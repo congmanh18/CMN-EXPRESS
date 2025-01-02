@@ -3,14 +3,27 @@ package server
 import (
 	"express_be/conf"
 	"express_be/core/config"
-	"express_be/core/transport/http"
+	httpServer "express_be/core/transport/http"
 	"express_be/core/transport/http/engine"
 	"express_be/core/transport/http/route"
 	"express_be/migration"
 	"express_be/provider"
+
+	"express_be/handler/admin"
+	authHandler "express_be/handler/auth"
+	customerHandler "express_be/handler/customer"
+	deliveryPersonHandler "express_be/handler/delivery"
+
+	customerRepo "express_be/repository/customer"
+	deliveryPersonRepo "express_be/repository/delivery"
+	"express_be/usecase/auth"
+	"express_be/usecase/customer"
+	"express_be/usecase/delivery"
+
+	echoSwagger "github.com/swaggo/echo-swagger"
 )
 
-const enableMigrations = true
+const enableMigrations = false
 
 func RunMigration(appProvider *provider.AppProvider, enableMigrate bool) {
 	if enableMigrate {
@@ -24,23 +37,58 @@ func LoadServiceConfig(confPath string) conf.ServiceConfig {
 	return serviceConf
 }
 
-func NewServer(serviceConf conf.ServiceConfig, routes []route.GroupRoute) *http.Server {
+func NewServer(serviceConf conf.ServiceConfig, routes []route.GroupRoute) *httpServer.Server {
 	e := engine.NewEcho()
-	return http.NewHttpServer(
-		http.AddName(serviceConf.ServiceName),
-		http.AddPort(serviceConf.ServicePort),
-		http.AddEngine(e),
-		http.AddGroupRoutes(routes),
+	e.GET("/swagger/*", echoSwagger.WrapHandler)
+	return httpServer.NewHttpServer(
+		httpServer.AddName(serviceConf.ServiceName),
+		httpServer.AddPort(serviceConf.ServicePort),
+		httpServer.AddEngine(e),
+		httpServer.AddGroupRoutes(routes),
 	)
 }
 
 func Run(confPath string) {
 	serviceConf := LoadServiceConfig(confPath)
-	appProvider := InitializeAppProvider(serviceConf)
-	handler := InitializeHandler(appProvider)
-	routes := InitializeRoutes(handler)
-	server := NewServer(serviceConf, routes)
-
+	appProvider := provider.NewAppProvider(serviceConf)
 	RunMigration(appProvider, enableMigrations)
-	server.Run()
+
+	// firebasAuth, err := auth.NewFirebaseAuthService("./conf/express-2227f-firebase-adminsdk-vbu9s-83580ceea5.json")
+	// if err != nil {
+	// 	panic(err)
+	// }
+
+	jwtSecret := serviceConf.JwtSecretKey
+
+	// Khởi tạo Repo
+	custRepo := customerRepo.NewRepo(appProvider.Postgres)
+	deliRepo := deliveryPersonRepo.NewRepo(appProvider.Postgres)
+
+	// Khởi tạo Usecase
+	authUsecase := auth.NewAuthUsecase(custRepo, deliRepo)
+	adminCustomerUsecase := customer.NewAdminUsecase(custRepo)
+	adminDeliveryPersonUsecase := delivery.NewAdminUsecase(deliRepo)
+	customerUsecase := customer.NewCustomerUsecase(custRepo)
+	deliveryUsecase := delivery.NewDeliveryPersonUsecase(deliRepo)
+
+	// Khởi tạo handler
+	adminHandl := admin.NewHandler(admin.HandlerInject{
+		AdminCustomerUsecase:       adminCustomerUsecase,
+		AdminDeliveryPersonUsecase: adminDeliveryPersonUsecase,
+	})
+	customerHandl := customerHandler.NewHandler(customerHandler.HandlerInject{
+		CustomerUsecase: customerUsecase,
+	})
+	deliveryHandl := deliveryPersonHandler.NewHandler(deliveryPersonHandler.HandlerInject{
+		DeliveryPersonUsecase: deliveryUsecase,
+	})
+	authHandl := authHandler.NewHandler(authHandler.HandlerInject{
+		AuthUsecase: authUsecase,
+	})
+
+	// Khởi tạo routes
+	routes := SetupRoutes(adminHandl, customerHandl, deliveryHandl, authHandl, jwtSecret)
+
+	s := NewServer(serviceConf, routes)
+	s.Run()
 }

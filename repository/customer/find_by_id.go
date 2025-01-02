@@ -2,30 +2,25 @@ package customer
 
 import (
 	"context"
+	"errors"
+	"express_be/repository/customer/entity"
 
 	"gorm.io/gorm"
 )
 
-func (c *customerImpl) FindByPhone(ctx context.Context, phone *string) (*string, error) {
-	var result string
-	err := c.DB.Executor.WithContext(ctx).
-		Table("customers").
-		Select("phone").
-		Where("phone = ? AND deleted_at IS NULL", phone).
-		Limit(1).
-		Scan(&result).Error
+func (c *customerImpl) FindByID(ctx context.Context, id *string) (*entity.Customer, error) {
+	var result entity.Customer
+	query := c.DB.Executor.WithContext(ctx).
+		Model(&entity.Customer{}).
+		Where("id = ?", *id).
+		First(&result)
 
-	if err != nil {
-		if err == gorm.ErrRecordNotFound { // Nếu không tìm thấy bản ghi
+	if query.Error != nil {
+		if errors.Is(query.Error, gorm.ErrRecordNotFound) {
 			return nil, nil
 		}
-		return nil, err // Lỗi khác
-	}
-
-	if result == "" {
-		return nil, nil // Trả về nil nếu chuỗi rỗng
+		return nil, query.Statement.Error
 	}
 
 	return &result, nil
-
 }

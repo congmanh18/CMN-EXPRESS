@@ -25,12 +25,12 @@ type ResErr struct {
 func Error(c echo.Context, code int, message ...string) error {
 	if len(message) == 0 {
 		return c.JSON(code, ResErr{
-			Status:  fmt.Sprintf("ERR_%d", code),
+			Status:  fmt.Sprintf("%d", code),
 			Message: http.StatusText(code),
 		})
 	}
 	return c.JSON(code, ResErr{
-		Status:  fmt.Sprintf("ERR_%d", code),
+		Status:  fmt.Sprintf("%d", code),
 		Message: message[0],
 	})
 }
@@ -44,7 +44,7 @@ func Errors(c echo.Context, code int, err error, messages ...string) error {
 	}
 	var errs = strings.Split(err.Error(), "\n")
 	return c.JSON(code, ResErr{
-		Status:  fmt.Sprintf("ERR_%d", code),
+		Status:  fmt.Sprintf("%d", code),
 		Message: resMsg,
 		Errors:  errs,
 	})
@@ -52,7 +52,7 @@ func Errors(c echo.Context, code int, err error, messages ...string) error {
 
 func OK(c echo.Context, code int, message string, data interface{}) error {
 	return c.JSON(code, ResOk{
-		Status:  fmt.Sprintf("OK_%d", code),
+		Status:  fmt.Sprintf("%d", code),
 		Message: message,
 		Data:    data,
 	})
@@ -60,7 +60,7 @@ func OK(c echo.Context, code int, message string, data interface{}) error {
 
 func SimpleOK(c echo.Context, code int, data interface{}) error {
 	return c.JSON(code, ResOk{
-		Status:  fmt.Sprintf("OK_%d", code),
+		Status:  fmt.Sprintf("%d", code),
 		Message: "OK",
 		Data:    data,
 	})

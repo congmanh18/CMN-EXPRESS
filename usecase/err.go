@@ -34,9 +34,3 @@ func (e *Error) Error() string {
 	}
 	return e.Message
 }
-
-var (
-	ErrOrderNotFound       = NewError(404, "Order not found", nil)
-	ErrOrderAlreadyShipped = NewError(400, "Order has already been shipped", nil)
-	ErrInvalidOrder        = NewError(400, "Invalid order data", nil)
-)

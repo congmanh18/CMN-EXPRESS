@@ -19,7 +19,7 @@ const (
 
 type DeliveryPerson struct {
 	record.BaseEntity
-	Phone          *string `gorm:"unique"`
+	Phone          *string `gorm:"uniqueIndex:idx_phone_deleted_at"`
 	PasswordHash   *string
 	CurrentAddress *string
 
@@ -27,11 +27,18 @@ type DeliveryPerson struct {
 	ExtraWeightRate *float64
 	TotalCod        *float64
 	DailyIncome     *float64
-	GeoHash         *float64
+	GeoHash         *string
 	Status          Status
 
+	IdentificationNumber *string `json:"identification_number"`
+	FullName             *string `json:"full_name"`
+	DateOfBirth          *string `json:"date_of_birth"`
+	Gender               *string `json:"gender"`
+	Nationality          *string `json:"nationality"`
+	PlaceOfOrigin        *string `json:"place_of_origin"`
+	PlaceOfResidence     *string `json:"place_of_residence"`
+
 	BankInfos []indentity.BankInfo             `gorm:"foreignKey:DeliveryPersonID"`
-	Identity  []indentity.UserIdentity         `gorm:"foreignKey:DeliveryPersonID"`
 	Salary    []Salary                         `gorm:"foreignKey:DeliveryPersonID"`
 	Warehouse []warehouse.WarehouseTransaction `gorm:"foreignKey:DeliveryPersonID"`
 }

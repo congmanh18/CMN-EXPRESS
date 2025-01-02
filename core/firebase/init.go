@@ -1,4 +1,4 @@
-package auth
+package firebase
 
 import (
 	"context"
@@ -8,9 +8,10 @@ import (
 	"google.golang.org/api/option"
 )
 
-func InitFirebase() (*auth.Client, error) {
+// "./conf/express-2227f-firebase-adminsdk-vbu9s-83580ceea5.json"
+func InitFirebase(pathsdk string) (*auth.Client, error) {
 	ctx := context.Background()
-	opt := option.WithCredentialsFile("path/to/serviceAccountKey.json")
+	opt := option.WithCredentialsFile(pathsdk)
 	app, err := firebase.NewApp(ctx, nil, opt)
 	if err != nil {
 		return nil, err

@@ -1,6 +1,7 @@
 package migration
 
 import (
+	"express_be/repository/admin"
 	customer "express_be/repository/customer/entity"
 	delivery "express_be/repository/delivery/entity"
 	identity "express_be/repository/identity/entity"
@@ -14,11 +15,11 @@ import (
 func Migration(db *gorm.DB) {
 	log.Printf("Migration.....")
 	err := db.AutoMigrate(
+		&admin.Admin{},
 		&customer.Customer{},
 		&delivery.DeliveryPerson{},
 		&delivery.Salary{},
 
-		&identity.UserIdentity{},
 		&identity.BankInfo{},
 
 		&order.Order{},

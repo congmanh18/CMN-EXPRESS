@@ -8,22 +8,24 @@ import (
 
 type Handler interface {
 	HandleCustomerRegistration(c echo.Context) error
+	HandleVerifyCustomer(c echo.Context) error
+	HandleLoginCustomer(c echo.Context) error
+
 	HandleDeliveryPersonRegistration(c echo.Context) error
+	HandleVerifyDeliveryPerson(c echo.Context) error
+	HandleLoginDeliveryPerson(c echo.Context) error
 }
 
 type handlerImpl struct {
-	registerCustomerUseCase       auth.RegisterCustomerUseCase
-	registerDeliveryPersonUseCase auth.RegisterDeliveryPersonUseCase
+	authUsecase auth.AuthUsecase
 }
 
 type HandlerInject struct {
-	RegisterCustomerUseCase       auth.RegisterCustomerUseCase
-	RegisterDeliveryPersonUseCase auth.RegisterDeliveryPersonUseCase
+	AuthUsecase auth.AuthUsecase
 }
 
 func NewHandler(inj HandlerInject) Handler {
 	return &handlerImpl{
-		registerCustomerUseCase:       inj.RegisterCustomerUseCase,
-		registerDeliveryPersonUseCase: inj.RegisterDeliveryPersonUseCase,
+		authUsecase: inj.AuthUsecase,
 	}
 }

@@ -8,7 +8,7 @@ import (
 )
 
 func ProvidePostgres(config conf.ServiceConfig) *postgresql.Database {
-	fmt.Println("Connecting to PostgreSQL")
+	fmt.Println("Connecting to PostgreSQL...")
 	return postgresql.New(postgresql.Connection{
 		Host:     config.DBHost,
 		Port:     config.DBPort,

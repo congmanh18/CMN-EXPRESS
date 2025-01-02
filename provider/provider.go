@@ -7,10 +7,12 @@ import (
 
 type AppProvider struct {
 	Postgres *postgresql.Database
+	// Redis    *redis.Client
 }
 
 func NewAppProvider(config conf.ServiceConfig) *AppProvider {
 	return &AppProvider{
+		// Redis:    ProvideRedis(config),
 		Postgres: ProvidePostgres(config),
 	}
 }
