@@ -1,17 +1,22 @@
 ##### Stage 1 #####
-FROM golang:1.23-alpine as builder
+FROM golang:1.23.5-alpine as builder
 
-RUN mkdir -p /project
-WORKDIR /project
+LABEL maintainer="nguyenmanh180102@gmail.com"
+LABEL description="Dockerfile for Go Application with Multi-stage Build"
 
-### Copy Go application dependency files
-COPY go.mod .
+ENV APP_PATH=/project
+
+RUN mkdir -p $APP_PATH
+WORKDIR $APP_PATH
+
+# Copy Go application dependency files
+COPY go.mod . 
 COPY go.sum .
 
-### Download Go application module dependencies
+# Download Go application module dependencies
 RUN go mod download
 
-### Copy actual source code for building the application
+# Copy actual source code for building the application
 COPY . .
 
 ENV CGO_ENABLED=0
@@ -21,13 +26,21 @@ RUN go build -o app cmd/main.go
 ##### Stage 2 #####
 FROM scratch
 
-WORKDIR /dist
+ENV DIST_PATH=/dist
+WORKDIR $DIST_PATH
 
-### Copy the built application
+# Copy the built application
 COPY --from=builder /project/app .
 
-### Copy the configuration file
+# Copy the configuration file
 COPY --from=builder /project/conf/service.env ./conf/service.env
 
-### Set the command to run the application with the configuration file
+# Create non-root user
+RUN addgroup -g 1000 appgroup && adduser -u 1000 -G appgroup -s /bin/sh -D appuser
+USER appuser
+
+# Expose port
+EXPOSE 8080
+
+# Set the command to run the application with the configuration file
 CMD ["./app", "-config=./conf/service.env"]

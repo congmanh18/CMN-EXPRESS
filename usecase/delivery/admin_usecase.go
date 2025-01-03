@@ -9,6 +9,7 @@ import (
 
 type AdminUsecase interface {
 	AdminGetPendingDeliveryPersons(ctx context.Context, page, pageSize *int) ([]entity.DeliveryPerson, *usecase.Error)
+	AdminGetAllDeliveryPersons(ctx context.Context, page, pageSize *int) ([]entity.DeliveryPerson, *usecase.Error)
 }
 
 type adminUseCaseImpl struct {

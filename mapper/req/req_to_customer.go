@@ -12,17 +12,11 @@ import (
 )
 
 func RegisterToCustomer(req model.RegisterRequest) *entity.Customer {
-	var status entity.Status
 	// Xử lý geohash luôn nếu cần
 	geohash := geohash.Encode(req.Latitude, req.Longtitude)
 	hashedPassword, err := security.HashPassword(req.Password)
 	if err != nil {
 		return nil
-	}
-	if req.CustomerAccountType == string(entity.Prepaid) {
-		status = entity.Pending
-	} else if req.CustomerAccountType == string(entity.Postpaid) {
-		status = entity.Verified
 	}
 
 	return &entity.Customer{
@@ -36,7 +30,7 @@ func RegisterToCustomer(req model.RegisterRequest) *entity.Customer {
 		GeoHash:              &geohash,
 		Latitude:             &req.Latitude,
 		Longtitude:           &req.Longtitude,
-		Status:               status,
+		Status:               entity.Pending,
 		IdentificationNumber: &req.IdentificationNumber,
 		FullName:             &req.FullName,
 		DateOfBirth:          &req.DateOfBirth,

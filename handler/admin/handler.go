@@ -10,6 +10,9 @@ import (
 type Handler interface {
 	HandleListPendingCustomer(c echo.Context) error
 	HandleListPendingDeliveryPerson(c echo.Context) error
+
+	HandleAllCustomers(c echo.Context) error
+	HandleAllDeliveryPersons(c echo.Context) error
 }
 
 type handlerImpl struct {

@@ -14,7 +14,7 @@ type Repo interface {
 	UpdateStatus(ctx context.Context, id *string, status *entity.Status) error
 	DeleteDeliveryPerson(ctx context.Context, id *string) error
 	UpdateDeliveryPerson(ctx context.Context, id *string, deliveryPerson *entity.DeliveryPerson) error
-	FetchAllDeliveryPersons(ctx context.Context) ([]entity.DeliveryPerson, error)
+	FetchAllDeliveryPersons(ctx context.Context, page, pageSize *int) ([]entity.DeliveryPerson, error)
 	FetchPendingStatusDeliveryPerson(ctx context.Context, page, pageSize *int) ([]entity.DeliveryPerson, error)
 	FetchPhone(ctx context.Context, phone *string) (*string, error)
 }

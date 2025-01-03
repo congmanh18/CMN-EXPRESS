@@ -11,7 +11,7 @@ const docTemplate = `{
         "title": "{{.Title}}",
         "termsOfService": "https://sharkytech.vercel.app/terms",
         "contact": {
-            "name": "Lucas Dev Team",
+            "name": "Lucas",
             "url": "https://sharkytech.vercel.app",
             "email": "nguyenmanh180102@gmail.com"
         },
@@ -24,6 +24,36 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/admin/customers/all": {
+            "get": {
+                "description": "Truy xuất danh sách tất cả khách hàng được phân trang",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Liệt kê tất cả khách hàng",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Page number, defaults to 1",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Page size, defaults to 10",
+                        "name": "page_size",
+                        "in": "query"
+                    }
+                ],
+                "responses": {}
+            }
+        },
         "/admin/customers/pending": {
             "get": {
                 "description": "Truy xuất danh sách khách hàng được phân trang với trạng thái \"PENDING\"",
@@ -37,6 +67,36 @@ const docTemplate = `{
                     "Admin"
                 ],
                 "summary": "Liệt kê khách hàng đang \"PENDING\"",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Page number, defaults to 1",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Page size, defaults to 10",
+                        "name": "page_size",
+                        "in": "query"
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/admin/delivery-persons/all": {
+            "get": {
+                "description": "Truy xuất danh sách được phân trang của tất cả những người giao hàng",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Liệt kê tất cả những người giao hàng",
                 "parameters": [
                     {
                         "type": "integer",

@@ -4,35 +4,34 @@ import (
 	"express_be/core/transport/http/response"
 	mapper "express_be/mapper/res"
 	model "express_be/model/res"
-
 	"net/http"
 	"strconv"
 
 	"github.com/labstack/echo/v4"
 )
 
-// HandleListPendingCustomer lists all pending customers
-// @Summary Liệt kê khách hàng đang "PENDING"
-// @Description Truy xuất danh sách khách hàng được phân trang với trạng thái "PENDING"
+// HandleListPendingCustomer lists all customers
+// @Summary Liệt kê tất cả khách hàng
+// @Description Truy xuất danh sách tất cả khách hàng được phân trang
 // @Tags Admin
 // @Accept  json
 // @Produce  json
 // @Param   page       query   int    false  "Page number, defaults to 1"
 // @Param   page_size  query   int    false  "Page size, defaults to 10"
-// @Router /admin/customers/pending [get]
-func (h handlerImpl) HandleListPendingCustomer(c echo.Context) error {
+// @Router /admin/customers/all [get]
+func (h *handlerImpl) HandleAllCustomers(c echo.Context) error {
 	page, err := strconv.Atoi(c.QueryParam("page"))
 	if err != nil || page < 1 {
-		page = 1 // Mặc định là trang đầu tiên nếu không hợp lệ
+		page = 1
 	}
 
 	pageSize, err := strconv.Atoi(c.QueryParam("page_size"))
 	if err != nil || pageSize < 1 {
-		pageSize = 10 // Mặc định 10 bản ghi mỗi trang nếu không hợp lệ
+		pageSize = 10
 	}
 
-	customers, usecaseErr := h.adminCustomerUsecase.AdminGetPendingCustomers(c.Request().Context(), &page, &pageSize)
-	if usecaseErr != nil {
+	customers, usecaseErr := h.adminCustomerUsecase.AdminGetAllCustomers(c.Request().Context(), &page, &pageSize)
+	if err != nil {
 		return response.Error(
 			c,
 			usecaseErr.Code,
@@ -45,7 +44,7 @@ func (h handlerImpl) HandleListPendingCustomer(c echo.Context) error {
 		customerRes := mapper.CustomerToRes(&customer)
 		customerResponses = append(customerResponses, customerRes)
 	}
-	
+
 	resp := model.CustomerPaginationResponse{
 		Page:     page,
 		PageSize: pageSize,

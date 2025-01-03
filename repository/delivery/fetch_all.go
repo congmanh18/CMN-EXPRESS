@@ -5,6 +5,19 @@ import (
 	"express_be/repository/delivery/entity"
 )
 
-func (d *deliveryImpl) FetchAllDeliveryPersons(ctx context.Context) ([]entity.DeliveryPerson, error) {
-	panic("unimplemented")
+func (d *deliveryImpl) FetchAllDeliveryPersons(ctx context.Context, page, pageSize *int) ([]entity.DeliveryPerson, error) {
+	var result []entity.DeliveryPerson
+	offset := (*page - 1) * *pageSize
+
+	query := d.DB.Executor.
+		WithContext(ctx).
+		Offset(offset).
+		Limit(*pageSize).
+		Find(&result)
+
+	if query.Error != nil {
+		return nil, query.Error
+	}
+
+	return result, nil
 }

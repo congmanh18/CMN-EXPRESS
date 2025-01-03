@@ -37,9 +37,19 @@ func SetupRoutes(
 					Handler: adminHandler.HandleListPendingCustomer,
 				},
 				{
+					Path:    "/customers/all",
+					Method:  method.GET,
+					Handler: adminHandler.HandleAllCustomers,
+				},
+				{
 					Path:    "/delivery-persons/pending",
 					Method:  method.GET,
 					Handler: adminHandler.HandleListPendingDeliveryPerson,
+				},
+				{
+					Path:    "/delivery-persons/all",
+					Method:  method.GET,
+					Handler: adminHandler.HandleAllDeliveryPersons,
 				},
 			},
 		},

@@ -82,7 +82,7 @@ host: 203.145.47.225
 info:
   contact:
     email: nguyenmanh180102@gmail.com
-    name: Lucas Dev Team
+    name: Lucas
     url: https://sharkytech.vercel.app
   description: |-
     Welcome to the CMN Express API documentation. This server facilitates seamless integration for managing logistics, tracking, and delivery services efficiently.
@@ -94,6 +94,26 @@ info:
   title: CMN Express API Documentation
   version: "1.0"
 paths:
+  /admin/customers/all:
+    get:
+      consumes:
+      - application/json
+      description: Truy xuất danh sách tất cả khách hàng được phân trang
+      parameters:
+      - description: Page number, defaults to 1
+        in: query
+        name: page
+        type: integer
+      - description: Page size, defaults to 10
+        in: query
+        name: page_size
+        type: integer
+      produces:
+      - application/json
+      responses: {}
+      summary: Liệt kê tất cả khách hàng
+      tags:
+      - Admin
   /admin/customers/pending:
     get:
       consumes:
@@ -112,6 +132,27 @@ paths:
       - application/json
       responses: {}
       summary: Liệt kê khách hàng đang "PENDING"
+      tags:
+      - Admin
+  /admin/delivery-persons/all:
+    get:
+      consumes:
+      - application/json
+      description: Truy xuất danh sách được phân trang của tất cả những người giao
+        hàng
+      parameters:
+      - description: Page number, defaults to 1
+        in: query
+        name: page
+        type: integer
+      - description: Page size, defaults to 10
+        in: query
+        name: page_size
+        type: integer
+      produces:
+      - application/json
+      responses: {}
+      summary: Liệt kê tất cả những người giao hàng
       tags:
       - Admin
   /admin/delivery-persons/pending:

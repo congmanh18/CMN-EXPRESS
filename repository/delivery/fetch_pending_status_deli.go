@@ -8,7 +8,8 @@ import (
 func (d *deliveryImpl) FetchPendingStatusDeliveryPerson(ctx context.Context, page, pageSize *int) ([]entity.DeliveryPerson, error) {
 	var result []entity.DeliveryPerson
 	offset := (*page - 1) * *pageSize
-	query := d.DB.Executor.Where("status = ?", entity.Pending).
+	query := d.DB.Executor.WithContext(ctx).
+		Where("status = ?", entity.Pending).
 		Offset(offset).
 		Limit(*pageSize).
 		Find(&result)

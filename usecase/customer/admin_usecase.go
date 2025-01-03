@@ -9,6 +9,7 @@ import (
 
 type AdminUsecase interface {
 	AdminGetPendingCustomers(ctx context.Context, page, pageSize *int) ([]entity.Customer, *usecase.Error)
+	AdminGetAllCustomers(ctx context.Context, page, pageSize *int) ([]entity.Customer, *usecase.Error)
 }
 
 type adminUsecaseImpl struct {

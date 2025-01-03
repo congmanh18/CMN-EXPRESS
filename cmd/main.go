@@ -15,7 +15,7 @@ import (
 // @version 1.0
 // @description Welcome to the CMN Express API documentation. This server facilitates seamless integration for managing logistics, tracking, and delivery services efficiently.
 // @description Explore the endpoints to unlock robust features designed to enhance your operational workflow.
-// @contact.name Lucas Dev Team
+// @contact.name Lucas
 // @contact.url https://sharkytech.vercel.app
 // @contact.email nguyenmanh180102@gmail.com
 // @contact.description For technical inquiries or support, feel free to reach out to our dedicated team.
@@ -38,10 +38,3 @@ func main() {
 	log.Printf("Starting server with config: %s", configPath)
 	server.Run(configPath)
 }
-
-// Cách 1:
-// go run main.go -config="./docs-service/deploy/prod_conf.env"
-
-// Cách 2:
-// export CONFIG_PATH="./docs-service/deploy/prod_conf.env"
-// go run main.go
