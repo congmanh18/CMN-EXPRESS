@@ -1,5 +1,5 @@
 ##### Stage 1 #####
-FROM golang:1.23.5-alpine as builder
+FROM golang:1.23-alpine as builder
 
 LABEL maintainer="nguyenmanh180102@gmail.com"
 LABEL description="Dockerfile for Go Application with Multi-stage Build"
