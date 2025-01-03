@@ -35,12 +35,5 @@ COPY --from=builder /project/app .
 # Copy the configuration file
 COPY --from=builder /project/conf/service.env ./conf/service.env
 
-# Create non-root user
-RUN addgroup -g 1000 appgroup && adduser -u 1000 -G appgroup -s /bin/sh -D appuser
-USER appuser
-
-# Expose port
-EXPOSE 8080
-
 # Set the command to run the application with the configuration file
 CMD ["./app", "-config=./conf/service.env"]
