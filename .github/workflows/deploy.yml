@@ -3,7 +3,7 @@ name: CI/CD for Go Backend
 on:
   push:
     branches:
-      - lucas
+      - master
 
 jobs:
   build-and-deploy:
