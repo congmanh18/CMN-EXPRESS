@@ -1,0 +1,400 @@
+basePath: /
+definitions:
+  req.BaseRegisterRequest:
+    properties:
+      password:
+        type: string
+      phone:
+        type: string
+    required:
+    - password
+    - phone
+    type: object
+  req.RegisterRequest:
+    properties:
+      account_type:
+        description: 2. Field for customer
+        type: string
+      current_address:
+        type: string
+      date_of_birth:
+        type: string
+      full_name:
+        type: string
+      gender:
+        type: string
+      identification_number:
+        type: string
+      latitude:
+        type: number
+      longtitude:
+        type: number
+      nationality:
+        type: string
+      password:
+        type: string
+      phone:
+        description: 1. Default field
+        type: string
+      place_of_origin:
+        type: string
+      place_of_residence:
+        type: string
+    required:
+    - password
+    - phone
+    type: object
+  req.UpdateCustomerReq:
+    properties:
+      account_type:
+        type: string
+      current_address:
+        type: string
+      date_of_birth:
+        type: string
+      full_name:
+        type: string
+      gender:
+        type: string
+      identification_number:
+        type: string
+      latitude:
+        type: number
+      longtitude:
+        type: number
+      nationality:
+        type: string
+      place_of_origin:
+        type: string
+      place_of_residence:
+        type: string
+    type: object
+  req.UpdateDeliveryPersonReq:
+    properties:
+      current_address:
+        type: string
+      date_of_birth:
+        type: string
+      full_name:
+        type: string
+      gender:
+        type: string
+      identification_number:
+        type: string
+      nationality:
+        type: string
+      place_of_origin:
+        type: string
+      place_of_residence:
+        type: string
+    type: object
+host: 203.145.47.225
+info:
+  contact:
+    email: nguyenmanh180102@gmail.com
+    name: Lucas
+    url: https://sharkytech.vercel.app
+  description: |-
+    Welcome to the CMN Express API documentation. This server facilitates seamless integration for managing logistics, tracking, and delivery services efficiently.
+    Explore the endpoints to unlock robust features designed to enhance your operational workflow.
+  license:
+    name: MIT License
+    url: https://opensource.org/licenses/MIT
+  termsOfService: https://sharkytech.vercel.app/terms
+  title: CMN Express API Documentation
+  version: "1.0"
+paths:
+  /admin/customers/{id}:
+    patch:
+      consumes:
+      - application/json
+      description: Cập nhật trạng thái của một khách hàng dựa trên ID
+      parameters:
+      - description: Customer ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Trạng thái mới của khách hàng (active, inactive, pending, blocked,
+          suspended, verified)
+        in: query
+        name: status
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses: {}
+      summary: Cập nhật trạng thái khách hàng
+      tags:
+      - Admin
+  /admin/customers/all:
+    get:
+      consumes:
+      - application/json
+      description: Truy xuất danh sách tất cả khách hàng được phân trang
+      parameters:
+      - description: Page number, defaults to 1
+        in: query
+        name: page
+        type: integer
+      - description: Page size, defaults to 10
+        in: query
+        name: page_size
+        type: integer
+      produces:
+      - application/json
+      responses: {}
+      summary: Liệt kê tất cả khách hàng
+      tags:
+      - Admin
+  /admin/customers/pending:
+    get:
+      consumes:
+      - application/json
+      description: Truy xuất danh sách khách hàng được phân trang với trạng thái "PENDING"
+      parameters:
+      - description: Page number, defaults to 1
+        in: query
+        name: page
+        type: integer
+      - description: Page size, defaults to 10
+        in: query
+        name: page_size
+        type: integer
+      produces:
+      - application/json
+      responses: {}
+      summary: Liệt kê khách hàng đang "PENDING"
+      tags:
+      - Admin
+  /admin/delivery-persons/{id}:
+    patch:
+      consumes:
+      - application/json
+      description: Cập nhật trạng thái của một người giao hàng dựa trên ID
+      parameters:
+      - description: DeliveryPerson ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Trạng thái mới của người giao hàng (active, inactive, on-duty,
+          off-duty)
+        in: query
+        name: status
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses: {}
+      summary: Cập nhật trạng thái của người giao hàng
+      tags:
+      - Admin
+  /admin/delivery-persons/all:
+    get:
+      consumes:
+      - application/json
+      description: Truy xuất danh sách được phân trang của tất cả những người giao
+        hàng
+      parameters:
+      - description: Page number, defaults to 1
+        in: query
+        name: page
+        type: integer
+      - description: Page size, defaults to 10
+        in: query
+        name: page_size
+        type: integer
+      produces:
+      - application/json
+      responses: {}
+      summary: Liệt kê tất cả những người giao hàng
+      tags:
+      - Admin
+  /admin/delivery-persons/pending:
+    get:
+      consumes:
+      - application/json
+      description: Truy xuất danh sách được phân trang của những người giao hàng với
+        trạng thái "PENDING"
+      parameters:
+      - description: Page number, defaults to 1
+        in: query
+        name: page
+        type: integer
+      - description: Page size, defaults to 10
+        in: query
+        name: page_size
+        type: integer
+      produces:
+      - application/json
+      responses: {}
+      summary: Liệt kê những người giao hàng đang "PENDING"
+      tags:
+      - Admin
+  /admin/register:
+    post:
+      consumes:
+      - application/json
+      description: Đăng ký người giao hàng mới cung cấp tối thiểu "phone" và "password"
+      parameters:
+      - description: Register successfully
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/req.BaseRegisterRequest'
+      produces:
+      - application/json
+      responses: {}
+      summary: Đăng ký người giao hàng mới
+      tags:
+      - Admin
+  /customers/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Thực hiện xóa khách hàng theo ID
+      parameters:
+      - description: Customer ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses: {}
+      summary: Xóa tài khoản khách hàng
+      tags:
+      - Customers
+    get:
+      consumes:
+      - application/json
+      description: Truy xuất thông tin chi tiết về một khách hàng cụ thể theo ID
+      parameters:
+      - description: Customer ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses: {}
+      summary: Nhận thông tin khách hàng
+      tags:
+      - Customers
+    put:
+      consumes:
+      - application/json
+      description: Cập nhật chi tiết của một khách hàng cụ thể theo ID
+      parameters:
+      - description: Customer ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Customer Update Request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/req.UpdateCustomerReq'
+      produces:
+      - application/json
+      responses: {}
+      summary: Cập nhật thông tin khách hàng
+      tags:
+      - Customers
+  /customers/register:
+    post:
+      consumes:
+      - application/json
+      description: Đăng ký khách hàng mới cung cấp số tối thiểu "account_type", "phone"
+        và "password"
+      parameters:
+      - description: Customer Registration Request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/req.RegisterRequest'
+      produces:
+      - application/json
+      responses: {}
+      summary: Đăng ký khách hàng mới
+      tags:
+      - Customers
+  /delivery-persons/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Thực hiện xóa người giao hàng theo ID
+      parameters:
+      - description: Delivery Person ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses: {}
+      summary: Xóa tài khoản người giao hàng
+      tags:
+      - DeliveryPersons
+    get:
+      consumes:
+      - application/json
+      description: Truy xuất thông tin chi tiết về người giao hàng cụ thể theo ID
+      parameters:
+      - description: Delivery Person ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses: {}
+      summary: Lấy thông tin người giao hàng
+      tags:
+      - DeliveryPersons
+    put:
+      consumes:
+      - application/json
+      description: Cập nhật chi tiết người giao hàng cụ thể theo ID
+      parameters:
+      - description: Delivery Person ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Delivery Person Update Request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/req.UpdateDeliveryPersonReq'
+      produces:
+      - application/json
+      responses: {}
+      summary: Cập nhật thông tin người giao hàng
+      tags:
+      - DeliveryPersons
+  /delivery-persons/register:
+    post:
+      consumes:
+      - application/json
+      description: Đăng ký người giao hàng mới cung cấp tối thiểu "phone" và "password"
+      parameters:
+      - description: Delivery Person Registration Request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/req.RegisterRequest'
+      produces:
+      - application/json
+      responses: {}
+      summary: Đăng ký người giao hàng mới
+      tags:
+      - DeliveryPersons
+swagger: "2.0"
