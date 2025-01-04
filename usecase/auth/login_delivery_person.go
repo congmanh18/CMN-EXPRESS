@@ -43,7 +43,7 @@ func (u *authUsecaseImpl) LoginDeliveryPerson(ctx context.Context, phone, passwo
 	if err != nil {
 		return nil, nil, &usecase.Error{
 			Code:    500,
-			Message: "failed to save token",
+			Message: "failed to save token" + err.Error(),
 			Err:     err,
 		}
 	}

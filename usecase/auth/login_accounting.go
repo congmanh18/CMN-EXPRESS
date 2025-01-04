@@ -4,14 +4,14 @@ import (
 	"context"
 	"express_be/core/security"
 	mapper "express_be/mapper/req"
-	customerEntity "express_be/repository/customer/entity"
-	"express_be/usecase"
+	"express_be/repository/accounting"
 
+	"express_be/usecase"
 	"time"
 )
 
-func (a *authUsecaseImpl) LoginCustomer(ctx context.Context, phone, password *string) (*security.Token, *customerEntity.Customer, *usecase.Error) {
-	customer, err := a.customerRepo.FindByPhone(ctx, phone)
+func (a *authUsecaseImpl) LoginAccounting(ctx context.Context, phone, password *string) (*security.Token, *accounting.Accounting, *usecase.Error) {
+	accounting, err := a.accountingRepo.FindByPhone(ctx, phone)
 	if err != nil {
 		return nil, nil, &usecase.Error{
 			Code:    404,
@@ -19,17 +19,16 @@ func (a *authUsecaseImpl) LoginCustomer(ctx context.Context, phone, password *st
 			Err:     err,
 		}
 	}
-	if !security.VerifyPassword(*password, *customer.PasswordHash) {
+	if !security.VerifyPassword(*password, *accounting.Password) {
 		return nil, nil, &usecase.Error{
 			Code:    401,
 			Message: "invalid password",
 			Err:     nil,
 		}
 	}
-
 	accessTokenDuration := time.Hour * 8
 	refreshTokenDuration := time.Hour * 24 * 14
-	scToken, err := security.GenToken(*customer.ID, accessTokenDuration, refreshTokenDuration)
+	scToken, err := security.GenToken(*accounting.ID, accessTokenDuration, refreshTokenDuration)
 	if err != nil {
 		return nil, nil, &usecase.Error{
 			Code:    500,
@@ -37,8 +36,7 @@ func (a *authUsecaseImpl) LoginCustomer(ctx context.Context, phone, password *st
 			Err:     err,
 		}
 	}
-
-	token := mapper.SecureTokenToTokenEntity(scToken, customer.ID, refreshTokenDuration)
+	token := mapper.SecureTokenToTokenEntity(scToken, accounting.ID, refreshTokenDuration)
 	err = a.tokenRepo.SaveToken(ctx, token)
 	if err != nil {
 		return nil, nil, &usecase.Error{
@@ -48,5 +46,6 @@ func (a *authUsecaseImpl) LoginCustomer(ctx context.Context, phone, password *st
 		}
 	}
 
-	return scToken, customer, nil
+	return scToken, accounting, nil
+
 }

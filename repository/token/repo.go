@@ -38,6 +38,6 @@ func (t *tokenImpl) ValidateToken(ctx context.Context, refreshToken *string) (*R
 	return result, nil
 }
 
-func NewTokenRepo(db *postgresql.Database) Repo {
+func NewRepo(db *postgresql.Database) Repo {
 	return &tokenImpl{DB: db}
 }

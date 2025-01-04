@@ -24,6 +24,33 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/admin/create-accouting": {
+            "post": {
+                "description": "Đăng ký kế toán mới cung cấp số tối thiểu \"phone\" và \"password\"",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Đăng ký kế toán",
+                "parameters": [
+                    {
+                        "description": "Accounting Registration Request",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/req.RegisterRequest"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
         "/admin/customers/all": {
             "get": {
                 "description": "Truy xuất danh sách tất cả khách hàng được phân trang",
@@ -229,6 +256,60 @@ const docTemplate = `{
                         "required": true,
                         "schema": {
                             "$ref": "#/definitions/req.BaseRegisterRequest"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/auth/accountings/login": {
+            "post": {
+                "description": "Authenticate Accounting using their phone number and password. Returns an Access Token and sets a Refresh Token in an HttpOnly cookie.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Login Accounting",
+                "parameters": [
+                    {
+                        "description": "Login Request",
+                        "name": "login",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/req.LoginRequest"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/auth/admin/login": {
+            "post": {
+                "description": "Authenticate Admin using their phone number and password. Returns an Access Token and sets a Refresh Token in an HttpOnly cookie.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Login Admin",
+                "parameters": [
+                    {
+                        "description": "Login Request",
+                        "name": "login",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/req.LoginRequest"
                         }
                     }
                 ],

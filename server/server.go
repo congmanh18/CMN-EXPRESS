@@ -14,11 +14,13 @@ import (
 	customerHandler "express_be/handler/customer"
 	deliveryPersonHandler "express_be/handler/delivery"
 
+	accountingRepo "express_be/repository/accounting"
 	adminRepo "express_be/repository/admin"
 	customerRepo "express_be/repository/customer"
 	deliveryPersonRepo "express_be/repository/delivery"
 	"express_be/repository/token"
 
+	"express_be/usecase/accounting"
 	"express_be/usecase/admin"
 	"express_be/usecase/auth"
 	"express_be/usecase/customer"
@@ -27,7 +29,7 @@ import (
 	echoSwagger "github.com/swaggo/echo-swagger"
 )
 
-const enableMigrations = false
+const enableMigrations = true
 
 func RunMigration(appProvider *provider.AppProvider, enableMigrate bool) {
 	if enableMigrate {
@@ -68,13 +70,15 @@ func Run(confPath string) {
 	custRepo := customerRepo.NewRepo(appProvider.Postgres)
 	deliRepo := deliveryPersonRepo.NewRepo(appProvider.Postgres)
 	adminRepo := adminRepo.NewRepo(appProvider.Postgres)
-	tokenRepo := token.NewTokenRepo(appProvider.Postgres)
+	tokenRepo := token.NewRepo(appProvider.Postgres)
+	accountingRepo := accountingRepo.NewRepo(appProvider.Postgres)
 
 	// Khởi tạo Usecase
-	authUsecase := auth.NewAuthUsecase(custRepo, deliRepo, tokenRepo)
+	authUsecase := auth.NewAuthUsecase(custRepo, deliRepo, tokenRepo, accountingRepo)
+	adminUsecase := admin.NewAdminUsecase(adminRepo, tokenRepo)
 	adminCustomerUsecase := customer.NewAdminUsecase(custRepo)
 	adminDeliveryPersonUsecase := delivery.NewAdminUsecase(deliRepo)
-	adminUsecase := admin.NewAdminUsecase(adminRepo)
+	adminAccountingUsecase := accounting.NewAdminUsecase(accountingRepo)
 
 	customerUsecase := customer.NewCustomerUsecase(custRepo)
 	deliveryUsecase := delivery.NewDeliveryPersonUsecase(deliRepo)
@@ -83,6 +87,7 @@ func Run(confPath string) {
 	adminHandl := adminHandler.NewHandler(adminHandler.HandlerInject{
 		AdminCustomerUsecase:       adminCustomerUsecase,
 		AdminDeliveryPersonUsecase: adminDeliveryPersonUsecase,
+		AdminAccountingUsecase:     adminAccountingUsecase,
 		AdminUsecase:               adminUsecase,
 	})
 	customerHandl := customerHandler.NewHandler(customerHandler.HandlerInject{
