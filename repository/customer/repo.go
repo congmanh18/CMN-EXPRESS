@@ -17,6 +17,7 @@ type Repo interface {
 	FetchAllCustomer(ctx context.Context, page, pageSize *int) ([]entity.Customer, error)            // Dùng để lấy danh sách customers (tất cả)
 	FetchPendingStatusCustomers(ctx context.Context, page, pageSize *int) ([]entity.Customer, error) // OKEY Lấy danh sách tài khoản chưa xác minh
 	FetchPhoneWithCache(ctx context.Context, phone *string) (bool, error)
+	ChangePassword(ctx context.Context, phone, newPassword *string) error
 }
 
 type customerImpl struct {

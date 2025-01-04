@@ -11,6 +11,7 @@ func (d *deliveryImpl) FetchAllDeliveryPersons(ctx context.Context, page, pageSi
 
 	query := d.DB.Executor.
 		WithContext(ctx).
+		Order("created_at DESC").
 		Offset(offset).
 		Limit(*pageSize).
 		Find(&result)

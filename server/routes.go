@@ -21,11 +21,11 @@ func SetupRoutes(
 		{
 			Prefix: "/admin",
 			Routes: []route.Route{
-				// {
-				// 	Path:    "/register",
-				// 	Method:  method.POST,
-				// 	Handler: adminHandler.HandleAdminRegistration,
-				// },
+				{
+					Path:    "/register",
+					Method:  method.POST,
+					Handler: adminHandler.HandleRegister,
+				},
 				// {
 				// 	Path:    "/login",
 				// 	Method:  method.POST,

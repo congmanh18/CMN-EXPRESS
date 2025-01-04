@@ -11,6 +11,7 @@ func (c *customerImpl) FetchAllCustomer(ctx context.Context, page, pageSize *int
 
 	query := c.DB.Executor.
 		WithContext(ctx).
+		Order("created_at DESC").
 		Offset(offset).
 		Limit(*pageSize).
 		Find(&result)

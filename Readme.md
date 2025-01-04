@@ -6,9 +6,9 @@ Welcome to the **CMN Express API Documentation**. This project provides a robust
 - [Overview](#overview)
 - [Installation](#installation)
 - [API Endpoints](#api-endpoints)
-  - [Admin Endpoints](#admin-endpoints)
-  - [Customer Endpoints](#customer-endpoints)
-  - [Delivery Person Endpoints](#delivery-person-endpoints)
+- [Admin Endpoints](#admin-endpoints)
+- [Customer Endpoints](#customer-endpoints)
+- [Delivery Person Endpoints](#delivery-person-endpoints)
 - [Definitions](#definitions)
 - [License](#license)
 

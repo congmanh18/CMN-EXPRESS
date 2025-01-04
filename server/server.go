@@ -9,13 +9,16 @@ import (
 	"express_be/migration"
 	"express_be/provider"
 
-	"express_be/handler/admin"
+	adminHandler "express_be/handler/admin"
 	authHandler "express_be/handler/auth"
 	customerHandler "express_be/handler/customer"
 	deliveryPersonHandler "express_be/handler/delivery"
 
+	adminRepo "express_be/repository/admin"
 	customerRepo "express_be/repository/customer"
 	deliveryPersonRepo "express_be/repository/delivery"
+
+	"express_be/usecase/admin"
 	"express_be/usecase/auth"
 	"express_be/usecase/customer"
 	"express_be/usecase/delivery"
@@ -63,18 +66,22 @@ func Run(confPath string) {
 	// Khởi tạo Repo
 	custRepo := customerRepo.NewRepo(appProvider.Postgres)
 	deliRepo := deliveryPersonRepo.NewRepo(appProvider.Postgres)
+	adminRepo := adminRepo.NewRepo(appProvider.Postgres)
 
 	// Khởi tạo Usecase
 	authUsecase := auth.NewAuthUsecase(custRepo, deliRepo)
 	adminCustomerUsecase := customer.NewAdminUsecase(custRepo)
 	adminDeliveryPersonUsecase := delivery.NewAdminUsecase(deliRepo)
+	adminUsecase := admin.NewAdminUsecase(adminRepo)
+
 	customerUsecase := customer.NewCustomerUsecase(custRepo)
 	deliveryUsecase := delivery.NewDeliveryPersonUsecase(deliRepo)
 
 	// Khởi tạo handler
-	adminHandl := admin.NewHandler(admin.HandlerInject{
+	adminHandl := adminHandler.NewHandler(adminHandler.HandlerInject{
 		AdminCustomerUsecase:       adminCustomerUsecase,
 		AdminDeliveryPersonUsecase: adminDeliveryPersonUsecase,
+		AdminUsecase:               adminUsecase,
 	})
 	customerHandl := customerHandler.NewHandler(customerHandler.HandlerInject{
 		CustomerUsecase: customerUsecase,

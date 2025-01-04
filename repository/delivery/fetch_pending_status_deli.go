@@ -9,6 +9,7 @@ func (d *deliveryImpl) FetchPendingStatusDeliveryPerson(ctx context.Context, pag
 	var result []entity.DeliveryPerson
 	offset := (*page - 1) * *pageSize
 	query := d.DB.Executor.WithContext(ctx).
+		Order("created_at DESC").
 		Where("status = ?", entity.Pending).
 		Offset(offset).
 		Limit(*pageSize).
