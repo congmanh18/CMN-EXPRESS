@@ -14,7 +14,7 @@ import (
 // @Tags Customers
 // @Accept  json
 // @Produce  json
-// @Param   request  body  model.ResetPasswordRequest
+// @Param request body model.ResetPasswordRequest true "Reset Password Request"
 // @Router /customers/reset-password [patch]
 func (h *handlerImpl) HandleChangePassword(c echo.Context) error {
 	// 1. Parse dữ liệu đầu vào

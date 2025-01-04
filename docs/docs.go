@@ -210,7 +210,7 @@ const docTemplate = `{
         },
         "/admin/register": {
             "post": {
-                "description": "Đăng ký người giao hàng mới cung cấp tối thiểu \"phone\" và \"password\"",
+                "description": "Đăng ký quản trị viên mới cung cấp tối thiểu \"phone\" và \"password\"",
                 "consumes": [
                     "application/json"
                 ],
@@ -220,7 +220,7 @@ const docTemplate = `{
                 "tags": [
                     "Admin"
                 ],
-                "summary": "Đăng ký người giao hàng mới",
+                "summary": "Đăng ký quản trị viên",
                 "parameters": [
                     {
                         "description": "Register successfully",
@@ -230,6 +230,85 @@ const docTemplate = `{
                         "schema": {
                             "$ref": "#/definitions/req.BaseRegisterRequest"
                         }
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/auth/customers/login": {
+            "post": {
+                "description": "Authenticate a customer using their phone number and password. Returns an Access Token and sets a Refresh Token in an HttpOnly cookie.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Login Customer",
+                "parameters": [
+                    {
+                        "description": "Login Request",
+                        "name": "login",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/req.LoginRequest"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/auth/delivery-persons/login": {
+            "post": {
+                "description": "Authenticate Delivery Persons using their phone number and password. Returns an Access Token and sets a Refresh Token in an HttpOnly cookie.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Login Delivery Persons",
+                "parameters": [
+                    {
+                        "description": "Login Request",
+                        "name": "login",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/req.LoginRequest"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/auth/refresh-token": {
+            "post": {
+                "description": "Refresh Access Token using a valid Refresh Token from headers.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Refresh Access Token",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The refresh token identifier stored in headers",
+                        "name": "refresh_token_id",
+                        "in": "header",
+                        "required": true
                     }
                 ],
                 "responses": {}
@@ -256,6 +335,33 @@ const docTemplate = `{
                         "required": true,
                         "schema": {
                             "$ref": "#/definitions/req.RegisterRequest"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/customers/reset-password": {
+            "patch": {
+                "description": "Đổi mật khẩu khách hàng bằng số điện thoại",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Customers"
+                ],
+                "summary": "Đổi mật khẩu",
+                "parameters": [
+                    {
+                        "description": "Reset Password Request",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/req.ResetPasswordRequest"
                         }
                     }
                 ],
@@ -369,6 +475,33 @@ const docTemplate = `{
                 "responses": {}
             }
         },
+        "/delivery-persons/reset-password": {
+            "patch": {
+                "description": "Đổi mật khẩu khách hàng bằng số điện thoại",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "DeliveryPersons"
+                ],
+                "summary": "Đổi mật khẩu",
+                "parameters": [
+                    {
+                        "description": "Reset Password Request",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/req.ResetPasswordRequest"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
         "/delivery-persons/{id}": {
             "get": {
                 "description": "Truy xuất thông tin chi tiết về người giao hàng cụ thể theo ID",
@@ -466,6 +599,21 @@ const docTemplate = `{
                 }
             }
         },
+        "req.LoginRequest": {
+            "type": "object",
+            "required": [
+                "password",
+                "phone"
+            ],
+            "properties": {
+                "password": {
+                    "type": "string"
+                },
+                "phone": {
+                    "type": "string"
+                }
+            }
+        },
         "req.RegisterRequest": {
             "type": "object",
             "required": [
@@ -512,6 +660,25 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "place_of_residence": {
+                    "type": "string"
+                }
+            }
+        },
+        "req.ResetPasswordRequest": {
+            "type": "object",
+            "required": [
+                "confirm_password",
+                "new_password",
+                "phone"
+            ],
+            "properties": {
+                "confirm_password": {
+                    "type": "string"
+                },
+                "new_password": {
+                    "type": "string"
+                },
+                "phone": {
                     "type": "string"
                 }
             }

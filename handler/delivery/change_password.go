@@ -14,7 +14,7 @@ import (
 // @Tags DeliveryPersons
 // @Accept  json
 // @Produce  json
-// @Param   request  body  model.ResetPasswordRequest
+// @Param request body model.ResetPasswordRequest true "Reset Password Request"
 // @Router /delivery-persons/reset-password [patch]
 func (h *handlerImpl) HandleChangePassword(c echo.Context) error {
 	var req model.ResetPasswordRequest

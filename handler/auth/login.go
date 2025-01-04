@@ -50,9 +50,9 @@ func (h *handlerImpl) HandleLoginCustomer(c echo.Context) error {
 	return response.OK(c, http.StatusOK, "Login successfully", resp)
 }
 
-// HandleLoginCustomer godoc
-// @Summary Login Customer
-// @Description Authenticate a customer using their phone number and password. Returns an Access Token and sets a Refresh Token in an HttpOnly cookie.
+// Handle Delivery Persons
+// @Summary Login Delivery Persons
+// @Description Authenticate Delivery Persons using their phone number and password. Returns an Access Token and sets a Refresh Token in an HttpOnly cookie.
 // @Tags Authentication
 // @Accept json
 // @Produce json

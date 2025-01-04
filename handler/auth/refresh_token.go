@@ -11,11 +11,11 @@ import (
 
 // HandleRefreshToken godoc
 // @Summary Refresh Access Token
-// @Description Refresh Access Token using a valid Refresh Token from cookies.
+// @Description Refresh Access Token using a valid Refresh Token from headers.
 // @Tags Authentication
 // @Accept json
 // @Produce json
-// @Param refresh_token_id cookie string true "The refresh token identifier stored in cookies"
+// @Param refresh_token_id header string true "The refresh token identifier stored in headers"
 // @Router /auth/refresh-token [post]
 func (h *handlerImpl) HandleRefreshToken(c echo.Context) error {
 	// 1. Lấy refresh_token_id từ cookie

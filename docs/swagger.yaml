@@ -10,6 +10,16 @@ definitions:
     - password
     - phone
     type: object
+  req.LoginRequest:
+    properties:
+      password:
+        type: string
+      phone:
+        type: string
+    required:
+    - password
+    - phone
+    type: object
   req.RegisterRequest:
     properties:
       account_type:
@@ -42,6 +52,19 @@ definitions:
         type: string
     required:
     - password
+    - phone
+    type: object
+  req.ResetPasswordRequest:
+    properties:
+      confirm_password:
+        type: string
+      new_password:
+        type: string
+      phone:
+        type: string
+    required:
+    - confirm_password
+    - new_password
     - phone
     type: object
   req.UpdateCustomerReq:
@@ -236,7 +259,7 @@ paths:
     post:
       consumes:
       - application/json
-      description: Đăng ký người giao hàng mới cung cấp tối thiểu "phone" và "password"
+      description: Đăng ký quản trị viên mới cung cấp tối thiểu "phone" và "password"
       parameters:
       - description: Register successfully
         in: body
@@ -247,9 +270,64 @@ paths:
       produces:
       - application/json
       responses: {}
-      summary: Đăng ký người giao hàng mới
+      summary: Đăng ký quản trị viên
       tags:
       - Admin
+  /auth/customers/login:
+    post:
+      consumes:
+      - application/json
+      description: Authenticate a customer using their phone number and password.
+        Returns an Access Token and sets a Refresh Token in an HttpOnly cookie.
+      parameters:
+      - description: Login Request
+        in: body
+        name: login
+        required: true
+        schema:
+          $ref: '#/definitions/req.LoginRequest'
+      produces:
+      - application/json
+      responses: {}
+      summary: Login Customer
+      tags:
+      - Authentication
+  /auth/delivery-persons/login:
+    post:
+      consumes:
+      - application/json
+      description: Authenticate Delivery Persons using their phone number and password.
+        Returns an Access Token and sets a Refresh Token in an HttpOnly cookie.
+      parameters:
+      - description: Login Request
+        in: body
+        name: login
+        required: true
+        schema:
+          $ref: '#/definitions/req.LoginRequest'
+      produces:
+      - application/json
+      responses: {}
+      summary: Login Delivery Persons
+      tags:
+      - Authentication
+  /auth/refresh-token:
+    post:
+      consumes:
+      - application/json
+      description: Refresh Access Token using a valid Refresh Token from headers.
+      parameters:
+      - description: The refresh token identifier stored in headers
+        in: header
+        name: refresh_token_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses: {}
+      summary: Refresh Access Token
+      tags:
+      - Authentication
   /customers/{id}:
     delete:
       consumes:
@@ -324,6 +402,24 @@ paths:
       summary: Đăng ký khách hàng mới
       tags:
       - Customers
+  /customers/reset-password:
+    patch:
+      consumes:
+      - application/json
+      description: Đổi mật khẩu khách hàng bằng số điện thoại
+      parameters:
+      - description: Reset Password Request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/req.ResetPasswordRequest'
+      produces:
+      - application/json
+      responses: {}
+      summary: Đổi mật khẩu
+      tags:
+      - Customers
   /delivery-persons/{id}:
     delete:
       consumes:
@@ -395,6 +491,24 @@ paths:
       - application/json
       responses: {}
       summary: Đăng ký người giao hàng mới
+      tags:
+      - DeliveryPersons
+  /delivery-persons/reset-password:
+    patch:
+      consumes:
+      - application/json
+      description: Đổi mật khẩu khách hàng bằng số điện thoại
+      parameters:
+      - description: Reset Password Request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/req.ResetPasswordRequest'
+      produces:
+      - application/json
+      responses: {}
+      summary: Đổi mật khẩu
       tags:
       - DeliveryPersons
 swagger: "2.0"
