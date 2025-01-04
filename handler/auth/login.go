@@ -35,7 +35,9 @@ func (h *handlerImpl) HandleLogin(c echo.Context) error {
 		}
 
 		resp := &res.LoginRes{
-			AccessToken: *token.AccessToken,
+			AccessToken:  *token.AccessToken,
+			RefreshToken: *token.RefreshToken,
+			UserID:       "nil",
 		}
 		return response.OK(c, http.StatusOK, "Login successfully", resp)
 	case "customer":
@@ -45,8 +47,9 @@ func (h *handlerImpl) HandleLogin(c echo.Context) error {
 		}
 
 		resp := &res.LoginRes{
-			AccessToken: *token.AccessToken,
-			UserID:      *user.ID,
+			AccessToken:  *token.AccessToken,
+			RefreshToken: *token.RefreshToken,
+			UserID:       *user.ID,
 		}
 		return response.OK(c, http.StatusOK, "Login successfully", resp)
 	case "delivery_person":
@@ -56,8 +59,9 @@ func (h *handlerImpl) HandleLogin(c echo.Context) error {
 		}
 
 		resp := &res.LoginRes{
-			AccessToken: *token.AccessToken,
-			UserID:      *user.ID,
+			AccessToken:  *token.AccessToken,
+			RefreshToken: *token.RefreshToken,
+			UserID:       *user.ID,
 		}
 		return response.OK(c, http.StatusOK, "Login successfully", resp)
 	case "accounting":
@@ -67,8 +71,9 @@ func (h *handlerImpl) HandleLogin(c echo.Context) error {
 		}
 
 		resp := &res.LoginRes{
-			AccessToken: *token.AccessToken,
-			UserID:      *user.ID,
+			AccessToken:  *token.AccessToken,
+			RefreshToken: *token.RefreshToken,
+			UserID:       *user.ID,
 		}
 		return response.OK(c, http.StatusOK, "Login successfully", resp)
 	default:

@@ -24,7 +24,7 @@ func (a *adminImpl) FindByPhone(ctx context.Context, phone *string) (*Admin, err
 	var result *Admin
 	query := a.DB.Executor.WithContext(ctx).
 		Model(&Admin{}).
-		Where("phone =?", phone).
+		Where("phone =?", *phone).
 		First(&result)
 
 	if query.Error != nil {
