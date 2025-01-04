@@ -17,11 +17,11 @@ import (
 // @Tags Admin
 // @Accept  json
 // @Produce  json
-// @Param   request  body  model.RegisterRequest  true  "Accounting Registration Request" example({"phone": "0912345678", "password": "abc@1234", "account_type": "prepaid"})
+// @Param   request  body  model.BaseRegisterRequest  true  "Accounting Registration Request" example({"phone": "0912345678", "password": "abc@1234", "account_type": "prepaid"})
 // @Router /admin/create-accouting [post]
 func (h *handlerImpl) HandleRegisterAccounting(c echo.Context) error {
 	// 1. Parse dữ liệu đầu vào
-	var req model.RegisterRequest
+	var req model.BaseRegisterRequest
 	if err := c.Bind(&req); err != nil {
 		return response.Error(c, http.StatusBadRequest, "Invalid request")
 	}

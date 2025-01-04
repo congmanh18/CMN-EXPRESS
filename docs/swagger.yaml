@@ -141,7 +141,7 @@ paths:
         name: request
         required: true
         schema:
-          $ref: '#/definitions/req.RegisterRequest'
+          $ref: '#/definitions/req.BaseRegisterRequest'
       produces:
       - application/json
       responses: {}
@@ -294,23 +294,6 @@ paths:
       summary: Đăng ký quản trị viên
       tags:
       - Admin
-  /auth/refresh-token:
-    post:
-      consumes:
-      - application/json
-      description: Refresh Access Token using a valid Refresh Token from headers.
-      parameters:
-      - description: The refresh token identifier stored in headers
-        in: header
-        name: refresh_token_id
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses: {}
-      summary: Refresh Access Token
-      tags:
-      - Authentication
   /customers/{id}:
     delete:
       consumes:
@@ -510,6 +493,23 @@ paths:
       - application/json
       responses: {}
       summary: Login
+      tags:
+      - Authentication
+  /refresh-token:
+    post:
+      consumes:
+      - application/json
+      description: Refresh Access Token using a valid Refresh Token from headers.
+      parameters:
+      - description: The refresh token identifier stored in headers
+        in: header
+        name: refresh_token_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses: {}
+      summary: Refresh Access Token
       tags:
       - Authentication
 swagger: "2.0"

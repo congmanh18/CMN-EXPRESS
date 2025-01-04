@@ -16,7 +16,7 @@ import (
 // @Accept json
 // @Produce json
 // @Param refresh_token_id header string true "The refresh token identifier stored in headers"
-// @Router /auth/refresh-token [post]
+// @Router /refresh-token [post]
 func (h *handlerImpl) HandleRefreshToken(c echo.Context) error {
 	// 1. Lấy refresh_token_id từ cookie
 	cookie, err := c.Cookie("refresh_token_id")

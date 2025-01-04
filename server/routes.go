@@ -64,7 +64,6 @@ func SetupRoutes(
 			},
 		},
 		{
-			Prefix: "/auth",
 			// Middlewares: []echo.MiddlewareFunc{
 			// 	authen.JWTMiddleware(jwtSecret),
 			// },

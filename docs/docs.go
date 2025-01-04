@@ -44,7 +44,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/req.RegisterRequest"
+                            "$ref": "#/definitions/req.BaseRegisterRequest"
                         }
                     }
                 ],
@@ -257,31 +257,6 @@ const docTemplate = `{
                         "schema": {
                             "$ref": "#/definitions/req.BaseRegisterRequest"
                         }
-                    }
-                ],
-                "responses": {}
-            }
-        },
-        "/auth/refresh-token": {
-            "post": {
-                "description": "Refresh Access Token using a valid Refresh Token from headers.",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Authentication"
-                ],
-                "summary": "Refresh Access Token",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "The refresh token identifier stored in headers",
-                        "name": "refresh_token_id",
-                        "in": "header",
-                        "required": true
                     }
                 ],
                 "responses": {}
@@ -577,6 +552,31 @@ const docTemplate = `{
                         "schema": {
                             "$ref": "#/definitions/req.LoginRequest"
                         }
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/refresh-token": {
+            "post": {
+                "description": "Refresh Access Token using a valid Refresh Token from headers.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Refresh Access Token",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The refresh token identifier stored in headers",
+                        "name": "refresh_token_id",
+                        "in": "header",
+                        "required": true
                     }
                 ],
                 "responses": {}
