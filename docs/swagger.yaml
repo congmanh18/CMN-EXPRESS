@@ -16,9 +16,12 @@ definitions:
         type: string
       phone:
         type: string
+      role:
+        type: string
     required:
     - password
     - phone
+    - role
     type: object
   req.RegisterRequest:
     properties:
@@ -291,82 +294,6 @@ paths:
       summary: Đăng ký quản trị viên
       tags:
       - Admin
-  /auth/accountings/login:
-    post:
-      consumes:
-      - application/json
-      description: Authenticate Accounting using their phone number and password.
-        Returns an Access Token and sets a Refresh Token in an HttpOnly cookie.
-      parameters:
-      - description: Login Request
-        in: body
-        name: login
-        required: true
-        schema:
-          $ref: '#/definitions/req.LoginRequest'
-      produces:
-      - application/json
-      responses: {}
-      summary: Login Accounting
-      tags:
-      - Authentication
-  /auth/admin/login:
-    post:
-      consumes:
-      - application/json
-      description: Authenticate Admin using their phone number and password. Returns
-        an Access Token and sets a Refresh Token in an HttpOnly cookie.
-      parameters:
-      - description: Login Request
-        in: body
-        name: login
-        required: true
-        schema:
-          $ref: '#/definitions/req.LoginRequest'
-      produces:
-      - application/json
-      responses: {}
-      summary: Login Admin
-      tags:
-      - Authentication
-  /auth/customers/login:
-    post:
-      consumes:
-      - application/json
-      description: Authenticate a customer using their phone number and password.
-        Returns an Access Token and sets a Refresh Token in an HttpOnly cookie.
-      parameters:
-      - description: Login Request
-        in: body
-        name: login
-        required: true
-        schema:
-          $ref: '#/definitions/req.LoginRequest'
-      produces:
-      - application/json
-      responses: {}
-      summary: Login Customer
-      tags:
-      - Authentication
-  /auth/delivery-persons/login:
-    post:
-      consumes:
-      - application/json
-      description: Authenticate Delivery Persons using their phone number and password.
-        Returns an Access Token and sets a Refresh Token in an HttpOnly cookie.
-      parameters:
-      - description: Login Request
-        in: body
-        name: login
-        required: true
-        schema:
-          $ref: '#/definitions/req.LoginRequest'
-      produces:
-      - application/json
-      responses: {}
-      summary: Login Delivery Persons
-      tags:
-      - Authentication
   /auth/refresh-token:
     post:
       consumes:
@@ -567,4 +494,22 @@ paths:
       summary: Đổi mật khẩu
       tags:
       - DeliveryPersons
+  /login:
+    post:
+      consumes:
+      - application/json
+      description: Login for different roles (admin, customer, delivery_person, accounting)
+      parameters:
+      - description: Login Request
+        in: body
+        name: login
+        required: true
+        schema:
+          $ref: '#/definitions/req.LoginRequest'
+      produces:
+      - application/json
+      responses: {}
+      summary: Login
+      tags:
+      - Authentication
 swagger: "2.0"

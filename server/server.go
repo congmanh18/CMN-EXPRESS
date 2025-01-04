@@ -74,8 +74,8 @@ func Run(confPath string) {
 	accountingRepo := accountingRepo.NewRepo(appProvider.Postgres)
 
 	// Khởi tạo Usecase
-	authUsecase := auth.NewAuthUsecase(custRepo, deliRepo, tokenRepo, accountingRepo)
-	adminUsecase := admin.NewAdminUsecase(adminRepo, tokenRepo)
+	authUsecase := auth.NewAuthUsecase(adminRepo, custRepo, deliRepo, accountingRepo, tokenRepo)
+	adminUsecase := admin.NewAdminUsecase(adminRepo)
 	adminCustomerUsecase := customer.NewAdminUsecase(custRepo)
 	adminDeliveryPersonUsecase := delivery.NewAdminUsecase(deliRepo)
 	adminAccountingUsecase := accounting.NewAdminUsecase(accountingRepo)

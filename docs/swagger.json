@@ -256,114 +256,6 @@
                 "responses": {}
             }
         },
-        "/auth/accountings/login": {
-            "post": {
-                "description": "Authenticate Accounting using their phone number and password. Returns an Access Token and sets a Refresh Token in an HttpOnly cookie.",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Authentication"
-                ],
-                "summary": "Login Accounting",
-                "parameters": [
-                    {
-                        "description": "Login Request",
-                        "name": "login",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/req.LoginRequest"
-                        }
-                    }
-                ],
-                "responses": {}
-            }
-        },
-        "/auth/admin/login": {
-            "post": {
-                "description": "Authenticate Admin using their phone number and password. Returns an Access Token and sets a Refresh Token in an HttpOnly cookie.",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Authentication"
-                ],
-                "summary": "Login Admin",
-                "parameters": [
-                    {
-                        "description": "Login Request",
-                        "name": "login",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/req.LoginRequest"
-                        }
-                    }
-                ],
-                "responses": {}
-            }
-        },
-        "/auth/customers/login": {
-            "post": {
-                "description": "Authenticate a customer using their phone number and password. Returns an Access Token and sets a Refresh Token in an HttpOnly cookie.",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Authentication"
-                ],
-                "summary": "Login Customer",
-                "parameters": [
-                    {
-                        "description": "Login Request",
-                        "name": "login",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/req.LoginRequest"
-                        }
-                    }
-                ],
-                "responses": {}
-            }
-        },
-        "/auth/delivery-persons/login": {
-            "post": {
-                "description": "Authenticate Delivery Persons using their phone number and password. Returns an Access Token and sets a Refresh Token in an HttpOnly cookie.",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Authentication"
-                ],
-                "summary": "Login Delivery Persons",
-                "parameters": [
-                    {
-                        "description": "Login Request",
-                        "name": "login",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/req.LoginRequest"
-                        }
-                    }
-                ],
-                "responses": {}
-            }
-        },
         "/auth/refresh-token": {
             "post": {
                 "description": "Refresh Access Token using a valid Refresh Token from headers.",
@@ -656,6 +548,33 @@
                 ],
                 "responses": {}
             }
+        },
+        "/login": {
+            "post": {
+                "description": "Login for different roles (admin, customer, delivery_person, accounting)",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Login",
+                "parameters": [
+                    {
+                        "description": "Login Request",
+                        "name": "login",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/req.LoginRequest"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
         }
     },
     "definitions": {
@@ -678,13 +597,17 @@
             "type": "object",
             "required": [
                 "password",
-                "phone"
+                "phone",
+                "role"
             ],
             "properties": {
                 "password": {
                     "type": "string"
                 },
                 "phone": {
+                    "type": "string"
+                },
+                "role": {
                     "type": "string"
                 }
             }

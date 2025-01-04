@@ -70,19 +70,14 @@ func SetupRoutes(
 			// },
 			Routes: []route.Route{
 				{
-					Path:    "/customers/login",
-					Method:  method.POST,
-					Handler: authhandler.HandleLoginCustomer,
-				},
-				{
-					Path:    "/delivery-persons/login",
-					Method:  method.POST,
-					Handler: authhandler.HandleLoginDeliveryPerson,
-				},
-				{
 					Path:    "/refresh-token",
 					Method:  method.POST,
-					Handler: authhandler.HandleLoginDeliveryPerson,
+					Handler: authhandler.HandleRefreshToken,
+				},
+				{
+					Path:    "/login",
+					Method:  method.POST,
+					Handler: authhandler.HandleLogin,
 				},
 			},
 		},

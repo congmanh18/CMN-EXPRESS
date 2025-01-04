@@ -11,7 +11,6 @@ import (
 
 type Handler interface {
 	HandleRegister(c echo.Context) error
-	HandleLogin(c echo.Context) error
 	HandleListPendingCustomer(c echo.Context) error
 	HandleListPendingDeliveryPerson(c echo.Context) error
 	HandleAllCustomers(c echo.Context) error
