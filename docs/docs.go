@@ -24,7 +24,7 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/admin/create-accouting": {
+        "/admin/create-accounting": {
             "post": {
                 "description": "Đăng ký kế toán mới cung cấp số tối thiểu \"phone\" và \"password\"",
                 "consumes": [

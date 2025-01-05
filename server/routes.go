@@ -63,7 +63,7 @@ func SetupRoutes(
 				},
 				{
 					Path:    "/create-accounting",
-					Method:  method.PATCH,
+					Method:  method.POST,
 					Handler: adminHandler.HandleRegisterAccounting,
 				},
 			},

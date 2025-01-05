@@ -130,7 +130,7 @@ info:
   title: CMN Express API Documentation
   version: "1.0"
 paths:
-  /admin/create-accouting:
+  /admin/create-accounting:
     post:
       consumes:
       - application/json
