@@ -12,10 +12,10 @@ import (
 
 func (a *authUsecaseImpl) LoginAccounting(ctx context.Context, phone, password *string) (*security.Token, *accounting.Accounting, *usecase.Error) {
 	accounting, err := a.accountingRepo.FindByPhone(ctx, phone)
-	if err != nil {
+	if err != nil || accounting == nil {
 		return nil, nil, &usecase.Error{
-			Code:    404,
-			Message: "customer not found",
+			Code:    401,
+			Message: "Invalid phone or password",
 			Err:     err,
 		}
 	}

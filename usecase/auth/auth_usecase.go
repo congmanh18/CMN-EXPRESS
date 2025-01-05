@@ -21,7 +21,7 @@ import (
 type AuthUsecase interface {
 	CreateCustomerUsecase(ctx context.Context, customer *customerEntity.Customer) *usecase.Error
 	CreateDeliveryPersonUsecase(ctx context.Context, deliveryPerson *deliveryPersonEntity.DeliveryPerson) *usecase.Error
-	LoginAdmin(ctx context.Context, phone, password *string) (*security.Token, *usecase.Error)
+	LoginAdmin(ctx context.Context, phone, password *string) (*security.Token, *admin.Admin, *usecase.Error)
 	LoginCustomer(ctx context.Context, phone, password *string) (*security.Token, *customerEntity.Customer, *usecase.Error)
 	LoginDeliveryPerson(ctx context.Context, phone, password *string) (*security.Token, *deliveryPersonEntity.DeliveryPerson, *usecase.Error)
 	LoginAccounting(ctx context.Context, phone, password *string) (*security.Token, *accounting.Accounting, *usecase.Error)
@@ -76,6 +76,7 @@ func NewAuthUsecase(
 	tokenRepo token.Repo,
 ) AuthUsecase {
 	return &authUsecaseImpl{
+		adminRepo:          adminRepo,
 		customerRepo:       customerRepo,
 		deliveryPersonRepo: deliveryPersonRepo,
 		tokenRepo:          tokenRepo,

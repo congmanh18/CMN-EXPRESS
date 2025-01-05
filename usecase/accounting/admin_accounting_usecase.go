@@ -19,7 +19,7 @@ func NewAdminUsecase(repo accounting.Repo) AdminUsecase {
 }
 
 func (a *adminUsecaseImpl) CreateAccounting(ctx context.Context, user *accounting.Accounting) *usecase.Error {
-	err := a.repo.Create(ctx, user)
+	err := a.repo.CreateAccounting(ctx, user)
 	if err != nil {
 		return &usecase.Error{
 			Code:    500,

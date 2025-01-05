@@ -29,7 +29,7 @@ func (h *handlerImpl) HandleLogin(c echo.Context) error {
 
 	switch *login.Role {
 	case "admin":
-		token, err := h.authUsecase.LoginAdmin(c.Request().Context(), login.Phone, login.Password)
+		token, user, err := h.authUsecase.LoginAdmin(c.Request().Context(), login.Phone, login.Password)
 		if err != nil {
 			return response.Error(c, err.Code, err.Message)
 		}
@@ -37,7 +37,7 @@ func (h *handlerImpl) HandleLogin(c echo.Context) error {
 		resp := &res.LoginRes{
 			AccessToken:  *token.AccessToken,
 			RefreshToken: *token.RefreshToken,
-			UserID:       "nil",
+			UserID:       *user.ID,
 		}
 		return response.OK(c, http.StatusOK, "Login successfully", resp)
 	case "customer":

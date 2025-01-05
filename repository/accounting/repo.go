@@ -6,7 +6,7 @@ import (
 )
 
 type Repo interface {
-	Create(ctx context.Context, accounting *Accounting) error
+	CreateAccounting(ctx context.Context, accounting *Accounting) error
 	FindByPhone(ctx context.Context, phone *string) (*Accounting, error)
 }
 
@@ -15,7 +15,7 @@ type accountingImpl struct {
 }
 
 // Create implements Repo.
-func (a *accountingImpl) Create(ctx context.Context, accounting *Accounting) error {
+func (a *accountingImpl) CreateAccounting(ctx context.Context, accounting *Accounting) error {
 	return a.DB.Executor.WithContext(ctx).Debug().Create(&accounting).Error
 }
 

@@ -12,6 +12,12 @@ import (
 
 func (a *authUsecaseImpl) LoginCustomer(ctx context.Context, phone, password *string) (*security.Token, *customerEntity.Customer, *usecase.Error) {
 	customer, err := a.customerRepo.FindByPhone(ctx, phone)
+	if customer == nil {
+		return nil, nil, &usecase.Error{
+			Code:    401,
+			Message: "Invalid phone or password",
+		}
+	}
 	if err != nil {
 		return nil, nil, &usecase.Error{
 			Code:    404,

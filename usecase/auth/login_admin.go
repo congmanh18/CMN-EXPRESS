@@ -4,21 +4,22 @@ import (
 	"context"
 	"express_be/core/security"
 	mapper "express_be/mapper/req"
+	"express_be/repository/admin"
 	"express_be/usecase"
 	"time"
 )
 
-func (a *authUsecaseImpl) LoginAdmin(ctx context.Context, phone, password *string) (*security.Token, *usecase.Error) {
+func (a *authUsecaseImpl) LoginAdmin(ctx context.Context, phone, password *string) (*security.Token, *admin.Admin, *usecase.Error) {
 	admin, err := a.adminRepo.FindByPhone(ctx, phone)
-	if err != nil {
-		return nil, &usecase.Error{
+	if err != nil || admin == nil {
+		return nil, nil, &usecase.Error{
 			Code:    401,
 			Message: "Invalid phone or password",
 			Err:     err,
 		}
 	}
 	if !security.VerifyPassword(*password, *admin.Password) {
-		return nil, &usecase.Error{
+		return nil, nil, &usecase.Error{
 			Code:    401,
 			Message: "Invalid phone or password",
 			Err:     err,
@@ -30,7 +31,7 @@ func (a *authUsecaseImpl) LoginAdmin(ctx context.Context, phone, password *strin
 	// jwt := "secret_key"
 	scToken, err := security.GenToken(*admin.ID, accessTokenDuration, refreshTokenDuration)
 	if err != nil {
-		return nil, &usecase.Error{
+		return nil, nil, &usecase.Error{
 			Code:    500,
 			Message: "internal server error",
 			Err:     err,
@@ -40,11 +41,11 @@ func (a *authUsecaseImpl) LoginAdmin(ctx context.Context, phone, password *strin
 	token := mapper.SecureTokenToTokenEntity(scToken, admin.ID, refreshTokenDuration)
 	err = a.tokenRepo.SaveToken(ctx, token)
 	if err != nil {
-		return nil, &usecase.Error{
+		return nil, nil, &usecase.Error{
 			Code:    500,
 			Message: "failed to save token" + err.Error(),
 			Err:     err,
 		}
 	}
-	return scToken, nil
+	return scToken, admin, nil
 }
