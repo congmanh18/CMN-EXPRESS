@@ -61,6 +61,11 @@ func SetupRoutes(
 					Method:  method.PATCH,
 					Handler: adminHandler.HandleUpdateDeliveryPersonStatus,
 				},
+				{
+					Path:    "/create-accounting",
+					Method:  method.PATCH,
+					Handler: adminHandler.HandleRegisterAccounting,
+				},
 			},
 		},
 		{
@@ -80,6 +85,16 @@ func SetupRoutes(
 				},
 			},
 		},
+		// {
+		// 	Prefix: "/accountings",
+		// 	Routes: []route.Route{
+		// 		{
+		// 			Path:    "/register",
+		// 			Method:  method.PATCH,
+		// 			Handler: adminHandler.HandleUpdateDeliveryPersonStatus,
+		// 		},
+		// 	},
+		// },
 		{
 			Prefix: "/customers",
 			Routes: []route.Route{
