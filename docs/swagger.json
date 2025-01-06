@@ -416,7 +416,7 @@
         },
         "/register": {
             "post": {
-                "description": "Register for different roles (admin, accounting, customer, delivery_person) account_type customer (prepaid, postpaid)",
+                "description": "Register for different roles (admin, accounting, customer, delivery_person) account_type customer (prepaid, postpaid)\nExample payload:\n\n{\n\"account_type\": \"prepaid\",\n\"current_address\": \"Shop Address of Customer\",\n\"date_of_birth\": \"23/10/2002\",\n\"full_name\": \"Nguyen Cong Manh\",\n\"gender\": \"Nam\",\n\"identification_number\": \"052202014579\",\n\"latitude\": 37.7749,\n\"longtitude\": 122.4194,\n\"nationality\": \"VN\",\n\"password\": \"strongpassword123\",\n\"phone\": \"0977683511\",\n\"place_of_origin\": \"Hoài Sơn, Thị xã Hoài Nhơn, Bình Định\",\n\"place_of_residence\": \"Thôn Phú Nông, Hoài Sơn, Hoài Nhơn, Bình Định\",\n\"role\": \"customer\"",
                 "consumes": [
                     "application/json"
                 ],
