@@ -11,11 +11,28 @@ import (
 
 // HandleRegister handles register for different user roles
 // @Summary Register
-// @Description Register for different roles (admin, customer, delivery_person, accounting)
+// @Description Register for different roles (admin, accounting, customer, delivery_person) account_type customer (prepaid, postpaid)
 // @Tags Authentication
 // @Accept json
 // @Produce json
-// @Param register body req.RegisterRequest true "Register Request"
+//
+//	@Param register body req.RegisterRequest true "Register Request Example" example({
+//	  "account_type": "prepaid",
+//	  "current_address": "Shop Address of Customer",
+//	  "date_of_birth": "23/10/2002",
+//	  "full_name": "Nguyen Cong Manh",
+//	  "gender": "Nam",
+//	  "identification_number": "052202014579",
+//	  "latitude": 37.7749,
+//	  "longtitude": 122.4194,
+//	  "nationality": "VN",
+//	  "password": "strongpassword123",
+//	  "phone": "0977683511",
+//	  "place_of_origin": "Hoài Sơn, Thị xã Hoài Nhơn, Bình Định",
+//	  "place_of_residence": "Thôn Phú Nông, Hoài Sơn, Hoài Nhơn, Bình Định",
+//	  "role": "customer"
+//	})
+//
 // @Router /register [post]
 func (h handlerImpl) HandleRegister(c echo.Context) error {
 	// 1. Parse dữ liệu đầu vào
