@@ -11,7 +11,6 @@ type DeliveryPersonUsecase interface {
 	GetInfoDeliveryPerson(ctx context.Context, id *string) (*entity.DeliveryPerson, *usecase.Error)
 	UpdateInfoDeliveryPerson(ctx context.Context, deliveryPerson *entity.DeliveryPerson, id *string) *usecase.Error
 	SoftDeleteDeliveryPerson(ctx context.Context, id *string) *usecase.Error
-	ChangePassword(ctx context.Context, phone, password *string) *usecase.Error
 }
 
 type deliveryPersonUsecaseImpl struct {

@@ -10,7 +10,6 @@ type Handler interface {
 	HandleGetInfoCustomer(c echo.Context) error
 	HandleUpdateCustomer(c echo.Context) error
 	HandleDeleteCustomer(c echo.Context) error
-	HandleChangePassword(c echo.Context) error
 }
 
 type handlerImpl struct {

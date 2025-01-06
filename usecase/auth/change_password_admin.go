@@ -1,4 +1,4 @@
-package delivery
+package auth
 
 import (
 	"context"
@@ -6,8 +6,8 @@ import (
 	"express_be/usecase"
 )
 
-// ChangePassword implements DeliveryPersonUsecase.
-func (d *deliveryPersonUsecaseImpl) ChangePassword(ctx context.Context, phone *string, password *string) *usecase.Error {
+// ChangePasswordAdmin implements AuthUsecase.
+func (c *authUsecaseImpl) ChangePasswordAdmin(ctx context.Context, phone *string, password *string) *usecase.Error {
 	hashedPassword, err := security.HashPassword(*password)
 	if err != nil {
 		return &usecase.Error{
@@ -17,7 +17,7 @@ func (d *deliveryPersonUsecaseImpl) ChangePassword(ctx context.Context, phone *s
 		}
 	}
 
-	err = d.deliveryPersonRepo.ChangePassword(ctx, phone, &hashedPassword)
+	err = c.adminRepo.ChangePassword(ctx, phone, &hashedPassword)
 	if err != nil {
 		return &usecase.Error{
 			Code:    500,
@@ -25,5 +25,6 @@ func (d *deliveryPersonUsecaseImpl) ChangePassword(ctx context.Context, phone *s
 			Err:     err,
 		}
 	}
+
 	return nil
 }

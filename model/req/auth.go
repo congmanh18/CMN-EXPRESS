@@ -37,9 +37,10 @@ type ForgotPasswordRequest struct {
 }
 
 type ResetPasswordRequest struct {
-	Phone           string `json:"phone" validate:"required"`
-	NewPassword     string `json:"new_password" validate:"required"`
-	ConfirmPassword string `json:"confirm_password" validate:"required"`
+	Role            *string `json:"role" validate:"required"`
+	Phone           *string `json:"phone" validate:"required"`
+	NewPassword     *string `json:"new_password" validate:"required"`
+	ConfirmPassword *string `json:"confirm_password" validate:"required"`
 }
 
 // type LoginResponse struct{

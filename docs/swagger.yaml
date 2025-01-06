@@ -58,10 +58,13 @@ definitions:
         type: string
       phone:
         type: string
+      role:
+        type: string
     required:
     - confirm_password
     - new_password
     - phone
+    - role
     type: object
   req.UpdateCustomerReq:
     properties:
@@ -304,24 +307,6 @@ paths:
       summary: Cập nhật thông tin khách hàng
       tags:
       - Customers
-  /customers/reset-password:
-    patch:
-      consumes:
-      - application/json
-      description: Đổi mật khẩu khách hàng bằng số điện thoại
-      parameters:
-      - description: Reset Password Request
-        in: body
-        name: request
-        required: true
-        schema:
-          $ref: '#/definitions/req.ResetPasswordRequest'
-      produces:
-      - application/json
-      responses: {}
-      summary: Đổi mật khẩu
-      tags:
-      - Customers
   /delivery-persons/{id}:
     delete:
       consumes:
@@ -377,24 +362,6 @@ paths:
       summary: Cập nhật thông tin người giao hàng
       tags:
       - DeliveryPersons
-  /delivery-persons/reset-password:
-    patch:
-      consumes:
-      - application/json
-      description: Đổi mật khẩu khách hàng bằng số điện thoại
-      parameters:
-      - description: Reset Password Request
-        in: body
-        name: request
-        required: true
-        schema:
-          $ref: '#/definitions/req.ResetPasswordRequest'
-      produces:
-      - application/json
-      responses: {}
-      summary: Đổi mật khẩu
-      tags:
-      - DeliveryPersons
   /login:
     post:
       consumes:
@@ -447,6 +414,24 @@ paths:
       - application/json
       responses: {}
       summary: Register
+      tags:
+      - Authentication
+  /reset-password:
+    patch:
+      consumes:
+      - application/json
+      description: Đổi mật khẩu người dùng bằng số điện thoại
+      parameters:
+      - description: Reset Password Request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/req.ResetPasswordRequest'
+      produces:
+      - application/json
+      responses: {}
+      summary: Đổi mật khẩu
       tags:
       - Authentication
 swagger: "2.0"

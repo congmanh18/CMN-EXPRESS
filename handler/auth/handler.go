@@ -10,6 +10,7 @@ type Handler interface {
 	HandleRegister(c echo.Context) error
 	HandleLogin(c echo.Context) error
 	HandleRefreshToken(c echo.Context) error
+	HandleChangePassword(c echo.Context) error
 }
 
 type handlerImpl struct {

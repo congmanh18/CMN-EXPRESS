@@ -208,33 +208,6 @@ const docTemplate = `{
                 "responses": {}
             }
         },
-        "/customers/reset-password": {
-            "patch": {
-                "description": "Đổi mật khẩu khách hàng bằng số điện thoại",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Customers"
-                ],
-                "summary": "Đổi mật khẩu",
-                "parameters": [
-                    {
-                        "description": "Reset Password Request",
-                        "name": "request",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/req.ResetPasswordRequest"
-                        }
-                    }
-                ],
-                "responses": {}
-            }
-        },
         "/customers/{id}": {
             "get": {
                 "description": "Truy xuất thông tin chi tiết về một khách hàng cụ thể theo ID",
@@ -310,33 +283,6 @@ const docTemplate = `{
                         "name": "id",
                         "in": "path",
                         "required": true
-                    }
-                ],
-                "responses": {}
-            }
-        },
-        "/delivery-persons/reset-password": {
-            "patch": {
-                "description": "Đổi mật khẩu khách hàng bằng số điện thoại",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "DeliveryPersons"
-                ],
-                "summary": "Đổi mật khẩu",
-                "parameters": [
-                    {
-                        "description": "Reset Password Request",
-                        "name": "request",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/req.ResetPasswordRequest"
-                        }
                     }
                 ],
                 "responses": {}
@@ -500,6 +446,33 @@ const docTemplate = `{
                 ],
                 "responses": {}
             }
+        },
+        "/reset-password": {
+            "patch": {
+                "description": "Đổi mật khẩu người dùng bằng số điện thoại",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Đổi mật khẩu",
+                "parameters": [
+                    {
+                        "description": "Reset Password Request",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/req.ResetPasswordRequest"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
         }
     },
     "definitions": {
@@ -581,7 +554,8 @@ const docTemplate = `{
             "required": [
                 "confirm_password",
                 "new_password",
-                "phone"
+                "phone",
+                "role"
             ],
             "properties": {
                 "confirm_password": {
@@ -591,6 +565,9 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "phone": {
+                    "type": "string"
+                },
+                "role": {
                     "type": "string"
                 }
             }

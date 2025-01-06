@@ -14,14 +14,22 @@ import (
 )
 
 type AuthUsecase interface {
+	// Create accounts usecases
 	CreateAdmin(ctx context.Context, user *admin.Admin) *usecase.Error
 	CreateAccounting(ctx context.Context, user *accounting.Accounting) *usecase.Error
 	CreateCustomer(ctx context.Context, customer *customerEntity.Customer) *usecase.Error
 	CreateDeliveryPerson(ctx context.Context, deliveryPerson *deliveryPersonEntity.DeliveryPerson) *usecase.Error
+	// Login useaces
 	LoginAdmin(ctx context.Context, phone, password *string) (*security.Token, *admin.Admin, *usecase.Error)
 	LoginCustomer(ctx context.Context, phone, password *string) (*security.Token, *customerEntity.Customer, *usecase.Error)
 	LoginDeliveryPerson(ctx context.Context, phone, password *string) (*security.Token, *deliveryPersonEntity.DeliveryPerson, *usecase.Error)
 	LoginAccounting(ctx context.Context, phone, password *string) (*security.Token, *accounting.Accounting, *usecase.Error)
+	// ChangePassword useacses
+	ChangePasswordAdmin(ctx context.Context, phone *string, password *string) *usecase.Error
+	ChangePasswordAccounting(ctx context.Context, phone *string, password *string) *usecase.Error
+	ChangePasswordCustomer(ctx context.Context, phone *string, password *string) *usecase.Error
+	ChangePasswordDeliveryPerson(ctx context.Context, phone *string, password *string) *usecase.Error
+	// Validate Token
 	ValidateRefreshToken(ctx context.Context, refreshToken *string) (*string, *usecase.Error)
 }
 

@@ -73,6 +73,11 @@ func SetupRoutes(
 					Method:  method.POST,
 					Handler: authhandler.HandleRegister,
 				},
+				{
+					Path:    "/reset-password",
+					Method:  method.PATCH,
+					Handler: authhandler.HandleChangePassword,
+				},
 			},
 		},
 		// {
@@ -103,11 +108,6 @@ func SetupRoutes(
 					Method:  method.PUT,
 					Handler: customerHandler.HandleUpdateCustomer,
 				},
-				{
-					Path:    "/reset-password",
-					Method:  method.PATCH,
-					Handler: customerHandler.HandleChangePassword,
-				},
 			},
 		},
 		{
@@ -127,11 +127,6 @@ func SetupRoutes(
 					Path:    "/:id",
 					Method:  method.PUT,
 					Handler: deliveryPersonHandler.HandleUpdateDeliveryPerson,
-				},
-				{
-					Path:    "/reset-password",
-					Method:  method.PATCH,
-					Handler: deliveryPersonHandler.HandleChangePassword,
 				},
 			},
 		},
