@@ -401,10 +401,10 @@ paths:
     post:
       consumes:
       - application/json
-      description: Register for different roles (admin, customer, delivery_person,
-        accounting)
+      description: Register for different roles (admin, accounting, customer, delivery_person)
+        account_type customer (prepaid, postpaid)
       parameters:
-      - description: Register Request
+      - description: Register Request Example
         in: body
         name: register
         required: true

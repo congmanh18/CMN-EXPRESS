@@ -422,7 +422,7 @@ const docTemplate = `{
         },
         "/register": {
             "post": {
-                "description": "Register for different roles (admin, customer, delivery_person, accounting)",
+                "description": "Register for different roles (admin, accounting, customer, delivery_person) account_type customer (prepaid, postpaid)",
                 "consumes": [
                     "application/json"
                 ],
@@ -435,7 +435,7 @@ const docTemplate = `{
                 "summary": "Register",
                 "parameters": [
                     {
-                        "description": "Register Request",
+                        "description": "Register Request Example",
                         "name": "register",
                         "in": "body",
                         "required": true,
