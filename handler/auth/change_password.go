@@ -35,12 +35,12 @@ func (h *handlerImpl) HandleChangePassword(c echo.Context) error {
 	// 3. Xử lý đổi mật khẩu
 	switch *req.Role {
 	case "admin":
-		err := h.authUsecase.ChangePasswordCustomer(c.Request().Context(), req.Phone, req.NewPassword)
+		err := h.authUsecase.ChangePasswordAdmin(c.Request().Context(), req.Phone, req.NewPassword)
 		if err != nil {
 			return response.Error(c, err.Code, "Failed to change password: "+err.Message)
 		}
 	case "accounting":
-		err := h.authUsecase.ChangePasswordAdmin(c.Request().Context(), req.Phone, req.NewPassword)
+		err := h.authUsecase.ChangePasswordAccounting(c.Request().Context(), req.Phone, req.NewPassword)
 		if err != nil {
 			return response.Error(c, err.Code, "Failed to change password: "+err.Message)
 		}
@@ -50,7 +50,7 @@ func (h *handlerImpl) HandleChangePassword(c echo.Context) error {
 			return response.Error(c, err.Code, "Failed to change password: "+err.Message)
 		}
 	case "deliver_person":
-		err := h.authUsecase.ChangePasswordCustomer(c.Request().Context(), req.Phone, req.NewPassword)
+		err := h.authUsecase.ChangePasswordDeliveryPerson(c.Request().Context(), req.Phone, req.NewPassword)
 		if err != nil {
 			return response.Error(c, err.Code, "Failed to change password: "+err.Message)
 		}
