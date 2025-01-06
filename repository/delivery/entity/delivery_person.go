@@ -7,6 +7,7 @@ import (
 )
 
 type Status string
+type ApprovalStatus string
 
 const (
 	Pending   Status = "pending"
@@ -17,6 +18,9 @@ const (
 	Suspended Status = "suspended"
 	OnDuty    Status = "on-duty"
 	OffDuty   Status = "off-duty"
+
+	Accepted ApprovalStatus = "accept"
+	Denied   ApprovalStatus = "deny"
 )
 
 type DeliveryPerson struct {
@@ -31,6 +35,7 @@ type DeliveryPerson struct {
 	DailyIncome     *float64
 	GeoHash         *string
 	Status          Status
+	ApprovalStatus  ApprovalStatus
 
 	IdentificationNumber *string `json:"identification_number"`
 	FullName             *string `json:"full_name"`

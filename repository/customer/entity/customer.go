@@ -8,6 +8,7 @@ import (
 
 type CustomerAccountType string
 type Status string
+type ApprovalStatus string
 
 const (
 	Prepaid  CustomerAccountType = "prepaid"
@@ -19,6 +20,9 @@ const (
 	Active    Status = "active"
 	Inactive  Status = "inactive"
 	Suspended Status = "suspended"
+
+	Accepted ApprovalStatus = "accept"
+	Denied   ApprovalStatus = "deny"
 )
 
 type Customer struct {
@@ -28,10 +32,11 @@ type Customer struct {
 	PasswordHash   *string
 	CurrentAddress *string
 
-	GeoHash    *string  `json:"geo_hash"`
-	Status     Status   `json:"status"`
-	Latitude   *float64 `json:"latitude"`
-	Longtitude *float64 `json:"longtitude"`
+	GeoHash        *string        `json:"geo_hash"`
+	Status         Status         `json:"status"`
+	ApprovalStatus ApprovalStatus `json:"approval_status"`
+	Latitude       *float64       `json:"latitude"`
+	Longtitude     *float64       `json:"longtitude"`
 
 	IdentificationNumber *string `json:"identification_number"`
 	FullName             *string `json:"full_name"`

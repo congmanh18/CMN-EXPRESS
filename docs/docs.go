@@ -24,33 +24,6 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/admin/create-accounting": {
-            "post": {
-                "description": "Đăng ký kế toán mới cung cấp số tối thiểu \"phone\" và \"password\"",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Admin"
-                ],
-                "summary": "Đăng ký kế toán",
-                "parameters": [
-                    {
-                        "description": "Accounting Registration Request",
-                        "name": "request",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/req.BaseRegisterRequest"
-                        }
-                    }
-                ],
-                "responses": {}
-            }
-        },
         "/admin/customers/all": {
             "get": {
                 "description": "Truy xuất danh sách tất cả khách hàng được phân trang",
@@ -134,8 +107,8 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
-                        "description": "Trạng thái mới của khách hàng (active, inactive, pending, blocked, suspended, verified)",
-                        "name": "status",
+                        "description": "Trạng thái mới của khách hàng (accept, deny)",
+                        "name": "approval-status",
                         "in": "query",
                         "required": true
                     }
@@ -226,64 +199,10 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
-                        "description": "Trạng thái mới của người giao hàng (active, inactive, on-duty, off-duty)",
-                        "name": "status",
+                        "description": "Trạng thái mới của người giao hàng (accept, deny)",
+                        "name": "approval-status",
                         "in": "query",
                         "required": true
-                    }
-                ],
-                "responses": {}
-            }
-        },
-        "/admin/register": {
-            "post": {
-                "description": "Đăng ký quản trị viên mới cung cấp tối thiểu \"phone\" và \"password\"",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Admin"
-                ],
-                "summary": "Đăng ký quản trị viên",
-                "parameters": [
-                    {
-                        "description": "Register successfully",
-                        "name": "request",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/req.BaseRegisterRequest"
-                        }
-                    }
-                ],
-                "responses": {}
-            }
-        },
-        "/customers/register": {
-            "post": {
-                "description": "Đăng ký khách hàng mới cung cấp số tối thiểu \"account_type\", \"phone\" và \"password\"",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Customers"
-                ],
-                "summary": "Đăng ký khách hàng mới",
-                "parameters": [
-                    {
-                        "description": "Customer Registration Request",
-                        "name": "request",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/req.RegisterRequest"
-                        }
                     }
                 ],
                 "responses": {}
@@ -391,33 +310,6 @@ const docTemplate = `{
                         "name": "id",
                         "in": "path",
                         "required": true
-                    }
-                ],
-                "responses": {}
-            }
-        },
-        "/delivery-persons/register": {
-            "post": {
-                "description": "Đăng ký người giao hàng mới cung cấp tối thiểu \"phone\" và \"password\"",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "DeliveryPersons"
-                ],
-                "summary": "Đăng ký người giao hàng mới",
-                "parameters": [
-                    {
-                        "description": "Delivery Person Registration Request",
-                        "name": "request",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/req.RegisterRequest"
-                        }
                     }
                 ],
                 "responses": {}
@@ -581,24 +473,36 @@ const docTemplate = `{
                 ],
                 "responses": {}
             }
+        },
+        "/register": {
+            "post": {
+                "description": "Register for different roles (admin, customer, delivery_person, accounting)",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Register",
+                "parameters": [
+                    {
+                        "description": "Register Request",
+                        "name": "register",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/req.RegisterRequest"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
         }
     },
     "definitions": {
-        "req.BaseRegisterRequest": {
-            "type": "object",
-            "required": [
-                "password",
-                "phone"
-            ],
-            "properties": {
-                "password": {
-                    "type": "string"
-                },
-                "phone": {
-                    "type": "string"
-                }
-            }
-        },
         "req.LoginRequest": {
             "type": "object",
             "required": [
@@ -664,6 +568,10 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "place_of_residence": {
+                    "type": "string"
+                },
+                "role": {
+                    "description": "3. Field for delivery person",
                     "type": "string"
                 }
             }

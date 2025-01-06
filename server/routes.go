@@ -22,16 +22,6 @@ func SetupRoutes(
 			Prefix: "/admin",
 			Routes: []route.Route{
 				{
-					Path:    "/register",
-					Method:  method.POST,
-					Handler: adminHandler.HandleRegister,
-				},
-				// {
-				// 	Path:    "/login",
-				// 	Method:  method.POST,
-				// 	Handler: adminHandler.Login,
-				// },
-				{
 					Path:    "/customers/pending",
 					Method:  method.GET,
 					Handler: adminHandler.HandleListPendingCustomer,
@@ -61,11 +51,6 @@ func SetupRoutes(
 					Method:  method.PATCH,
 					Handler: adminHandler.HandleUpdateDeliveryPersonStatus,
 				},
-				{
-					Path:    "/create-accounting",
-					Method:  method.POST,
-					Handler: adminHandler.HandleRegisterAccounting,
-				},
 			},
 		},
 		{
@@ -83,6 +68,11 @@ func SetupRoutes(
 					Method:  method.POST,
 					Handler: authhandler.HandleLogin,
 				},
+				{
+					Path:    "/register",
+					Method:  method.POST,
+					Handler: authhandler.HandleRegister,
+				},
 			},
 		},
 		// {
@@ -98,11 +88,6 @@ func SetupRoutes(
 		{
 			Prefix: "/customers",
 			Routes: []route.Route{
-				{
-					Path:    "/register",
-					Method:  method.POST,
-					Handler: authhandler.HandleCustomerRegistration,
-				},
 				{
 					Path:    "/:id",
 					Method:  method.GET,
@@ -128,11 +113,6 @@ func SetupRoutes(
 		{
 			Prefix: "/delivery-persons",
 			Routes: []route.Route{
-				{
-					Path:    "/register",
-					Method:  method.POST,
-					Handler: authhandler.HandleDeliveryPersonRegistration,
-				},
 				{
 					Path:    "/:id",
 					Method:  method.GET,

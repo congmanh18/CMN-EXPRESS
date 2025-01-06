@@ -14,7 +14,7 @@ import (
 // @Accept json
 // @Produce json
 // @Param id path string true "Customer ID"
-// @Param status query string true "Trạng thái mới của khách hàng (active, inactive, pending, blocked, suspended, verified)"
+// @Param approval-status query string true "Trạng thái mới của khách hàng (accept, deny)"
 // @Router /admin/customers/{id} [patch]
 func (h *handlerImpl) HandleUpdateCustomerStatus(c echo.Context) error {
 	id := c.Param("id")
@@ -22,7 +22,7 @@ func (h *handlerImpl) HandleUpdateCustomerStatus(c echo.Context) error {
 		return response.Error(c, http.StatusBadRequest, "id is required")
 	}
 
-	status := c.QueryParam("status")
+	status := c.QueryParam("approval-status")
 	if status == "" {
 		return response.Error(c, http.StatusBadRequest, "status is required")
 	}

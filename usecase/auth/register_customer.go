@@ -11,7 +11,7 @@ import (
 	"github.com/lib/pq"
 )
 
-func (c *authUsecaseImpl) CreateCustomerUsecase(ctx context.Context, customer *customerEntity.Customer) *usecase.Error {
+func (c *authUsecaseImpl) CreateCustomer(ctx context.Context, customer *customerEntity.Customer) *usecase.Error {
 	err := c.customerRepo.CreateCustomer(ctx, customer)
 	if err != nil {
 		var pqErr *pq.Error

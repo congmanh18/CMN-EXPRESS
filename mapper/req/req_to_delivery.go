@@ -10,7 +10,7 @@ import (
 	"github.com/google/uuid"
 )
 
-func RegisterToDeliveryPerson(req model.RegisterRequest) *entity.DeliveryPerson {
+func ReqToDeliveryPerson(req model.RegisterRequest) *entity.DeliveryPerson {
 	hashedPassword, err := security.HashPassword(req.Password)
 	if err != nil {
 		return nil

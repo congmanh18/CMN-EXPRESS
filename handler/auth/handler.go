@@ -7,8 +7,7 @@ import (
 )
 
 type Handler interface {
-	HandleCustomerRegistration(c echo.Context) error
-	HandleDeliveryPersonRegistration(c echo.Context) error
+	HandleRegister(c echo.Context) error
 	HandleLogin(c echo.Context) error
 	HandleRefreshToken(c echo.Context) error
 }

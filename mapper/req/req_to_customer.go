@@ -11,7 +11,7 @@ import (
 	"github.com/mmcloughlin/geohash"
 )
 
-func RegisterToCustomer(req model.RegisterRequest) *entity.Customer {
+func ReqToCustomer(req model.RegisterRequest) *entity.Customer {
 	// Xử lý geohash luôn nếu cần
 	geohash := geohash.Encode(req.Latitude, req.Longtitude)
 	hashedPassword, err := security.HashPassword(req.Password)
@@ -42,13 +42,7 @@ func RegisterToCustomer(req model.RegisterRequest) *entity.Customer {
 }
 
 func UpdateToCustomer(req model.UpdateCustomerReq) *entity.Customer {
-	var status entity.Status
 	geohash := geohash.Encode(req.Latitude, req.Longtitude)
-	if req.CustomerAccountType == string(entity.Prepaid) {
-		status = entity.Pending
-	} else if req.CustomerAccountType == string(entity.Postpaid) {
-		status = entity.Verified
-	}
 	return &entity.Customer{
 		AccountType:          entity.CustomerAccountType(req.CustomerAccountType),
 		CurrentAddress:       &req.CurrentAddress,
@@ -62,6 +56,5 @@ func UpdateToCustomer(req model.UpdateCustomerReq) *entity.Customer {
 		GeoHash:              &geohash,
 		Latitude:             &req.Latitude,
 		Longtitude:           &req.Longtitude,
-		Status:               status,
 	}
 }

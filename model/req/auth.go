@@ -29,6 +29,7 @@ type RegisterRequest struct {
 	Longtitude          float64 `json:"longtitude,omitempty"`
 
 	// 3. Field for delivery person
+	Role string `json:"role,omitempty"`
 }
 
 type ForgotPasswordRequest struct {

@@ -11,7 +11,7 @@ import (
 	"github.com/lib/pq"
 )
 
-func (r *authUsecaseImpl) CreateDeliveryPersonUsecase(ctx context.Context, deliveryPerson *deliveryPersonEntity.DeliveryPerson) *usecase.Error {
+func (r *authUsecaseImpl) CreateDeliveryPerson(ctx context.Context, deliveryPerson *deliveryPersonEntity.DeliveryPerson) *usecase.Error {
 	err := r.deliveryPersonRepo.CreateDeliveryPerson(ctx, deliveryPerson)
 	if err != nil {
 		var pqErr *pq.Error

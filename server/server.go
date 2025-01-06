@@ -20,8 +20,6 @@ import (
 	deliveryPersonRepo "express_be/repository/delivery"
 	"express_be/repository/token"
 
-	"express_be/usecase/accounting"
-	"express_be/usecase/admin"
 	"express_be/usecase/auth"
 	"express_be/usecase/customer"
 	"express_be/usecase/delivery"
@@ -29,7 +27,7 @@ import (
 	echoSwagger "github.com/swaggo/echo-swagger"
 )
 
-const enableMigrations = false
+const enableMigrations = true
 
 func RunMigration(appProvider *provider.AppProvider, enableMigrate bool) {
 	if enableMigrate {
@@ -75,10 +73,10 @@ func Run(confPath string) {
 
 	// Khởi tạo Usecase
 	authUsecase := auth.NewAuthUsecase(adminRepo, custRepo, deliRepo, accountingRepo, tokenRepo)
-	adminUsecase := admin.NewAdminUsecase(adminRepo)
+	// adminUsecase := admin.NewAdminUsecase(adminRepo)
 	adminCustomerUsecase := customer.NewAdminUsecase(custRepo)
 	adminDeliveryPersonUsecase := delivery.NewAdminUsecase(deliRepo)
-	adminAccountingUsecase := accounting.NewAdminUsecase(accountingRepo)
+	// adminAccountingUsecase := accounting.NewAdminUsecase(accountingRepo)
 
 	customerUsecase := customer.NewCustomerUsecase(custRepo)
 	deliveryUsecase := delivery.NewDeliveryPersonUsecase(deliRepo)
@@ -87,8 +85,6 @@ func Run(confPath string) {
 	adminHandl := adminHandler.NewHandler(adminHandler.HandlerInject{
 		AdminCustomerUsecase:       adminCustomerUsecase,
 		AdminDeliveryPersonUsecase: adminDeliveryPersonUsecase,
-		AdminAccountingUsecase:     adminAccountingUsecase,
-		AdminUsecase:               adminUsecase,
 	})
 	customerHandl := customerHandler.NewHandler(customerHandler.HandlerInject{
 		CustomerUsecase: customerUsecase,

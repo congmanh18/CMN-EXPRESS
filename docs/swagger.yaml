@@ -1,15 +1,5 @@
 basePath: /
 definitions:
-  req.BaseRegisterRequest:
-    properties:
-      password:
-        type: string
-      phone:
-        type: string
-    required:
-    - password
-    - phone
-    type: object
   req.LoginRequest:
     properties:
       password:
@@ -52,6 +42,9 @@ definitions:
       place_of_origin:
         type: string
       place_of_residence:
+        type: string
+      role:
+        description: 3. Field for delivery person
         type: string
     required:
     - password
@@ -130,24 +123,6 @@ info:
   title: CMN Express API Documentation
   version: "1.0"
 paths:
-  /admin/create-accounting:
-    post:
-      consumes:
-      - application/json
-      description: Đăng ký kế toán mới cung cấp số tối thiểu "phone" và "password"
-      parameters:
-      - description: Accounting Registration Request
-        in: body
-        name: request
-        required: true
-        schema:
-          $ref: '#/definitions/req.BaseRegisterRequest'
-      produces:
-      - application/json
-      responses: {}
-      summary: Đăng ký kế toán
-      tags:
-      - Admin
   /admin/customers/{id}:
     patch:
       consumes:
@@ -159,10 +134,9 @@ paths:
         name: id
         required: true
         type: string
-      - description: Trạng thái mới của khách hàng (active, inactive, pending, blocked,
-          suspended, verified)
+      - description: Trạng thái mới của khách hàng (accept, deny)
         in: query
-        name: status
+        name: approval-status
         required: true
         type: string
       produces:
@@ -222,10 +196,9 @@ paths:
         name: id
         required: true
         type: string
-      - description: Trạng thái mới của người giao hàng (active, inactive, on-duty,
-          off-duty)
+      - description: Trạng thái mới của người giao hàng (accept, deny)
         in: query
-        name: status
+        name: approval-status
         required: true
         type: string
       produces:
@@ -274,24 +247,6 @@ paths:
       - application/json
       responses: {}
       summary: Liệt kê những người giao hàng đang "PENDING"
-      tags:
-      - Admin
-  /admin/register:
-    post:
-      consumes:
-      - application/json
-      description: Đăng ký quản trị viên mới cung cấp tối thiểu "phone" và "password"
-      parameters:
-      - description: Register successfully
-        in: body
-        name: request
-        required: true
-        schema:
-          $ref: '#/definitions/req.BaseRegisterRequest'
-      produces:
-      - application/json
-      responses: {}
-      summary: Đăng ký quản trị viên
       tags:
       - Admin
   /customers/{id}:
@@ -347,25 +302,6 @@ paths:
       - application/json
       responses: {}
       summary: Cập nhật thông tin khách hàng
-      tags:
-      - Customers
-  /customers/register:
-    post:
-      consumes:
-      - application/json
-      description: Đăng ký khách hàng mới cung cấp số tối thiểu "account_type", "phone"
-        và "password"
-      parameters:
-      - description: Customer Registration Request
-        in: body
-        name: request
-        required: true
-        schema:
-          $ref: '#/definitions/req.RegisterRequest'
-      produces:
-      - application/json
-      responses: {}
-      summary: Đăng ký khách hàng mới
       tags:
       - Customers
   /customers/reset-password:
@@ -441,24 +377,6 @@ paths:
       summary: Cập nhật thông tin người giao hàng
       tags:
       - DeliveryPersons
-  /delivery-persons/register:
-    post:
-      consumes:
-      - application/json
-      description: Đăng ký người giao hàng mới cung cấp tối thiểu "phone" và "password"
-      parameters:
-      - description: Delivery Person Registration Request
-        in: body
-        name: request
-        required: true
-        schema:
-          $ref: '#/definitions/req.RegisterRequest'
-      produces:
-      - application/json
-      responses: {}
-      summary: Đăng ký người giao hàng mới
-      tags:
-      - DeliveryPersons
   /delivery-persons/reset-password:
     patch:
       consumes:
@@ -510,6 +428,25 @@ paths:
       - application/json
       responses: {}
       summary: Refresh Access Token
+      tags:
+      - Authentication
+  /register:
+    post:
+      consumes:
+      - application/json
+      description: Register for different roles (admin, customer, delivery_person,
+        accounting)
+      parameters:
+      - description: Register Request
+        in: body
+        name: register
+        required: true
+        schema:
+          $ref: '#/definitions/req.RegisterRequest'
+      produces:
+      - application/json
+      responses: {}
+      summary: Register
       tags:
       - Authentication
 swagger: "2.0"

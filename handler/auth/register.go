@@ -9,15 +9,15 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-// HandleCustomerRegistration handles customer registration
-// @Summary Đăng ký khách hàng mới
-// @Description Đăng ký khách hàng mới cung cấp số tối thiểu "account_type", "phone" và "password"
-// @Tags Customers
-// @Accept  json
-// @Produce  json
-// @Param   request  body  model.RegisterRequest  true  "Customer Registration Request" example({"phone": "0912345678", "password": "abc@1234", "account_type": "prepaid"})
-// @Router /customers/register [post]
-func (h *handlerImpl) HandleCustomerRegistration(c echo.Context) error {
+// HandleRegister handles register for different user roles
+// @Summary Register
+// @Description Register for different roles (admin, customer, delivery_person, accounting)
+// @Tags Authentication
+// @Accept json
+// @Produce json
+// @Param register body req.RegisterRequest true "Register Request"
+// @Router /register [post]
+func (h handlerImpl) HandleRegister(c echo.Context) error {
 	// 1. Parse dữ liệu đầu vào
 	var req model.RegisterRequest
 	if err := c.Bind(&req); err != nil {
@@ -28,49 +28,36 @@ func (h *handlerImpl) HandleCustomerRegistration(c echo.Context) error {
 	if err := model.Validate.Struct(req); err != nil {
 		return response.Error(c, http.StatusBadRequest, err.Error())
 	}
+	switch req.Role {
+	case "admin":
+		admin := mapper.ReqToAdmin(req)
+		err := h.authUsecase.CreateAdmin(c.Request().Context(), admin)
+		if err != nil {
+			return response.Error(c, err.Code, err.Message)
+		}
+	case "customer":
+		customer := mapper.ReqToCustomer(req)
+		err := h.authUsecase.CreateCustomer(c.Request().Context(), customer)
+		if err != nil {
+			return response.Error(c, err.Code, err.Message)
+		}
+	case "delivery_person":
+		deliveryPerson := mapper.ReqToDeliveryPerson(req)
+		err := h.authUsecase.CreateDeliveryPerson(c.Request().Context(), deliveryPerson)
+		if err != nil {
+			return response.Error(c, err.Code, err.Message)
+		}
+	case "accounting":
+		accounting := mapper.ReqToAccounting(req)
+		err := h.authUsecase.CreateAccounting(c.Request().Context(), accounting)
+		if err != nil {
+			return response.Error(c, err.Code, err.Message)
+		}
+	case "driver":
+	default:
+		return response.Error(c, http.StatusUnauthorized, "Invalid role")
 
-	// 3. Define default and hash password
-	customer := mapper.RegisterToCustomer(req)
-
-	// 4. Gọi đến usecase để xử lý logic
-	err := h.authUsecase.CreateCustomerUsecase(c.Request().Context(), customer)
-	if err != nil {
-		return response.Error(c, err.Code, err.Message)
 	}
 
-	// 5. Trả về kết quả
-	return response.OK(c, http.StatusOK, "Register successfully", nil)
-}
-
-// HandleDeliveryPersonRegistration handles delivery person registration
-// @Summary Đăng ký người giao hàng mới
-// @Description Đăng ký người giao hàng mới cung cấp tối thiểu "phone" và "password"
-// @Tags DeliveryPersons
-// @Accept  json
-// @Produce  json
-// @Param   request  body  model.RegisterRequest  true  "Delivery Person Registration Request" example({"phone": "0912345678", "password": "abc@1234"})
-// @Router /delivery-persons/register [post]
-func (h *handlerImpl) HandleDeliveryPersonRegistration(c echo.Context) error {
-	// 1. Parse dữ liệu đầu vào
-	var req model.RegisterRequest
-	if err := c.Bind(&req); err != nil {
-		return response.Error(c, http.StatusBadRequest, "Invalid request")
-	}
-
-	// 2. Validate dữ liệu
-	if err := model.Validate.Struct(req); err != nil {
-		return response.Error(c, http.StatusBadRequest, err.Error())
-	}
-
-	// 3. Define default and hash password
-	deliveryPerson := mapper.RegisterToDeliveryPerson(req)
-
-	// 4. Gọi đến usecase để xử lý logic
-	err := h.authUsecase.CreateDeliveryPersonUsecase(c.Request().Context(), deliveryPerson)
-	if err != nil {
-		return response.Error(c, err.Code, err.Message)
-	}
-
-	// 5. Trả về kết quả
 	return response.OK(c, http.StatusOK, "Register successfully", nil)
 }

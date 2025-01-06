@@ -14,7 +14,7 @@ import (
 // @Accept json
 // @Produce json
 // @Param id path string true "DeliveryPerson ID"
-// @Param status query string true "Trạng thái mới của người giao hàng (active, inactive, on-duty, off-duty)"
+// @Param approval-status query string true "Trạng thái mới của người giao hàng (accept, deny)"
 // @Router /admin/delivery-persons/{id} [patch]
 func (h *handlerImpl) HandleUpdateDeliveryPersonStatus(c echo.Context) error {
 	// Lấy ID từ path
@@ -23,18 +23,15 @@ func (h *handlerImpl) HandleUpdateDeliveryPersonStatus(c echo.Context) error {
 		return response.Error(c, http.StatusBadRequest, "id is required")
 	}
 
-	// Lấy trạng thái từ query string
-	status := c.QueryParam("status")
+	status := c.QueryParam("approval-status")
 	if status == "" {
 		return response.Error(c, http.StatusBadRequest, "status is required")
 	}
 
-	// Gọi usecase để cập nhật trạng thái
 	usecaseErr := h.adminDeliveryPersonUsecase.AdminUpdateStatusDeliveryPerson(c.Request().Context(), &id, &status)
 	if usecaseErr != nil {
 		return response.Error(c, usecaseErr.Code, usecaseErr.Message)
 	}
 
-	// Trả về phản hồi thành công
 	return response.OK(c, http.StatusOK, "status update successful", nil)
 }
