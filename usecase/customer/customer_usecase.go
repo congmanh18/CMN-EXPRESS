@@ -11,7 +11,6 @@ type CustomerUsecase interface {
 	GetInfoCustomer(ctx context.Context, id *string) (*entity.Customer, *usecase.Error)
 	UpdateInfoCustomer(ctx context.Context, customer *entity.Customer, id *string) *usecase.Error
 	SoftDeleteCustomer(ctx context.Context, id *string) *usecase.Error
-	ChangePassword(ctx context.Context, phone, password *string) *usecase.Error
 }
 
 type customerUsecaseImpl struct {

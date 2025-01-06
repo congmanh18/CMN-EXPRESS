@@ -27,7 +27,7 @@ import (
 	echoSwagger "github.com/swaggo/echo-swagger"
 )
 
-const enableMigrations = true
+const enableMigrations = false
 
 func RunMigration(appProvider *provider.AppProvider, enableMigrate bool) {
 	if enableMigrate {
