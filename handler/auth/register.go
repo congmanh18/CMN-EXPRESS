@@ -15,39 +15,22 @@ import (
 // @Description Example customer payload:
 //
 //	@Description ``` {
+//	@Description	"password": "strongpassword123",
+//	@Description	"phone": "0977683511",
+//	@Description	"role": "customer",
 //	@Description 	"account_type": "prepaid",
 //	@Description 	"current_address": "Shop Address of Customer",
 //	@Description 	"date_of_birth": "23/10/2002",
 //	@Description	"full_name": "Nguyen Cong Manh",
 //	@Description	"gender": "Nam",
 //	@Description	"identification_number": "052202014579",
+//	@Description	"nationality": "VN",
+//	@Description	"place_of_origin": "Hoài Sơn, Thị xã Hoài Nhơn, Bình Định",
+//	@Description	"place_of_residence": "Thôn Phú Nông, Hoài Sơn, Hoài Nhơn, Bình Định",
 //	@Description	"latitude": 37.7749,
 //	@Description	"longtitude": 122.4194
-//	@Description	"nationality": "VN",
-//	@Description	"password": "strongpassword123",
-//	@Description	"phone": "0977683511",
-//	@Description	"place_of_origin": "Hoài Sơn, Thị xã Hoài Nhơn, Bình Định",
-//	@Description	"place_of_residence": "Thôn Phú Nông, Hoài Sơn, Hoài Nhơn, Bình Định",
-//	@Description	"role": "customer"
 //	@Description } ```
 //
-// @Description Example delivery-person payload:
-//
-//	@Description ``` {
-//	@Description 	"current_address": "Shop Address of Customer",
-//	@Description 	"date_of_birth": "23/10/2002",
-//	@Description	"full_name": "Nguyen Cong Manh",
-//	@Description	"gender": "Nam",
-//	@Description	"identification_number": "052202014579",
-//	@Description	"nationality": "VN",
-//	@Description	"password": "strongpassword123",
-//	@Description	"phone": "0977683511",
-//	@Description	"place_of_origin": "Hoài Sơn, Thị xã Hoài Nhơn, Bình Định",
-//	@Description	"place_of_residence": "Thôn Phú Nông, Hoài Sơn, Hoài Nhơn, Bình Định",
-//	@Description	"role": "delivery person"
-//	@Description } ```
-//
-// @Description
 // @Tags Authentication
 // @Accept json
 // @Produce json

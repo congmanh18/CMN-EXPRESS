@@ -12,6 +12,13 @@ import (
 // HandleLogin handles login for different user roles
 // @Summary Login
 // @Description Login for different roles (admin, customer, delivery_person, accounting)
+// @Description Example customer payload:
+//
+//	@Description ``` {
+//	@Description	"phone": "0977683511",
+//	@Description	"password": "strongpassword123"
+//	@Description } ```
+//
 // @Tags Authentication
 // @Accept json
 // @Produce json

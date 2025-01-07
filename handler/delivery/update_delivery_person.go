@@ -13,6 +13,19 @@ import (
 // HandleUpdateDeliveryPerson updates delivery person information
 // @Summary Cập nhật thông tin người giao hàng
 // @Description Cập nhật chi tiết người giao hàng cụ thể theo ID
+// @Description Example delivery person payload:
+//
+//	@Description ``` {
+//	@Description 	"current_address": "Shop Address of Customer",
+//	@Description 	"date_of_birth": "23/10/2002",
+//	@Description	"full_name": "Nguyen Cong Manh",
+//	@Description	"gender": "Nam",
+//	@Description	"identification_number": "052202014579",
+//	@Description	"nationality": "VN",
+//	@Description	"place_of_origin": "Hoài Sơn, Thị xã Hoài Nhơn, Bình Định",
+//	@Description	"place_of_residence": "Thôn Phú Nông, Hoài Sơn, Hoài Nhơn, Bình Định",
+//	@Description } ```
+//
 // @Tags DeliveryPersons
 // @Accept  json
 // @Produce  json

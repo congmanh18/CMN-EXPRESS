@@ -144,6 +144,38 @@ const docTemplate = `{
                 "responses": {}
             }
         },
+        "/admin/users/{id}": {
+            "patch": {
+                "description": "Cập nhật trạng thái của một khách hàng dựa trên ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Cập nhật trạng thái khách hàng",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Customer ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Trạng thái mới của khách hàng (accept, deny)",
+                        "name": "approval-status",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            }
+        },
         "/customers/{id}": {
             "get": {
                 "description": "Truy xuất thông tin chi tiết về một khách hàng cụ thể theo ID",
@@ -169,7 +201,7 @@ const docTemplate = `{
                 "responses": {}
             },
             "put": {
-                "description": "Cập nhật chi tiết của một khách hàng cụ thể theo ID",
+                "description": "Cập nhật chi tiết của một khách hàng cụ thể theo ID\nExample customer payload:\n` + "`" + `` + "`" + `` + "`" + ` {\n\"account_type\": \"prepaid\",\n\"current_address\": \"Shop Address of Customer\",\n\"date_of_birth\": \"23/10/2002\",\n\"full_name\": \"Nguyen Cong Manh\",\n\"gender\": \"Nam\",\n\"identification_number\": \"052202014579\",\n\"nationality\": \"VN\",\n\"place_of_origin\": \"Hoài Sơn, Thị xã Hoài Nhơn, Bình Định\",\n\"place_of_residence\": \"Thôn Phú Nông, Hoài Sơn, Hoài Nhơn, Bình Định\",\n\"latitude\": 37.7749,\n\"longtitude\": 122.4194\n} ` + "`" + `` + "`" + `` + "`" + `",
                 "consumes": [
                     "application/json"
                 ],
@@ -249,7 +281,7 @@ const docTemplate = `{
                 "responses": {}
             },
             "put": {
-                "description": "Cập nhật chi tiết người giao hàng cụ thể theo ID",
+                "description": "Cập nhật chi tiết người giao hàng cụ thể theo ID\nExample delivery person payload:\n` + "`" + `` + "`" + `` + "`" + ` {\n\"current_address\": \"Shop Address of Customer\",\n\"date_of_birth\": \"23/10/2002\",\n\"full_name\": \"Nguyen Cong Manh\",\n\"gender\": \"Nam\",\n\"identification_number\": \"052202014579\",\n\"nationality\": \"VN\",\n\"place_of_origin\": \"Hoài Sơn, Thị xã Hoài Nhơn, Bình Định\",\n\"place_of_residence\": \"Thôn Phú Nông, Hoài Sơn, Hoài Nhơn, Bình Định\",\n} ` + "`" + `` + "`" + `` + "`" + `",
                 "consumes": [
                     "application/json"
                 ],
@@ -306,7 +338,7 @@ const docTemplate = `{
         },
         "/login": {
             "post": {
-                "description": "Login for different roles (admin, customer, delivery_person, accounting)",
+                "description": "Login for different roles (admin, customer, delivery_person, accounting)\nExample customer payload:\n` + "`" + `` + "`" + `` + "`" + ` {\n\"phone\": \"0977683511\",\n\"password\": \"strongpassword123\"\n} ` + "`" + `` + "`" + `` + "`" + `",
                 "consumes": [
                     "application/json"
                 ],
@@ -358,7 +390,7 @@ const docTemplate = `{
         },
         "/register": {
             "post": {
-                "description": "Register for different roles (admin, accounting, customer, delivery_person) account_type customer (prepaid, postpaid)\nExample customer payload:\n` + "`" + `` + "`" + `` + "`" + ` {\n\"account_type\": \"prepaid\",\n\"current_address\": \"Shop Address of Customer\",\n\"date_of_birth\": \"23/10/2002\",\n\"full_name\": \"Nguyen Cong Manh\",\n\"gender\": \"Nam\",\n\"identification_number\": \"052202014579\",\n\"latitude\": 37.7749,\n\"longtitude\": 122.4194\n\"nationality\": \"VN\",\n\"password\": \"strongpassword123\",\n\"phone\": \"0977683511\",\n\"place_of_origin\": \"Hoài Sơn, Thị xã Hoài Nhơn, Bình Định\",\n\"place_of_residence\": \"Thôn Phú Nông, Hoài Sơn, Hoài Nhơn, Bình Định\",\n\"role\": \"customer\"\n} ` + "`" + `` + "`" + `` + "`" + `\nExample delivery-person payload:\n` + "`" + `` + "`" + `` + "`" + ` {\n\"current_address\": \"Shop Address of Customer\",\n\"date_of_birth\": \"23/10/2002\",\n\"full_name\": \"Nguyen Cong Manh\",\n\"gender\": \"Nam\",\n\"identification_number\": \"052202014579\",\n\"nationality\": \"VN\",\n\"password\": \"strongpassword123\",\n\"phone\": \"0977683511\",\n\"place_of_origin\": \"Hoài Sơn, Thị xã Hoài Nhơn, Bình Định\",\n\"place_of_residence\": \"Thôn Phú Nông, Hoài Sơn, Hoài Nhơn, Bình Định\",\n\"role\": \"delivery person\"\n} ` + "`" + `` + "`" + `` + "`" + `\n",
+                "description": "Register for different roles (admin, accounting, customer, delivery_person) account_type customer (prepaid, postpaid)\nExample customer payload:\n` + "`" + `` + "`" + `` + "`" + ` {\n\"password\": \"strongpassword123\",\n\"phone\": \"0977683511\",\n\"role\": \"customer\",\n\"account_type\": \"prepaid\",\n\"current_address\": \"Shop Address of Customer\",\n\"date_of_birth\": \"23/10/2002\",\n\"full_name\": \"Nguyen Cong Manh\",\n\"gender\": \"Nam\",\n\"identification_number\": \"052202014579\",\n\"nationality\": \"VN\",\n\"place_of_origin\": \"Hoài Sơn, Thị xã Hoài Nhơn, Bình Định\",\n\"place_of_residence\": \"Thôn Phú Nông, Hoài Sơn, Hoài Nhơn, Bình Định\",\n\"latitude\": 37.7749,\n\"longtitude\": 122.4194\n} ` + "`" + `` + "`" + `` + "`" + `",
                 "consumes": [
                     "application/json"
                 ],
@@ -385,7 +417,7 @@ const docTemplate = `{
         },
         "/reset-password": {
             "patch": {
-                "description": "Đổi mật khẩu người dùng bằng số điện thoại",
+                "description": "Đổi mật khẩu người dùng bằng số điện thoại\nExample reset password payload:\n` + "`" + `` + "`" + `` + "`" + ` {\n\"confirm_password\": \"strongpassword123\",\n\"new_password\": \"strongpassword321\",\n\"phone\": \"0977683511\",\n\"role\": \"customer\"\n} ` + "`" + `` + "`" + `` + "`" + `",
                 "consumes": [
                     "application/json"
                 ],
@@ -405,38 +437,6 @@ const docTemplate = `{
                         "schema": {
                             "$ref": "#/definitions/req.ResetPasswordRequest"
                         }
-                    }
-                ],
-                "responses": {}
-            }
-        },
-        "/users/{id}": {
-            "patch": {
-                "description": "Cập nhật trạng thái của một khách hàng dựa trên ID",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Admin"
-                ],
-                "summary": "Cập nhật trạng thái khách hàng",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Customer ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Trạng thái mới của khách hàng (accept, deny)",
-                        "name": "approval-status",
-                        "in": "query",
-                        "required": true
                     }
                 ],
                 "responses": {}

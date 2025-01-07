@@ -11,6 +11,15 @@ import (
 // Handle Change Password
 // @Summary Đổi mật khẩu
 // @Description Đổi mật khẩu người dùng bằng số điện thoại
+// @Description Example reset password payload:
+//
+//	@Description ``` {
+//	@Description	"confirm_password": "strongpassword123",
+//	@Description	"new_password": "strongpassword321",
+//	@Description	"phone": "0977683511",
+//	@Description	"role": "customer"
+//	@Description } ```
+//
 // @Tags Authentication
 // @Accept  json
 // @Produce  json

@@ -13,10 +13,26 @@ import (
 // HandleUpdateCustomer updates customer information
 // @Summary Cập nhật thông tin khách hàng
 // @Description Cập nhật chi tiết của một khách hàng cụ thể theo ID
+// @Description Example customer payload:
+//
+//	@Description ``` {
+//	@Description 	"account_type": "prepaid",
+//	@Description 	"current_address": "Shop Address of Customer",
+//	@Description 	"date_of_birth": "23/10/2002",
+//	@Description	"full_name": "Nguyen Cong Manh",
+//	@Description	"gender": "Nam",
+//	@Description	"identification_number": "052202014579",
+//	@Description	"nationality": "VN",
+//	@Description	"place_of_origin": "Hoài Sơn, Thị xã Hoài Nhơn, Bình Định",
+//	@Description	"place_of_residence": "Thôn Phú Nông, Hoài Sơn, Hoài Nhơn, Bình Định",
+//	@Description	"latitude": 37.7749,
+//	@Description	"longtitude": 122.4194
+//	@Description } ```
+//
 // @Tags Customers
 // @Accept  json
 // @Produce  json
-// @Param   id      path      string                 true  "Customer ID"
+// @Param   id      path      string  true  "Customer ID"
 // @Param   request body      model.UpdateCustomerReq true  "Customer Update Request"
 // @Router /customers/{id} [put]
 func (h *handlerImpl) HandleUpdateCustomer(c echo.Context) error {

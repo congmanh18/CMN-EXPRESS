@@ -15,7 +15,7 @@ import (
 // @Produce json
 // @Param id path string true "Customer ID"
 // @Param approval-status query string true "Trạng thái mới của khách hàng (accept, deny)"
-// @Router /users/{id} [patch]
+// @Router /admin/users/{id} [patch]
 func (h *handlerImpl) HandleUpdateStatus(c echo.Context) error {
 	id := c.Param("id")
 	if id == "" {
