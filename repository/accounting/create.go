@@ -1,8 +1,15 @@
 package accounting
 
-import "context"
+import (
+	"context"
+	accountingEntity "express_be/repository/accounting/entity"
 
-// Create implements Repo.
-func (a *accountingImpl) CreateAccounting(ctx context.Context, accounting *Accounting) error {
-	return a.DB.Executor.WithContext(ctx).Debug().Create(&accounting).Error
+	"fmt"
+)
+
+func (r *accountingImpl) Create(ctx context.Context, accounting *accountingEntity.Accounting) error {
+	if err := r.DB.Executor.WithContext(ctx).Create(accounting).Error; err != nil {
+		return fmt.Errorf("failed to create accounting: %w", err)
+	}
+	return nil
 }

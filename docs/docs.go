@@ -448,17 +448,13 @@ const docTemplate = `{
             "type": "object",
             "required": [
                 "password",
-                "phone",
-                "role"
+                "phone"
             ],
             "properties": {
                 "password": {
                     "type": "string"
                 },
                 "phone": {
-                    "type": "string"
-                },
-                "role": {
                     "type": "string"
                 }
             }

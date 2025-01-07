@@ -2,27 +2,29 @@ package auth
 
 import (
 	"context"
-	deliveryPersonEntity "express_be/repository/delivery/entity"
+	deliveryEntity "express_be/repository/delivery/entity"
 	user "express_be/repository/user/entity"
 
 	"express_be/usecase"
 )
 
-func (c *authUsecaseImpl) CreateDeliveryPerson(ctx context.Context, user *user.User, deliveryPerson *deliveryPersonEntity.DeliveryPerson) *usecase.Error {
+func (c *authUsecaseImpl) CreateDeliveryPerson(ctx context.Context, user *user.User, deliveryPerson *deliveryEntity.DeliveryPerson) *usecase.Error {
+	// Thêm user trước
 	err := c.userRepo.Create(ctx, user)
 	if err != nil {
 		return &usecase.Error{
 			Code:    500,
-			Message: "Failed to create user account. Please try again later." + err.Error(),
+			Message: "Failed to create user. Please try again later. " + err.Error(),
 			Err:     err,
 		}
 	}
 
-	err = c.deliveryPersonRepo.CreateDeliveryPerson(ctx, deliveryPerson)
+	// Sau đó thêm deliveryPerson
+	err = c.deliveryPersonRepo.Create(ctx, deliveryPerson)
 	if err != nil {
 		return &usecase.Error{
 			Code:    500,
-			Message: "Failed to create accounting record. Please try again later. " + err.Error(),
+			Message: "Failed to create delivery person. Please try again later. " + err.Error(),
 			Err:     err,
 		}
 	}

@@ -2,29 +2,32 @@ package auth
 
 import (
 	"context"
-	"express_be/repository/admin"
-	user "express_be/repository/user/entity"
+	adminEntity "express_be/repository/admin/entity"
+	userEntity "express_be/repository/user/entity"
 
 	"express_be/usecase"
 )
 
-func (a *authUsecaseImpl) CreateAdmin(ctx context.Context, user *user.User, admin *admin.Admin) *usecase.Error {
-	err := a.userRepo.Create(ctx, user)
+func (c *authUsecaseImpl) CreateAdmin(ctx context.Context, user *userEntity.User, admin *adminEntity.Admin) *usecase.Error {
+	// Thêm user trước
+	err := c.userRepo.Create(ctx, user)
 	if err != nil {
 		return &usecase.Error{
 			Code:    500,
-			Message: "Failed to create user account. Please try again later." + err.Error(),
+			Message: "Failed to create user. Please try again later. " + err.Error(),
 			Err:     err,
 		}
 	}
 
-	err = a.adminRepo.CreateAdmin(ctx, admin)
+	// Sau đó thêm admin
+	err = c.adminRepo.Create(ctx, admin)
 	if err != nil {
 		return &usecase.Error{
 			Code:    500,
-			Message: "Failed to create accounting record. Please try again later. " + err.Error(),
+			Message: "Failed to create admin. Please try again later. " + err.Error(),
 			Err:     err,
 		}
 	}
+
 	return nil
 }

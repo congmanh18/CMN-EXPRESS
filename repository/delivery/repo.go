@@ -7,7 +7,7 @@ import (
 )
 
 type Repo interface {
-	CreateDeliveryPerson(ctx context.Context, delivery *entity.DeliveryPerson) error
+	Create(ctx context.Context, deliveryPerson *entity.DeliveryPerson) error
 	FetchID(ctx context.Context, id *string) (*string, error)
 	FindByPhone(ctx context.Context, phone *string) (*entity.DeliveryPerson, error)
 	FindByID(ctx context.Context, id *string) (*entity.DeliveryPerson, error)

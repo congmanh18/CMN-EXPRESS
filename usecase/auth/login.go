@@ -8,21 +8,12 @@ import (
 	"time"
 )
 
-func (a *authUsecaseImpl) LoginAdmin(ctx context.Context, phone, password *string) (*security.Token, *usecase.Error) {
+func (a *authUsecaseImpl) Login(ctx context.Context, phone, password *string) (*security.Token, *usecase.Error) {
 	user, err := a.userRepo.FindByPhone(ctx, phone)
 	if err != nil || user == nil {
 		return nil, &usecase.Error{
 			Code:    401,
 			Message: "The phone number is not registered or invalid. " + err.Error(),
-			Err:     err,
-		}
-	}
-
-	admin, err := a.adminRepo.FindByPhone(ctx, phone)
-	if err != nil || admin == nil {
-		return nil, &usecase.Error{
-			Code:    401,
-			Message: "Admin information not found. Please check your details. " + err.Error(),
 			Err:     err,
 		}
 	}
@@ -38,7 +29,7 @@ func (a *authUsecaseImpl) LoginAdmin(ctx context.Context, phone, password *strin
 	accessTokenDuration := time.Hour * 8
 	refreshTokenDuration := time.Hour * 24 * 14
 	// jwt := "secret_key"
-	scToken, err := security.GenToken(*admin.ID, accessTokenDuration, refreshTokenDuration)
+	scToken, err := security.GenToken(*user.ID, accessTokenDuration, refreshTokenDuration)
 	if err != nil {
 		return nil, &usecase.Error{
 			Code:    500,
@@ -47,7 +38,7 @@ func (a *authUsecaseImpl) LoginAdmin(ctx context.Context, phone, password *strin
 		}
 	}
 
-	token := mapper.SecureTokenToTokenEntity(scToken, admin.ID, refreshTokenDuration)
+	token := mapper.SecureTokenToTokenEntity(scToken, user.ID, refreshTokenDuration)
 	err = a.tokenRepo.SaveToken(ctx, token)
 	if err != nil {
 		return nil, &usecase.Error{

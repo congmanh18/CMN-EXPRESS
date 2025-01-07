@@ -7,7 +7,6 @@ var Validate = validator.New(validator.WithRequiredStructEnabled())
 type LoginRequest struct {
 	Phone    *string `json:"phone" validate:"required"`
 	Password *string `json:"password" validate:"required"`
-	Role     *string `json:"role" validate:"required"`
 }
 
 type RegisterRequest struct {

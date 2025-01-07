@@ -1,8 +1,15 @@
 package admin
 
-import "context"
+import (
+	"context"
+	adminEntity "express_be/repository/admin/entity"
 
-// CreateAdmin implements Repo.
-func (a *adminImpl) CreateAdmin(ctx context.Context, admin *Admin) error {
-	return a.DB.Executor.WithContext(ctx).Debug().Create(&admin).Error
+	"fmt"
+)
+
+func (r *adminImpl) Create(ctx context.Context, admin *adminEntity.Admin) error {
+	if err := r.DB.Executor.WithContext(ctx).Create(admin).Error; err != nil {
+		return fmt.Errorf("failed to create admin: %w", err)
+	}
+	return nil
 }

@@ -2,8 +2,8 @@ package entity
 
 import (
 	"express_be/core/record"
-	"express_be/repository/accounting"
-	"express_be/repository/admin"
+	accounting "express_be/repository/accounting/entity"
+	admin "express_be/repository/admin/entity"
 	customer "express_be/repository/customer/entity"
 	delivery "express_be/repository/delivery/entity"
 )
@@ -46,10 +46,10 @@ type User struct {
 	Role                 Role
 	Status               Status
 	ApprovalStatus       ApprovalStatus
-	Admin                admin.Admin             `gorm:"foreignKey:Phone"`
-	Customer             customer.Customer       `gorm:"foreignKey:Phone"`
-	DeliveryPerson       delivery.DeliveryPerson `gorm:"foreignKey:Phone"`
-	Accounting           accounting.Accounting   `gorm:"foreignKey:Phone"`
+	Admin                admin.Admin             `gorm:"foreignKey:Phone;references:Phone"`
+	Customer             customer.Customer       `gorm:"foreignKey:Phone;references:Phone"` // Thiết lập One-to-One
+	DeliveryPerson       delivery.DeliveryPerson `gorm:"foreignKey:Phone;references:Phone"`
+	Accounting           accounting.Accounting   `gorm:"foreignKey:Phone;references:Phone"`
 }
 
 func (u *User) TableName() string {

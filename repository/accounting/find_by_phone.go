@@ -1,12 +1,15 @@
 package accounting
 
-import "context"
+import (
+	"context"
+	"express_be/repository/accounting/entity"
+)
 
 // FindByPhone implements Repo.
-func (a *accountingImpl) FindByPhone(ctx context.Context, phone *string) (*Accounting, error) {
-	var result *Accounting
+func (a *accountingImpl) FindByPhone(ctx context.Context, phone *string) (*entity.Accounting, error) {
+	var result *entity.Accounting
 	query := a.DB.Executor.WithContext(ctx).
-		Model(&Accounting{}).
+		Model(&entity.Accounting{}).
 		Where("phone =?", phone).
 		First(&result)
 

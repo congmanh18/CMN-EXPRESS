@@ -7,7 +7,7 @@ import (
 )
 
 type Repo interface {
-	CreateCustomer(ctx context.Context, customer *entity.Customer) error                  // OKEY Dùng để đăng ký tài khoản
+	Create(ctx context.Context, customer *entity.Customer) error
 	FetchID(ctx context.Context, id *string) (*string, error)                             // Dùng để verify tài khoản 1
 	FindByPhone(ctx context.Context, phone *string) (*entity.Customer, error)             // Dùng để Login
 	FindByID(ctx context.Context, id *string) (*entity.Customer, error)                   // OKEY Admin xem thông tin chi tiết tài khoản

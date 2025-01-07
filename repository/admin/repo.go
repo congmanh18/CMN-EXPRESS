@@ -3,11 +3,12 @@ package admin
 import (
 	"context"
 	"express_be/core/db/postgresql"
+	"express_be/repository/admin/entity"
 )
 
 type Repo interface {
-	CreateAdmin(ctx context.Context, admin *Admin) error
-	FindByPhone(ctx context.Context, phone *string) (*Admin, error)
+	Create(ctx context.Context, admin *entity.Admin) error
+	FindByPhone(ctx context.Context, phone *string) (*entity.Admin, error)
 }
 
 type adminImpl struct {

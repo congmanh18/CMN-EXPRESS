@@ -34,54 +34,16 @@ func (h *handlerImpl) HandleLogin(c echo.Context) error {
 		return response.Error(c, http.StatusBadRequest, err.Error())
 	}
 
-	switch *login.Role {
-	case "admin":
-		token, err := h.authUsecase.LoginAdmin(c.Request().Context(), login.Phone, login.Password)
-		if err != nil {
-			return response.Error(c, err.Code, err.Message)
-		}
-
-		resp := &res.LoginRes{
-			AccessToken:  *token.AccessToken,
-			RefreshToken: *token.RefreshToken,
-		}
-		return response.OK(c, http.StatusOK, "Login successfully", resp)
-	case "customer":
-		token, err := h.authUsecase.LoginCustomer(c.Request().Context(), login.Phone, login.Password)
-		if err != nil {
-			return response.Error(c, err.Code, err.Message)
-		}
-
-		resp := &res.LoginRes{
-			AccessToken:  *token.AccessToken,
-			RefreshToken: *token.RefreshToken,
-		}
-		return response.OK(c, http.StatusOK, "Login successfully", resp)
-	case "delivery_person":
-		token, err := h.authUsecase.LoginDeliveryPerson(c.Request().Context(), login.Phone, login.Password)
-		if err != nil {
-			return response.Error(c, err.Code, err.Message)
-		}
-
-		resp := &res.LoginRes{
-			AccessToken:  *token.AccessToken,
-			RefreshToken: *token.RefreshToken,
-		}
-		return response.OK(c, http.StatusOK, "Login successfully", resp)
-	case "accounting":
-		token, err := h.authUsecase.LoginAccounting(c.Request().Context(), login.Phone, login.Password)
-		if err != nil {
-			return response.Error(c, err.Code, err.Message)
-		}
-
-		resp := &res.LoginRes{
-			AccessToken:  *token.AccessToken,
-			RefreshToken: *token.RefreshToken,
-		}
-		return response.OK(c, http.StatusOK, "Login successfully", resp)
-	default:
-		return response.Error(c, http.StatusUnauthorized, "Invalid role")
+	token, err := h.authUsecase.Login(c.Request().Context(), login.Phone, login.Password)
+	if err != nil {
+		return response.Error(c, err.Code, err.Message)
 	}
+
+	resp := &res.LoginRes{
+		AccessToken:  *token.AccessToken,
+		RefreshToken: *token.RefreshToken,
+	}
+	return response.OK(c, http.StatusOK, "Login successfully", resp)
 }
 
 // c.SetCookie(&http.Cookie{

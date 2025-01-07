@@ -5,8 +5,8 @@ import (
 	"express_be/core/record"
 	"express_be/core/security"
 	model "express_be/model/req"
-	accountingEntity "express_be/repository/accounting"
-	adminEntity "express_be/repository/admin"
+	accountingEntity "express_be/repository/accounting/entity"
+	adminEntity "express_be/repository/admin/entity"
 	userEntity "express_be/repository/user/entity"
 
 	"github.com/google/uuid"

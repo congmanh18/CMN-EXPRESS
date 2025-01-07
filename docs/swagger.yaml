@@ -6,12 +6,9 @@ definitions:
         type: string
       phone:
         type: string
-      role:
-        type: string
     required:
     - password
     - phone
-    - role
     type: object
   req.RegisterRequest:
     properties:

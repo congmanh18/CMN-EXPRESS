@@ -8,7 +8,7 @@ import (
 
 type DeliveryPerson struct {
 	record.BaseEntity
-	Phone           *string `gorm:"foreignKey:DeliveryPersonPhone"`
+	Phone           *string `gorm:"not null;index"`
 	SalaryRate      *float64
 	ExtraWeightRate *float64
 	TotalCod        *float64

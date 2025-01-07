@@ -16,7 +16,7 @@ const (
 type Customer struct {
 	record.BaseEntity
 	AccountType CustomerAccountType
-	Phone       *string  `gorm:"foreignKey:CustomerPhone"`
+	Phone       *string  `gorm:"not null;index"`
 	GeoHash     *string  `json:"geo_hash"`
 	Latitude    *float64 `json:"latitude"`
 	Longtitude  *float64 `json:"longtitude"`

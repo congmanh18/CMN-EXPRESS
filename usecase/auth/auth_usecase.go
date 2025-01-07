@@ -4,7 +4,9 @@ import (
 	"context"
 	"express_be/core/security"
 	"express_be/repository/accounting"
+	accountingEntity "express_be/repository/accounting/entity"
 	"express_be/repository/admin"
+	adminEntity "express_be/repository/admin/entity"
 	"express_be/repository/customer"
 	customerEntity "express_be/repository/customer/entity"
 	"express_be/repository/delivery"
@@ -17,15 +19,12 @@ import (
 
 type AuthUsecase interface {
 	// Create accounts usecases
-	CreateAdmin(ctx context.Context, user *userEntity.User, admin *admin.Admin) *usecase.Error
-	CreateAccounting(ctx context.Context, user *userEntity.User, accounting *accounting.Accounting) *usecase.Error
+	CreateAdmin(ctx context.Context, user *userEntity.User, admin *adminEntity.Admin) *usecase.Error
+	CreateAccounting(ctx context.Context, user *userEntity.User, accounting *accountingEntity.Accounting) *usecase.Error
 	CreateCustomer(ctx context.Context, user *userEntity.User, customer *customerEntity.Customer) *usecase.Error
 	CreateDeliveryPerson(ctx context.Context, user *userEntity.User, deliveryPerson *deliveryPersonEntity.DeliveryPerson) *usecase.Error
 	// Login useaces
-	LoginAdmin(ctx context.Context, phone, password *string) (*security.Token, *usecase.Error)
-	LoginCustomer(ctx context.Context, phone, password *string) (*security.Token, *usecase.Error)
-	LoginDeliveryPerson(ctx context.Context, phone, password *string) (*security.Token, *usecase.Error)
-	LoginAccounting(ctx context.Context, phone, password *string) (*security.Token, *usecase.Error)
+	Login(ctx context.Context, phone, password *string) (*security.Token, *usecase.Error)
 	// ChangePassword useacses
 	ChangePassword(ctx context.Context, phone *string, password *string) *usecase.Error
 	// Validate Token

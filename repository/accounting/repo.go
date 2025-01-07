@@ -3,11 +3,12 @@ package accounting
 import (
 	"context"
 	"express_be/core/db/postgresql"
+	"express_be/repository/accounting/entity"
 )
 
 type Repo interface {
-	CreateAccounting(ctx context.Context, accounting *Accounting) error
-	FindByPhone(ctx context.Context, phone *string) (*Accounting, error)
+	Create(ctx context.Context, accounting *entity.Accounting) error
+	FindByPhone(ctx context.Context, phone *string) (*entity.Accounting, error)
 }
 
 type accountingImpl struct {
