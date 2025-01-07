@@ -23,6 +23,7 @@ func RegisterToAdmin(req model.RegisterRequest) (*adminEntity.Admin, *userEntity
 		BaseEntity: record.BaseEntity{
 			ID: id,
 		},
+		Phone:    &req.Phone,
 		Password: &hashedPassword,
 		Role:     userEntity.Admin,
 	}
