@@ -78,38 +78,6 @@
                 "responses": {}
             }
         },
-        "/admin/customers/{id}": {
-            "patch": {
-                "description": "Cập nhật trạng thái của một khách hàng dựa trên ID",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Admin"
-                ],
-                "summary": "Cập nhật trạng thái khách hàng",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Customer ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Trạng thái mới của khách hàng (accept, deny)",
-                        "name": "approval-status",
-                        "in": "query",
-                        "required": true
-                    }
-                ],
-                "responses": {}
-            }
-        },
         "/admin/delivery-persons/all": {
             "get": {
                 "description": "Truy xuất danh sách được phân trang của tất cả những người giao hàng",
@@ -165,38 +133,6 @@
                         "description": "Page size, defaults to 10",
                         "name": "page_size",
                         "in": "query"
-                    }
-                ],
-                "responses": {}
-            }
-        },
-        "/admin/delivery-persons/{id}": {
-            "patch": {
-                "description": "Cập nhật trạng thái của một người giao hàng dựa trên ID",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Admin"
-                ],
-                "summary": "Cập nhật trạng thái của người giao hàng",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "DeliveryPerson ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Trạng thái mới của người giao hàng (accept, deny)",
-                        "name": "approval-status",
-                        "in": "query",
-                        "required": true
                     }
                 ],
                 "responses": {}
@@ -416,7 +352,7 @@
         },
         "/register": {
             "post": {
-                "description": "Register for different roles (admin, accounting, customer, delivery_person) account_type customer (prepaid, postpaid)\nExample payload:\n\n{\n\"account_type\": \"prepaid\",\n\"current_address\": \"Shop Address of Customer\",\n\"date_of_birth\": \"23/10/2002\",\n\"full_name\": \"Nguyen Cong Manh\",\n\"gender\": \"Nam\",\n\"identification_number\": \"052202014579\",\n\"latitude\": 37.7749,\n\"longtitude\": 122.4194,\n\"nationality\": \"VN\",\n\"password\": \"strongpassword123\",\n\"phone\": \"0977683511\",\n\"place_of_origin\": \"Hoài Sơn, Thị xã Hoài Nhơn, Bình Định\",\n\"place_of_residence\": \"Thôn Phú Nông, Hoài Sơn, Hoài Nhơn, Bình Định\",\n\"role\": \"customer\"",
+                "description": "Register for different roles (admin, accounting, customer, delivery_person) account_type customer (prepaid, postpaid)\nExample customer payload:\n``` {\n\"account_type\": \"prepaid\",\n\"current_address\": \"Shop Address of Customer\",\n\"date_of_birth\": \"23/10/2002\",\n\"full_name\": \"Nguyen Cong Manh\",\n\"gender\": \"Nam\",\n\"identification_number\": \"052202014579\",\n\"latitude\": 37.7749,\n\"longtitude\": 122.4194\n\"nationality\": \"VN\",\n\"password\": \"strongpassword123\",\n\"phone\": \"0977683511\",\n\"place_of_origin\": \"Hoài Sơn, Thị xã Hoài Nhơn, Bình Định\",\n\"place_of_residence\": \"Thôn Phú Nông, Hoài Sơn, Hoài Nhơn, Bình Định\",\n\"role\": \"customer\"\n} ```\nExample delivery-person payload:\n``` {\n\"current_address\": \"Shop Address of Customer\",\n\"date_of_birth\": \"23/10/2002\",\n\"full_name\": \"Nguyen Cong Manh\",\n\"gender\": \"Nam\",\n\"identification_number\": \"052202014579\",\n\"nationality\": \"VN\",\n\"password\": \"strongpassword123\",\n\"phone\": \"0977683511\",\n\"place_of_origin\": \"Hoài Sơn, Thị xã Hoài Nhơn, Bình Định\",\n\"place_of_residence\": \"Thôn Phú Nông, Hoài Sơn, Hoài Nhơn, Bình Định\",\n\"role\": \"delivery person\"\n} ```\n",
                 "consumes": [
                     "application/json"
                 ],
@@ -463,6 +399,38 @@
                         "schema": {
                             "$ref": "#/definitions/req.ResetPasswordRequest"
                         }
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/users/{id}": {
+            "patch": {
+                "description": "Cập nhật trạng thái của một khách hàng dựa trên ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Cập nhật trạng thái khách hàng",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Customer ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Trạng thái mới của khách hàng (accept, deny)",
+                        "name": "approval-status",
+                        "in": "query",
+                        "required": true
                     }
                 ],
                 "responses": {}
