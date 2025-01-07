@@ -6,8 +6,8 @@ import (
 	"express_be/usecase"
 )
 
-func (c *customerUsecaseImpl) GetAllCustomers(ctx context.Context, page *int, pageSize *int) ([]entity.CustomerDetails, *usecase.Error) {
-	customers, err := c.userRepo.FetchAllCustomer(ctx, page, pageSize)
+func (c *customerUsecaseImpl) GetPendingCustomers(ctx context.Context, page, pageSize *int) ([]entity.CustomerDetails, *usecase.Error) {
+	customers, err := c.userRepo.FetchPendingStatusCustomers(ctx, page, pageSize)
 	if err != nil {
 		return nil, &usecase.Error{
 			Code:    500,
@@ -15,5 +15,6 @@ func (c *customerUsecaseImpl) GetAllCustomers(ctx context.Context, page *int, pa
 			Err:     err,
 		}
 	}
+
 	return customers, nil
 }

@@ -2,24 +2,24 @@ package res
 
 import (
 	"express_be/model/res"
-	"express_be/repository/delivery/entity"
+	userEntity "express_be/repository/user/entity"
 )
 
-func DeliveryPersonToRes(deliveryPerson *entity.DeliveryPerson) res.DeliveryPersonRes {
-	status := string(deliveryPerson.Status)
+func DeliveryPersonToRes(user *userEntity.DeliveryPersonDetails) res.DeliveryPersonRes {
+	status := string(user.Status)
 	return res.DeliveryPersonRes{
-		ID:             deliveryPerson.ID,
-		Phone:          deliveryPerson.Phone,
-		CurrentAddress: deliveryPerson.CurrentAddress,
-		SalaryRate:     deliveryPerson.SalaryRate,
+		ID:             user.ID,
+		Phone:          user.Phone,
+		CurrentAddress: user.CurrentAddress,
+		Status:         &status,
 
-		IdentificationNumber: deliveryPerson.IdentificationNumber,
-		FullName:             deliveryPerson.FullName,
-		DateOfBirth:          deliveryPerson.DateOfBirth,
-		Gender:               deliveryPerson.Gender,
-		Nationality:          deliveryPerson.Nationality,
-		PlaceOfOrigin:        deliveryPerson.PlaceOfOrigin,
-		PlaceOfResidence:     deliveryPerson.PlaceOfResidence,
-		Status:               &status,
+		IdentificationNumber: user.IdentificationNumber,
+		FullName:             user.FullName,
+		DateOfBirth:          user.DateOfBirth,
+		Gender:               user.Gender,
+		Nationality:          user.Nationality,
+		PlaceOfOrigin:        user.PlaceOfOrigin,
+		PlaceOfResidence:     user.PlaceOfResidence,
+		SalaryRate:           user.SalaryRate,
 	}
 }

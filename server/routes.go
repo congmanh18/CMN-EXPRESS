@@ -22,6 +22,11 @@ func SetupRoutes(
 			Prefix: "/admin",
 			Routes: []route.Route{
 				{
+					Path:    "/users/:id",
+					Method:  method.PATCH,
+					Handler: adminHandler.HandleUpdateStatus,
+				},
+				{
 					Path:    "/customers/pending",
 					Method:  method.GET,
 					Handler: adminHandler.HandleListPendingCustomer,
@@ -32,11 +37,6 @@ func SetupRoutes(
 					Handler: adminHandler.HandleAllCustomers,
 				},
 				{
-					Path:    "/customers/:id",
-					Method:  method.PATCH,
-					Handler: adminHandler.HandleUpdateCustomerStatus,
-				},
-				{
 					Path:    "/delivery-persons/pending",
 					Method:  method.GET,
 					Handler: adminHandler.HandleListPendingDeliveryPerson,
@@ -45,11 +45,6 @@ func SetupRoutes(
 					Path:    "/delivery-persons/all",
 					Method:  method.GET,
 					Handler: adminHandler.HandleAllDeliveryPersons,
-				},
-				{
-					Path:    "/delivery-persons/:id",
-					Method:  method.PATCH,
-					Handler: adminHandler.HandleUpdateDeliveryPersonStatus,
 				},
 			},
 		},

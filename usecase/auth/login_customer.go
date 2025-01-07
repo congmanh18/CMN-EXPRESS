@@ -4,31 +4,33 @@ import (
 	"context"
 	"express_be/core/security"
 	mapper "express_be/mapper/req"
-	customerEntity "express_be/repository/customer/entity"
 	"express_be/usecase"
 
 	"time"
 )
 
-func (a *authUsecaseImpl) LoginCustomer(ctx context.Context, phone, password *string) (*security.Token, *customerEntity.Customer, *usecase.Error) {
-	customer, err := a.customerRepo.FindByPhone(ctx, phone)
-	if customer == nil {
-		return nil, nil, &usecase.Error{
+func (a *authUsecaseImpl) LoginCustomer(ctx context.Context, phone, password *string) (*security.Token, *usecase.Error) {
+	user, err := a.userRepo.FindByPhone(ctx, phone)
+	if err != nil || user == nil {
+		return nil, &usecase.Error{
 			Code:    401,
-			Message: "Invalid phone or password",
-		}
-	}
-	if err != nil {
-		return nil, nil, &usecase.Error{
-			Code:    404,
-			Message: "customer not found",
+			Message: "The phone number is not registered or invalid. " + err.Error(),
 			Err:     err,
 		}
 	}
-	if !security.VerifyPassword(*password, *customer.PasswordHash) {
-		return nil, nil, &usecase.Error{
+
+	customer, err := a.customerRepo.FindByPhone(ctx, phone)
+	if err != nil || customer == nil {
+		return nil, &usecase.Error{
 			Code:    401,
-			Message: "invalid password",
+			Message: "Customer information not found. Please check your details. " + err.Error(),
+			Err:     err,
+		}
+	}
+	if !security.VerifyPassword(*password, *user.Password) {
+		return nil, &usecase.Error{
+			Code:    401,
+			Message: "Incorrect password. Please try again.",
 			Err:     nil,
 		}
 	}
@@ -37,9 +39,9 @@ func (a *authUsecaseImpl) LoginCustomer(ctx context.Context, phone, password *st
 	refreshTokenDuration := time.Hour * 24 * 14
 	scToken, err := security.GenToken(*customer.ID, accessTokenDuration, refreshTokenDuration)
 	if err != nil {
-		return nil, nil, &usecase.Error{
+		return nil, &usecase.Error{
 			Code:    500,
-			Message: "internal server error",
+			Message: "Unable to generate access token. Please try again later. " + err.Error(),
 			Err:     err,
 		}
 	}
@@ -47,12 +49,12 @@ func (a *authUsecaseImpl) LoginCustomer(ctx context.Context, phone, password *st
 	token := mapper.SecureTokenToTokenEntity(scToken, customer.ID, refreshTokenDuration)
 	err = a.tokenRepo.SaveToken(ctx, token)
 	if err != nil {
-		return nil, nil, &usecase.Error{
+		return nil, &usecase.Error{
 			Code:    500,
-			Message: "failed to save token" + err.Error(),
+			Message: "Failed to save token. Please contact support if this issue persists. " + err.Error(),
 			Err:     err,
 		}
 	}
 
-	return scToken, customer, nil
+	return scToken, nil
 }

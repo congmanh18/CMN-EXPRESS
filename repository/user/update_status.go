@@ -1,14 +1,14 @@
-package customer
+package user
 
 import (
 	"context"
-	"express_be/repository/customer/entity"
+	"express_be/repository/user/entity"
 	"fmt"
 )
 
-func (c *customerImpl) UpdateStatus(ctx context.Context, id *string, approval_status *entity.ApprovalStatus, status *entity.Status) error {
+func (c *userImpl) UpdateStatus(ctx context.Context, id *string, approval_status *entity.ApprovalStatus, status *entity.Status) error {
 	result := c.DB.Executor.WithContext(ctx).
-		Model(&entity.Customer{}).
+		Model(&entity.User{}).
 		Where("id = ?", *id).
 		Updates(map[string]interface{}{
 			"approval_status": approval_status,

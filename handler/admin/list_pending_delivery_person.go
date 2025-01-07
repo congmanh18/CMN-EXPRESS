@@ -30,7 +30,7 @@ func (h handlerImpl) HandleListPendingDeliveryPerson(c echo.Context) error {
 		pageSize = 10 // Mặc định 10 bản ghi mỗi trang nếu không hợp lệ
 	}
 
-	deliveryPersons, usecaseErr := h.adminDeliveryPersonUsecase.AdminGetPendingDeliveryPersons(c.Request().Context(), &page, &pageSize)
+	deliveryPersons, usecaseErr := h.deliveryPersonUsecase.GetPendingDeliveryPersons(c.Request().Context(), &page, &pageSize)
 	if usecaseErr != nil {
 		return response.Error(
 			c,

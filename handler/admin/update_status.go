@@ -15,8 +15,8 @@ import (
 // @Produce json
 // @Param id path string true "Customer ID"
 // @Param approval-status query string true "Trạng thái mới của khách hàng (accept, deny)"
-// @Router /admin/customers/{id} [patch]
-func (h *handlerImpl) HandleUpdateCustomerStatus(c echo.Context) error {
+// @Router /users/{id} [patch]
+func (h *handlerImpl) HandleUpdateStatus(c echo.Context) error {
 	id := c.Param("id")
 	if id == "" {
 		return response.Error(c, http.StatusBadRequest, "id is required")
@@ -27,7 +27,7 @@ func (h *handlerImpl) HandleUpdateCustomerStatus(c echo.Context) error {
 		return response.Error(c, http.StatusBadRequest, "status is required")
 	}
 
-	usecaseErr := h.adminCustomerUsecase.AdminUpdateStatusCustomer(c.Request().Context(), &id, &status)
+	usecaseErr := h.adminUserUsecase.UpdateStatus(c.Request().Context(), &id, &status)
 	if usecaseErr != nil {
 		return response.Error(c, usecaseErr.Code, usecaseErr.Message)
 	}

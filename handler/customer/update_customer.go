@@ -38,10 +38,10 @@ func (h *handlerImpl) HandleUpdateCustomer(c echo.Context) error {
 	}
 
 	// 4. mapping req thành entity
-	customer := mapper.UpdateToCustomer(req)
+	customer, user := mapper.UpdateToCustomer(req)
 
 	// 5. Thực hiện cập nhật
-	if err := h.customerUsecase.UpdateInfoCustomer(c.Request().Context(), customer, &id); err != nil {
+	if err := h.customerUsecase.UpdateInfoCustomer(c.Request().Context(), user, customer, &id); err != nil {
 		return response.Error(c, http.StatusInternalServerError, "Failed to update: "+err.Error())
 	}
 

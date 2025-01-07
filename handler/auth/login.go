@@ -29,7 +29,7 @@ func (h *handlerImpl) HandleLogin(c echo.Context) error {
 
 	switch *login.Role {
 	case "admin":
-		token, user, err := h.authUsecase.LoginAdmin(c.Request().Context(), login.Phone, login.Password)
+		token, err := h.authUsecase.LoginAdmin(c.Request().Context(), login.Phone, login.Password)
 		if err != nil {
 			return response.Error(c, err.Code, err.Message)
 		}
@@ -37,11 +37,10 @@ func (h *handlerImpl) HandleLogin(c echo.Context) error {
 		resp := &res.LoginRes{
 			AccessToken:  *token.AccessToken,
 			RefreshToken: *token.RefreshToken,
-			UserID:       *user.ID,
 		}
 		return response.OK(c, http.StatusOK, "Login successfully", resp)
 	case "customer":
-		token, user, err := h.authUsecase.LoginCustomer(c.Request().Context(), login.Phone, login.Password)
+		token, err := h.authUsecase.LoginCustomer(c.Request().Context(), login.Phone, login.Password)
 		if err != nil {
 			return response.Error(c, err.Code, err.Message)
 		}
@@ -49,11 +48,10 @@ func (h *handlerImpl) HandleLogin(c echo.Context) error {
 		resp := &res.LoginRes{
 			AccessToken:  *token.AccessToken,
 			RefreshToken: *token.RefreshToken,
-			UserID:       *user.ID,
 		}
 		return response.OK(c, http.StatusOK, "Login successfully", resp)
 	case "delivery_person":
-		token, user, err := h.authUsecase.LoginDeliveryPerson(c.Request().Context(), login.Phone, login.Password)
+		token, err := h.authUsecase.LoginDeliveryPerson(c.Request().Context(), login.Phone, login.Password)
 		if err != nil {
 			return response.Error(c, err.Code, err.Message)
 		}
@@ -61,11 +59,10 @@ func (h *handlerImpl) HandleLogin(c echo.Context) error {
 		resp := &res.LoginRes{
 			AccessToken:  *token.AccessToken,
 			RefreshToken: *token.RefreshToken,
-			UserID:       *user.ID,
 		}
 		return response.OK(c, http.StatusOK, "Login successfully", resp)
 	case "accounting":
-		token, user, err := h.authUsecase.LoginAccounting(c.Request().Context(), login.Phone, login.Password)
+		token, err := h.authUsecase.LoginAccounting(c.Request().Context(), login.Phone, login.Password)
 		if err != nil {
 			return response.Error(c, err.Code, err.Message)
 		}
@@ -73,7 +70,6 @@ func (h *handlerImpl) HandleLogin(c echo.Context) error {
 		resp := &res.LoginRes{
 			AccessToken:  *token.AccessToken,
 			RefreshToken: *token.RefreshToken,
-			UserID:       *user.ID,
 		}
 		return response.OK(c, http.StatusOK, "Login successfully", resp)
 	default:

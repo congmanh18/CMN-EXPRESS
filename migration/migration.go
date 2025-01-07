@@ -8,6 +8,7 @@ import (
 	identity "express_be/repository/identity/entity"
 	order "express_be/repository/order/entity"
 	"express_be/repository/token"
+	user "express_be/repository/user/entity"
 	warehouse "express_be/repository/warehouse/entity"
 
 	"log"
@@ -19,6 +20,7 @@ func Migration(db *gorm.DB) {
 	log.Printf("Migration.....")
 	err := db.AutoMigrate(
 		&token.RefreshToken{},
+		&user.User{},
 		&admin.Admin{},
 		&accounting.Accounting{},
 		&customer.Customer{},

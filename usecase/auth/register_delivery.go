@@ -2,30 +2,27 @@ package auth
 
 import (
 	"context"
-	"errors"
 	deliveryPersonEntity "express_be/repository/delivery/entity"
-	"fmt"
+	user "express_be/repository/user/entity"
 
 	"express_be/usecase"
-
-	"github.com/lib/pq"
 )
 
-func (r *authUsecaseImpl) CreateDeliveryPerson(ctx context.Context, deliveryPerson *deliveryPersonEntity.DeliveryPerson) *usecase.Error {
-	err := r.deliveryPersonRepo.CreateDeliveryPerson(ctx, deliveryPerson)
+func (c *authUsecaseImpl) CreateDeliveryPerson(ctx context.Context, user *user.User, deliveryPerson *deliveryPersonEntity.DeliveryPerson) *usecase.Error {
+	err := c.userRepo.Create(ctx, user)
 	if err != nil {
-		var pqErr *pq.Error
-		if errors.As(err, &pqErr) && pqErr.Code == "23505" { // SQLSTATE 23505: duplicate key
-			return &usecase.Error{
-				Code:    400,
-				Message: fmt.Sprintf("Delivery person already exists: %s", *deliveryPerson.Phone),
-				Err:     errors.New("delivery person already exists"),
-			}
-		}
-
 		return &usecase.Error{
 			Code:    500,
-			Message: "Failed to create delivery person -" + err.Error(),
+			Message: "Failed to create user account. Please try again later." + err.Error(),
+			Err:     err,
+		}
+	}
+
+	err = c.deliveryPersonRepo.CreateDeliveryPerson(ctx, deliveryPerson)
+	if err != nil {
+		return &usecase.Error{
+			Code:    500,
+			Message: "Failed to create accounting record. Please try again later. " + err.Error(),
 			Err:     err,
 		}
 	}

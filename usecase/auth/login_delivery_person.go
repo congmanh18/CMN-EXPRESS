@@ -4,31 +4,33 @@ import (
 	"context"
 	"express_be/core/security"
 	mapper "express_be/mapper/req"
-	deliveryPersonEntity "express_be/repository/delivery/entity"
 	"express_be/usecase"
 	"time"
 )
 
-func (u *authUsecaseImpl) LoginDeliveryPerson(ctx context.Context, phone, password *string) (*security.Token, *deliveryPersonEntity.DeliveryPerson, *usecase.Error) {
-	deliveryPerson, err := u.deliveryPersonRepo.FindByPhone(ctx, phone)
-	if deliveryPerson == nil {
-		return nil, nil, &usecase.Error{
+func (u *authUsecaseImpl) LoginDeliveryPerson(ctx context.Context, phone, password *string) (*security.Token, *usecase.Error) {
+	user, err := u.userRepo.FindByPhone(ctx, phone)
+	if err != nil || user == nil {
+		return nil, &usecase.Error{
 			Code:    401,
-			Message: "Invalid phone or password",
-		}
-	}
-	if err != nil {
-		return nil, nil, &usecase.Error{
-			Code:    404,
-			Message: "Invalid phone number or password",
+			Message: "The phone number is not registered or invalid. " + err.Error(),
 			Err:     err,
 		}
 	}
 
-	if !security.VerifyPassword(*password, *deliveryPerson.PasswordHash) {
-		return nil, nil, &usecase.Error{
+	deliveryPerson, err := u.deliveryPersonRepo.FindByPhone(ctx, phone)
+	if err != nil || deliveryPerson == nil {
+		return nil, &usecase.Error{
 			Code:    401,
-			Message: "Invalid phone number or password",
+			Message: "Invalid phone or password: " + err.Error(),
+			Err:     err,
+		}
+	}
+
+	if !security.VerifyPassword(*password, *user.Password) {
+		return nil, &usecase.Error{
+			Code:    401,
+			Message: "Incorrect password. Please try again.",
 			Err:     err,
 		}
 	}
@@ -37,9 +39,9 @@ func (u *authUsecaseImpl) LoginDeliveryPerson(ctx context.Context, phone, passwo
 	refreshTokenDuration := time.Hour * 24 * 14
 	scToken, err := security.GenToken(*deliveryPerson.ID, accessTokenDuration, refreshTokenDuration)
 	if err != nil {
-		return nil, nil, &usecase.Error{
+		return nil, &usecase.Error{
 			Code:    500,
-			Message: "internal server error",
+			Message: "Unable to generate access token. Please try again later. " + err.Error(),
 			Err:     err,
 		}
 	}
@@ -47,12 +49,12 @@ func (u *authUsecaseImpl) LoginDeliveryPerson(ctx context.Context, phone, passwo
 	token := mapper.SecureTokenToTokenEntity(scToken, deliveryPerson.ID, refreshTokenDuration)
 	err = u.tokenRepo.SaveToken(ctx, token)
 	if err != nil {
-		return nil, nil, &usecase.Error{
+		return nil, &usecase.Error{
 			Code:    500,
-			Message: "failed to save token" + err.Error(),
+			Message: "Failed to save token. Please contact support if this issue persists. " + err.Error(),
 			Err:     err,
 		}
 	}
 
-	return scToken, deliveryPerson, nil
+	return scToken, nil
 }

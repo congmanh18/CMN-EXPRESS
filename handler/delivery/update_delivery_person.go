@@ -38,10 +38,10 @@ func (h *handlerImpl) HandleUpdateDeliveryPerson(c echo.Context) error {
 	}
 
 	// 4. mapping req thành entity
-	deliveryPerson := mapper.UpdateToDeliveryPerson(req)
+	deliveryPerson, user := mapper.UpdateToDeliveryPerson(req)
 
 	// 5. Thực hiện cập nhật
-	if err := h.deliveryPersonUsecase.UpdateInfoDeliveryPerson(c.Request().Context(), deliveryPerson, &id); err != nil {
+	if err := h.deliveryPersonUsecase.UpdateInfoDeliveryPerson(c.Request().Context(), user, deliveryPerson, &id); err != nil {
 		return response.Error(c, http.StatusInternalServerError, err.Error())
 	}
 

@@ -4,8 +4,7 @@ import "express_be/core/record"
 
 type Accounting struct {
 	record.BaseEntity
-	Phone    *string `json:"phone" validate:"required"`
-	Password *string `json:"password" validate:"required"`
+	Phone *string `gorm:"foreignKey:AccountingPhone"`
 }
 
 func (a *Accounting) TableName() string {

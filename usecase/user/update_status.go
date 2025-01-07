@@ -1,13 +1,14 @@
-package delivery
+package user
 
 import (
 	"context"
-	"express_be/repository/delivery/entity"
+	"express_be/repository/user/entity"
 	"express_be/usecase"
 	"fmt"
 )
 
-func (c *adminUseCaseImpl) AdminUpdateStatusDeliveryPerson(ctx context.Context, deliveryPersonID *string, approvalStatus *string) *usecase.Error {
+// AdminAcceptCustomer implements AdminUsecase.
+func (c *userUsecaseImpl) UpdateStatus(ctx context.Context, customerID *string, approvalStatus *string) *usecase.Error {
 	validStatuses := []string{
 		string(entity.Accepted),
 		string(entity.Denied),
@@ -38,7 +39,7 @@ func (c *adminUseCaseImpl) AdminUpdateStatusDeliveryPerson(ctx context.Context, 
 		}
 	}
 
-	err := c.deliveryPersonRepo.UpdateStatus(ctx, deliveryPersonID, &approvalStatusValue, &accountStatus)
+	err := c.repo.UpdateStatus(ctx, customerID, &approvalStatusValue, &accountStatus)
 	if err != nil {
 		return &usecase.Error{
 			Code:    500,

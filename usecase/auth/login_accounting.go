@@ -4,25 +4,33 @@ import (
 	"context"
 	"express_be/core/security"
 	mapper "express_be/mapper/req"
-	"express_be/repository/accounting"
 
 	"express_be/usecase"
 	"time"
 )
 
-func (a *authUsecaseImpl) LoginAccounting(ctx context.Context, phone, password *string) (*security.Token, *accounting.Accounting, *usecase.Error) {
-	accounting, err := a.accountingRepo.FindByPhone(ctx, phone)
-	if err != nil || accounting == nil {
-		return nil, nil, &usecase.Error{
+func (a *authUsecaseImpl) LoginAccounting(ctx context.Context, phone, password *string) (*security.Token, *usecase.Error) {
+	user, err := a.userRepo.FindByPhone(ctx, phone)
+	if err != nil || user == nil {
+		return nil, &usecase.Error{
 			Code:    401,
-			Message: "Invalid phone or password",
+			Message: "The phone number is not registered or invalid. " + err.Error(),
 			Err:     err,
 		}
 	}
-	if !security.VerifyPassword(*password, *accounting.Password) {
-		return nil, nil, &usecase.Error{
+
+	accounting, err := a.accountingRepo.FindByPhone(ctx, phone)
+	if err != nil || accounting == nil {
+		return nil, &usecase.Error{
 			Code:    401,
-			Message: "invalid password",
+			Message: "Accounting information not found. Please check your details. " + err.Error(),
+			Err:     err,
+		}
+	}
+	if !security.VerifyPassword(*password, *user.Password) {
+		return nil, &usecase.Error{
+			Code:    401,
+			Message: "Incorrect password. Please try again.",
 			Err:     nil,
 		}
 	}
@@ -30,22 +38,22 @@ func (a *authUsecaseImpl) LoginAccounting(ctx context.Context, phone, password *
 	refreshTokenDuration := time.Hour * 24 * 14
 	scToken, err := security.GenToken(*accounting.ID, accessTokenDuration, refreshTokenDuration)
 	if err != nil {
-		return nil, nil, &usecase.Error{
+		return nil, &usecase.Error{
 			Code:    500,
-			Message: "internal server error",
+			Message: "Unable to generate access token. Please try again later. " + err.Error(),
 			Err:     err,
 		}
 	}
 	token := mapper.SecureTokenToTokenEntity(scToken, accounting.ID, refreshTokenDuration)
 	err = a.tokenRepo.SaveToken(ctx, token)
 	if err != nil {
-		return nil, nil, &usecase.Error{
+		return nil, &usecase.Error{
 			Code:    500,
-			Message: "failed to save token" + err.Error(),
+			Message: "Failed to save token. Please contact support if this issue persists. " + err.Error(),
 			Err:     err,
 		}
 	}
 
-	return scToken, accounting, nil
+	return scToken, nil
 
 }

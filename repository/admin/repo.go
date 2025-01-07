@@ -8,7 +8,6 @@ import (
 type Repo interface {
 	CreateAdmin(ctx context.Context, admin *Admin) error
 	FindByPhone(ctx context.Context, phone *string) (*Admin, error)
-	ChangePassword(ctx context.Context, phone *string, newPassword *string) error
 }
 
 type adminImpl struct {

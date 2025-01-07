@@ -6,8 +6,8 @@ import (
 	"express_be/usecase"
 )
 
-// ChangePasswordAdmin implements AuthUsecase.
-func (c *authUsecaseImpl) ChangePasswordAdmin(ctx context.Context, phone *string, password *string) *usecase.Error {
+// ChangePasswordAccounting implements AuthUsecase.
+func (c *authUsecaseImpl) ChangePassword(ctx context.Context, phone *string, password *string) *usecase.Error {
 	hashedPassword, err := security.HashPassword(*password)
 	if err != nil {
 		return &usecase.Error{
@@ -17,7 +17,7 @@ func (c *authUsecaseImpl) ChangePasswordAdmin(ctx context.Context, phone *string
 		}
 	}
 
-	err = c.adminRepo.ChangePassword(ctx, phone, &hashedPassword)
+	err = c.userRepo.ChangePassword(ctx, phone, &hashedPassword)
 	if err != nil {
 		return &usecase.Error{
 			Code:    500,

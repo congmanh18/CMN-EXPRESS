@@ -31,7 +31,7 @@ func (h handlerImpl) HandleListPendingCustomer(c echo.Context) error {
 		pageSize = 10 // Mặc định 10 bản ghi mỗi trang nếu không hợp lệ
 	}
 
-	customers, usecaseErr := h.adminCustomerUsecase.AdminGetPendingCustomers(c.Request().Context(), &page, &pageSize)
+	customers, usecaseErr := h.customerUsecase.GetPendingCustomers(c.Request().Context(), &page, &pageSize)
 	if usecaseErr != nil {
 		return response.Error(
 			c,
@@ -45,7 +45,7 @@ func (h handlerImpl) HandleListPendingCustomer(c echo.Context) error {
 		customerRes := mapper.CustomerToRes(&customer)
 		customerResponses = append(customerResponses, customerRes)
 	}
-	
+
 	resp := model.CustomerPaginationResponse{
 		Page:     page,
 		PageSize: pageSize,

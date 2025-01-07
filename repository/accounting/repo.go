@@ -8,7 +8,6 @@ import (
 type Repo interface {
 	CreateAccounting(ctx context.Context, accounting *Accounting) error
 	FindByPhone(ctx context.Context, phone *string) (*Accounting, error)
-	ChangePassword(ctx context.Context, phone *string, newPassword *string) error
 }
 
 type accountingImpl struct {

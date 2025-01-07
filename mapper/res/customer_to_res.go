@@ -2,27 +2,26 @@ package res
 
 import (
 	"express_be/model/res"
-	"express_be/repository/customer/entity"
+	userEntity "express_be/repository/user/entity"
 )
 
-func CustomerToRes(customer *entity.Customer) res.CustomerRes {
-	status := string(customer.Status)
+func CustomerToRes(user *userEntity.CustomerDetails) res.CustomerRes {
+	status := string(user.Status)
 	return res.CustomerRes{
-		ID:             customer.ID,
-		Phone:          customer.Phone,
-		CurrentAddress: customer.CurrentAddress,
-		AccountType:    (*string)(&customer.AccountType),
+		ID:             user.ID,
+		Phone:          user.Phone,
+		CurrentAddress: user.CurrentAddress,
+		Status:         &status,
 
-		Status:    &status,
-		Latitude:  customer.Latitude,
-		Longitude: customer.Longtitude,
-
-		IdentificationNumber: customer.IdentificationNumber,
-		FullName:             customer.FullName,
-		DateOfBirth:          customer.DateOfBirth,
-		Gender:               customer.Gender,
-		Nationality:          customer.Nationality,
-		PlaceOfOrigin:        customer.PlaceOfOrigin,
-		PlaceOfResidence:     customer.PlaceOfResidence,
+		IdentificationNumber: user.IdentificationNumber,
+		FullName:             user.FullName,
+		DateOfBirth:          user.DateOfBirth,
+		Gender:               user.Gender,
+		Nationality:          user.Nationality,
+		PlaceOfOrigin:        user.PlaceOfOrigin,
+		PlaceOfResidence:     user.PlaceOfResidence,
+		AccountType:          user.AccountType,
+		Latitude:             user.Latitude,
+		Longitude:            user.Longtitude,
 	}
 }

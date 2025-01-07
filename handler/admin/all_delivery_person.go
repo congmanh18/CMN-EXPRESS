@@ -30,7 +30,7 @@ func (h *handlerImpl) HandleAllDeliveryPersons(c echo.Context) error {
 		pageSize = 10
 	}
 
-	deliveryPersons, usecaseErr := h.adminDeliveryPersonUsecase.AdminGetAllDeliveryPersons(c.Request().Context(), &page, &pageSize)
+	deliveryPersons, usecaseErr := h.deliveryPersonUsecase.GetAllDeliveryPersons(c.Request().Context(), &page, &pageSize)
 	if usecaseErr != nil {
 		return response.Error(
 			c,

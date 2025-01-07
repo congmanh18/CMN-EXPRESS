@@ -33,29 +33,9 @@ func (h *handlerImpl) HandleChangePassword(c echo.Context) error {
 	}
 
 	// 3. Xử lý đổi mật khẩu
-	switch *req.Role {
-	case "admin":
-		err := h.authUsecase.ChangePasswordAdmin(c.Request().Context(), req.Phone, req.NewPassword)
-		if err != nil {
-			return response.Error(c, err.Code, "Failed to change password: "+err.Message)
-		}
-	case "accounting":
-		err := h.authUsecase.ChangePasswordAccounting(c.Request().Context(), req.Phone, req.NewPassword)
-		if err != nil {
-			return response.Error(c, err.Code, "Failed to change password: "+err.Message)
-		}
-	case "customer":
-		err := h.authUsecase.ChangePasswordCustomer(c.Request().Context(), req.Phone, req.NewPassword)
-		if err != nil {
-			return response.Error(c, err.Code, "Failed to change password: "+err.Message)
-		}
-	case "deliver_person":
-		err := h.authUsecase.ChangePasswordDeliveryPerson(c.Request().Context(), req.Phone, req.NewPassword)
-		if err != nil {
-			return response.Error(c, err.Code, "Failed to change password: "+err.Message)
-		}
-	default:
-		return response.Error(c, http.StatusUnauthorized, "Invalid role")
+	err := h.authUsecase.ChangePassword(c.Request().Context(), req.Phone, req.NewPassword)
+	if err != nil {
+		return response.Error(c, err.Code, "Failed to change password: "+err.Message)
 	}
 
 	// 4. Trả về kết quả

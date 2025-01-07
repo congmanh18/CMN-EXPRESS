@@ -10,30 +10,30 @@ import (
 	"express_be/repository/delivery"
 	deliveryPersonEntity "express_be/repository/delivery/entity"
 	"express_be/repository/token"
+	"express_be/repository/user"
+	userEntity "express_be/repository/user/entity"
 	"express_be/usecase"
 )
 
 type AuthUsecase interface {
 	// Create accounts usecases
-	CreateAdmin(ctx context.Context, user *admin.Admin) *usecase.Error
-	CreateAccounting(ctx context.Context, user *accounting.Accounting) *usecase.Error
-	CreateCustomer(ctx context.Context, customer *customerEntity.Customer) *usecase.Error
-	CreateDeliveryPerson(ctx context.Context, deliveryPerson *deliveryPersonEntity.DeliveryPerson) *usecase.Error
+	CreateAdmin(ctx context.Context, user *userEntity.User, admin *admin.Admin) *usecase.Error
+	CreateAccounting(ctx context.Context, user *userEntity.User, accounting *accounting.Accounting) *usecase.Error
+	CreateCustomer(ctx context.Context, user *userEntity.User, customer *customerEntity.Customer) *usecase.Error
+	CreateDeliveryPerson(ctx context.Context, user *userEntity.User, deliveryPerson *deliveryPersonEntity.DeliveryPerson) *usecase.Error
 	// Login useaces
-	LoginAdmin(ctx context.Context, phone, password *string) (*security.Token, *admin.Admin, *usecase.Error)
-	LoginCustomer(ctx context.Context, phone, password *string) (*security.Token, *customerEntity.Customer, *usecase.Error)
-	LoginDeliveryPerson(ctx context.Context, phone, password *string) (*security.Token, *deliveryPersonEntity.DeliveryPerson, *usecase.Error)
-	LoginAccounting(ctx context.Context, phone, password *string) (*security.Token, *accounting.Accounting, *usecase.Error)
+	LoginAdmin(ctx context.Context, phone, password *string) (*security.Token, *usecase.Error)
+	LoginCustomer(ctx context.Context, phone, password *string) (*security.Token, *usecase.Error)
+	LoginDeliveryPerson(ctx context.Context, phone, password *string) (*security.Token, *usecase.Error)
+	LoginAccounting(ctx context.Context, phone, password *string) (*security.Token, *usecase.Error)
 	// ChangePassword useacses
-	ChangePasswordAdmin(ctx context.Context, phone *string, password *string) *usecase.Error
-	ChangePasswordAccounting(ctx context.Context, phone *string, password *string) *usecase.Error
-	ChangePasswordCustomer(ctx context.Context, phone *string, password *string) *usecase.Error
-	ChangePasswordDeliveryPerson(ctx context.Context, phone *string, password *string) *usecase.Error
+	ChangePassword(ctx context.Context, phone *string, password *string) *usecase.Error
 	// Validate Token
 	ValidateRefreshToken(ctx context.Context, refreshToken *string) (*string, *usecase.Error)
 }
 
 type authUsecaseImpl struct {
+	userRepo           user.Repo
 	adminRepo          admin.Repo
 	customerRepo       customer.Repo
 	deliveryPersonRepo delivery.Repo
@@ -42,6 +42,7 @@ type authUsecaseImpl struct {
 }
 
 func NewAuthUsecase(
+	userRepo user.Repo,
 	adminRepo admin.Repo,
 	customerRepo customer.Repo,
 	deliveryPersonRepo delivery.Repo,
@@ -49,6 +50,7 @@ func NewAuthUsecase(
 	tokenRepo token.Repo,
 ) AuthUsecase {
 	return &authUsecaseImpl{
+		userRepo:           userRepo,
 		adminRepo:          adminRepo,
 		customerRepo:       customerRepo,
 		deliveryPersonRepo: deliveryPersonRepo,

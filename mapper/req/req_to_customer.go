@@ -6,31 +6,38 @@ import (
 	"express_be/core/security"
 	model "express_be/model/req"
 	"express_be/repository/customer/entity"
+	user "express_be/repository/user/entity"
 
 	"github.com/google/uuid"
 	"github.com/mmcloughlin/geohash"
 )
 
-func ReqToCustomer(req model.RegisterRequest) *entity.Customer {
+func RegisterToCustomer(req model.RegisterRequest) (*entity.Customer, *user.User) {
 	// Xử lý geohash luôn nếu cần
 	geohash := geohash.Encode(req.Latitude, req.Longtitude)
 	hashedPassword, err := security.HashPassword(req.Password)
 	if err != nil {
-		return nil
+		return nil, nil
+	}
+	id := pointer.String(uuid.New().String())
+	customer := &entity.Customer{
+		BaseEntity: record.BaseEntity{
+			ID: id,
+		},
+		AccountType: entity.CustomerAccountType(req.CustomerAccountType),
+		Phone:       &req.Phone,
+		GeoHash:     &geohash,
+		Latitude:    &req.Latitude,
+		Longtitude:  &req.Longtitude,
 	}
 
-	return &entity.Customer{
+	user := &user.User{
 		BaseEntity: record.BaseEntity{
-			ID: pointer.String(uuid.New().String()),
+			ID: id,
 		},
-		AccountType:          entity.CustomerAccountType(req.CustomerAccountType),
 		Phone:                &req.Phone,
-		PasswordHash:         &hashedPassword,
+		Password:             &hashedPassword,
 		CurrentAddress:       &req.CurrentAddress,
-		GeoHash:              &geohash,
-		Latitude:             &req.Latitude,
-		Longtitude:           &req.Longtitude,
-		Status:               entity.Pending,
 		IdentificationNumber: &req.IdentificationNumber,
 		FullName:             &req.FullName,
 		DateOfBirth:          &req.DateOfBirth,
@@ -38,13 +45,15 @@ func ReqToCustomer(req model.RegisterRequest) *entity.Customer {
 		Nationality:          &req.Nationality,
 		PlaceOfOrigin:        &req.PlaceOfOrigin,
 		PlaceOfResidence:     &req.PlaceOfResidence,
+		Status:               user.Pending,
+		Role:                 user.Customer,
 	}
+	return customer, user
 }
 
-func UpdateToCustomer(req model.UpdateCustomerReq) *entity.Customer {
+func UpdateToCustomer(req model.UpdateCustomerReq) (*entity.Customer, *user.User) {
 	geohash := geohash.Encode(req.Latitude, req.Longtitude)
-	return &entity.Customer{
-		AccountType:          entity.CustomerAccountType(req.CustomerAccountType),
+	user := &user.User{
 		CurrentAddress:       &req.CurrentAddress,
 		IdentificationNumber: &req.IdentificationNumber,
 		FullName:             &req.FullName,
@@ -53,8 +62,11 @@ func UpdateToCustomer(req model.UpdateCustomerReq) *entity.Customer {
 		Nationality:          &req.Nationality,
 		PlaceOfOrigin:        &req.PlaceOfOrigin,
 		PlaceOfResidence:     &req.PlaceOfResidence,
-		GeoHash:              &geohash,
-		Latitude:             &req.Latitude,
-		Longtitude:           &req.Longtitude,
 	}
+	customer := &entity.Customer{
+		GeoHash:    &geohash,
+		Latitude:   &req.Latitude,
+		Longtitude: &req.Longtitude,
+	}
+	return customer, user
 }

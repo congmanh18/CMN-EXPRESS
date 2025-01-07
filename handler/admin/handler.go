@@ -3,6 +3,7 @@ package admin
 import (
 	"express_be/usecase/customer"
 	"express_be/usecase/delivery"
+	"express_be/usecase/user"
 
 	"github.com/labstack/echo/v4"
 )
@@ -12,23 +13,25 @@ type Handler interface {
 	HandleListPendingDeliveryPerson(c echo.Context) error
 	HandleAllCustomers(c echo.Context) error
 	HandleAllDeliveryPersons(c echo.Context) error
-	HandleUpdateCustomerStatus(c echo.Context) error
-	HandleUpdateDeliveryPersonStatus(c echo.Context) error
+	HandleUpdateStatus(c echo.Context) error
 }
 
 type handlerImpl struct {
-	adminCustomerUsecase       customer.AdminUsecase
-	adminDeliveryPersonUsecase delivery.AdminUsecase
+	adminUserUsecase      user.UserUsecase
+	customerUsecase       customer.CustomerUsecase
+	deliveryPersonUsecase delivery.DeliveryPersonUsecase
 }
 
 type HandlerInject struct {
-	AdminCustomerUsecase       customer.AdminUsecase
-	AdminDeliveryPersonUsecase delivery.AdminUsecase
+	AdminUserUsecase      user.UserUsecase
+	CustomerUsecase       customer.CustomerUsecase
+	DeliveryPersonUsecase delivery.DeliveryPersonUsecase
 }
 
 func NewHandler(inj HandlerInject) Handler {
 	return &handlerImpl{
-		adminCustomerUsecase:       inj.AdminCustomerUsecase,
-		adminDeliveryPersonUsecase: inj.AdminDeliveryPersonUsecase,
+		adminUserUsecase:      inj.AdminUserUsecase,
+		customerUsecase:       inj.CustomerUsecase,
+		deliveryPersonUsecase: inj.DeliveryPersonUsecase,
 	}
 }
