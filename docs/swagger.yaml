@@ -205,7 +205,6 @@ paths:
       - description: Filter by user status (e.g., pending, verified)
         in: query
         name: status
-        required: true
         type: string
       - description: Filter by user role (e.g., customer, delivery-person)
         in: query

@@ -18,7 +18,7 @@ import (
 // @Produce      json
 // @Param        page        query     int     false  "Page number (default is 1)"       default(1)
 // @Param        page_size   query     int     false  "Page size (default is 10)"       default(10)
-// @Param        status      query     string  true   "Filter by user status (e.g., pending, verified)"
+// @Param        status      query     string  false  "Filter by user status (e.g., pending, verified)"
 // @Param        role        query     string  true   "Filter by user role (e.g., customer, delivery-person)"
 // @Router       /users [get]
 func (h *handlerImpl) HandleListUsers(c echo.Context) error {

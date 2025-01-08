@@ -162,8 +162,7 @@ const docTemplate = `{
                         "type": "string",
                         "description": "Filter by user status (e.g., pending, verified)",
                         "name": "status",
-                        "in": "query",
-                        "required": true
+                        "in": "query"
                     },
                     {
                         "type": "string",
