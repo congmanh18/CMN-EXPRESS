@@ -39,7 +39,7 @@ func (c *userUsecaseImpl) UpdateStatus(ctx context.Context, customerID *string, 
 		}
 	}
 
-	err := c.repo.UpdateStatus(ctx, customerID, &approvalStatusValue, &accountStatus)
+	err := c.userRepo.UpdateStatus(ctx, customerID, &approvalStatusValue, &accountStatus)
 	if err != nil {
 		return &usecase.Error{
 			Code:    500,

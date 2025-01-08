@@ -3,17 +3,16 @@ package server
 import (
 	"express_be/core/transport/http/method"
 	"express_be/core/transport/http/route"
-	customerHandler "express_be/handler/customer"
-	dashboardHandler "express_be/handler/dashboard"
-	deliveryPersonHandler "express_be/handler/delivery"
+
+	// customerHandler "express_be/handler/customer"
+	// deliveryPersonHandler "express_be/handler/delivery"
+	userHandler "express_be/handler/user"
 
 	"express_be/handler/auth"
 )
 
 func SetupRoutes(
-	dashboardHandler dashboardHandler.Handler,
-	customerHandler customerHandler.Handler,
-	deliveryPersonHandler deliveryPersonHandler.Handler,
+	userHandler userHandler.Handler,
 	authhandler auth.Handler,
 	jwtSecret string,
 ) []route.GroupRoute {
@@ -50,12 +49,12 @@ func SetupRoutes(
 				{
 					Path:    "/users/:id",
 					Method:  method.PATCH,
-					Handler: dashboardHandler.HandleUpdateUserStatus,
+					Handler: userHandler.HandleUpdateUserStatus,
 				},
 				{
 					Path:    "/users",
 					Method:  method.GET,
-					Handler: dashboardHandler.HandleListUsers,
+					Handler: userHandler.HandleListUsers,
 				},
 			},
 		},
@@ -69,45 +68,45 @@ func SetupRoutes(
 		// 		},
 		// 	},
 		// },
-		{
-			Prefix: "/customers",
-			Routes: []route.Route{
-				{
-					Path:    "/:id",
-					Method:  method.GET,
-					Handler: customerHandler.HandleGetInfoCustomer,
-				},
-				{
-					Path:    "/:id",
-					Method:  method.DELETE,
-					Handler: customerHandler.HandleDeleteCustomer,
-				},
-				{
-					Path:    "/:id",
-					Method:  method.PUT,
-					Handler: customerHandler.HandleUpdateCustomer,
-				},
-			},
-		},
-		{
-			Prefix: "/delivery-persons",
-			Routes: []route.Route{
-				{
-					Path:    "/:id",
-					Method:  method.GET,
-					Handler: deliveryPersonHandler.HandleGetInfoDeliveryPerson,
-				},
-				{
-					Path:    "/:id",
-					Method:  method.DELETE,
-					Handler: deliveryPersonHandler.HandleDeleteDeliveryPerson,
-				},
-				{
-					Path:    "/:id",
-					Method:  method.PUT,
-					Handler: deliveryPersonHandler.HandleUpdateDeliveryPerson,
-				},
-			},
-		},
+		// {
+		// 	Prefix: "/customers",
+		// 	Routes: []route.Route{
+		// 		{
+		// 			Path:    "/:id",
+		// 			Method:  method.GET,
+		// 			Handler: customerHandler.HandleGetInfoCustomer,
+		// 		},
+		// 		{
+		// 			Path:    "/:id",
+		// 			Method:  method.DELETE,
+		// 			Handler: customerHandler.HandleDeleteCustomer,
+		// 		},
+		// 		{
+		// 			Path:    "/:id",
+		// 			Method:  method.PUT,
+		// 			Handler: customerHandler.HandleUpdateCustomer,
+		// 		},
+		// 	},
+		// },
+		// {
+		// 	Prefix: "/delivery-persons",
+		// 	Routes: []route.Route{
+		// 		{
+		// 			Path:    "/:id",
+		// 			Method:  method.GET,
+		// 			Handler: deliveryPersonHandler.HandleGetInfoDeliveryPerson,
+		// 		},
+		// 		{
+		// 			Path:    "/:id",
+		// 			Method:  method.DELETE,
+		// 			Handler: deliveryPersonHandler.HandleDeleteDeliveryPerson,
+		// 		},
+		// 		{
+		// 			Path:    "/:id",
+		// 			Method:  method.PUT,
+		// 			Handler: deliveryPersonHandler.HandleUpdateDeliveryPerson,
+		// 		},
+		// 	},
+		// },
 	}
 }

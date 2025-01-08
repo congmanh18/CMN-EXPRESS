@@ -66,62 +66,6 @@ definitions:
     - new_password
     - phone
     type: object
-  req.UpdateCustomerReq:
-    properties:
-      account_type:
-        type: string
-      city:
-        type: string
-      date_of_birth:
-        type: string
-      district:
-        type: string
-      full_name:
-        type: string
-      gender:
-        type: string
-      identification_number:
-        type: string
-      latitude:
-        type: number
-      longtitude:
-        type: number
-      nationality:
-        type: string
-      place_of_origin:
-        type: string
-      place_of_residence:
-        type: string
-      specific_address:
-        type: string
-      ward:
-        type: string
-    type: object
-  req.UpdateDeliveryPersonReq:
-    properties:
-      city:
-        type: string
-      date_of_birth:
-        type: string
-      district:
-        type: string
-      full_name:
-        type: string
-      gender:
-        type: string
-      identification_number:
-        type: string
-      nationality:
-        type: string
-      place_of_origin:
-        type: string
-      place_of_residence:
-        type: string
-      specific_address:
-        type: string
-      ward:
-        type: string
-    type: object
 host: 203.145.47.225
 info:
   contact:
@@ -138,143 +82,6 @@ info:
   title: CMN Express API Documentation
   version: "1.0"
 paths:
-  /customers/{id}:
-    delete:
-      consumes:
-      - application/json
-      description: Thực hiện xóa khách hàng theo ID
-      parameters:
-      - description: Customer ID
-        in: path
-        name: id
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses: {}
-      summary: Xóa tài khoản khách hàng
-      tags:
-      - Customers
-    get:
-      consumes:
-      - application/json
-      description: Truy xuất thông tin chi tiết về một khách hàng cụ thể theo ID
-      parameters:
-      - description: Customer ID
-        in: path
-        name: id
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses: {}
-      summary: Nhận thông tin khách hàng
-      tags:
-      - Customers
-    put:
-      consumes:
-      - application/json
-      description: |-
-        Cập nhật chi tiết của một khách hàng cụ thể theo ID
-        Example customer payload:
-        ``` {
-        "account_type": "prepaid",
-        "current_address": "Shop Address of Customer",
-        "date_of_birth": "23/10/2002",
-        "full_name": "Nguyen Cong Manh",
-        "gender": "Nam",
-        "identification_number": "052202014579",
-        "nationality": "VN",
-        "place_of_origin": "Hoài Sơn, Thị xã Hoài Nhơn, Bình Định",
-        "place_of_residence": "Thôn Phú Nông, Hoài Sơn, Hoài Nhơn, Bình Định",
-        "latitude": 37.7749,
-        "longtitude": 122.4194
-        } ```
-      parameters:
-      - description: Customer ID
-        in: path
-        name: id
-        required: true
-        type: string
-      - description: Customer Update Request
-        in: body
-        name: request
-        required: true
-        schema:
-          $ref: '#/definitions/req.UpdateCustomerReq'
-      produces:
-      - application/json
-      responses: {}
-      summary: Cập nhật thông tin khách hàng
-      tags:
-      - Customers
-  /delivery-persons/{id}:
-    delete:
-      consumes:
-      - application/json
-      description: Thực hiện xóa người giao hàng theo ID
-      parameters:
-      - description: Delivery Person ID
-        in: path
-        name: id
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses: {}
-      summary: Xóa tài khoản người giao hàng
-      tags:
-      - DeliveryPersons
-    get:
-      consumes:
-      - application/json
-      description: Truy xuất thông tin chi tiết về người giao hàng cụ thể theo ID
-      parameters:
-      - description: Delivery Person ID
-        in: path
-        name: id
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses: {}
-      summary: Lấy thông tin người giao hàng
-      tags:
-      - DeliveryPersons
-    put:
-      consumes:
-      - application/json
-      description: |-
-        Cập nhật chi tiết người giao hàng cụ thể theo ID
-        Example delivery person payload:
-        ``` {
-        "current_address": "Shop Address of Customer",
-        "date_of_birth": "23/10/2002",
-        "full_name": "Nguyen Cong Manh",
-        "gender": "Nam",
-        "identification_number": "052202014579",
-        "nationality": "VN",
-        "place_of_origin": "Hoài Sơn, Thị xã Hoài Nhơn, Bình Định",
-        "place_of_residence": "Thôn Phú Nông, Hoài Sơn, Hoài Nhơn, Bình Định",
-        } ```
-      parameters:
-      - description: Delivery Person ID
-        in: path
-        name: id
-        required: true
-        type: string
-      - description: Delivery Person Update Request
-        in: body
-        name: request
-        required: true
-        schema:
-          $ref: '#/definitions/req.UpdateDeliveryPersonReq'
-      produces:
-      - application/json
-      responses: {}
-      summary: Cập nhật thông tin người giao hàng
-      tags:
-      - DeliveryPersons
   /login:
     post:
       consumes:
@@ -412,6 +219,23 @@ paths:
       tags:
       - Users
   /users/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Fetch the details of a user based on their ID. The user can be
+        either a customer or a delivery person.
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses: {}
+      summary: Get user information
+      tags:
+      - Users
     patch:
       consumes:
       - application/json
@@ -432,5 +256,5 @@ paths:
       responses: {}
       summary: Cập nhật trạng thái khách hàng
       tags:
-      - Admin
+      - Users
 swagger: "2.0"

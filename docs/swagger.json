@@ -18,166 +18,6 @@
     "host": "203.145.47.225",
     "basePath": "/",
     "paths": {
-        "/customers/{id}": {
-            "get": {
-                "description": "Truy xuất thông tin chi tiết về một khách hàng cụ thể theo ID",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Customers"
-                ],
-                "summary": "Nhận thông tin khách hàng",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Customer ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {}
-            },
-            "put": {
-                "description": "Cập nhật chi tiết của một khách hàng cụ thể theo ID\nExample customer payload:\n``` {\n\"account_type\": \"prepaid\",\n\"current_address\": \"Shop Address of Customer\",\n\"date_of_birth\": \"23/10/2002\",\n\"full_name\": \"Nguyen Cong Manh\",\n\"gender\": \"Nam\",\n\"identification_number\": \"052202014579\",\n\"nationality\": \"VN\",\n\"place_of_origin\": \"Hoài Sơn, Thị xã Hoài Nhơn, Bình Định\",\n\"place_of_residence\": \"Thôn Phú Nông, Hoài Sơn, Hoài Nhơn, Bình Định\",\n\"latitude\": 37.7749,\n\"longtitude\": 122.4194\n} ```",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Customers"
-                ],
-                "summary": "Cập nhật thông tin khách hàng",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Customer ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "description": "Customer Update Request",
-                        "name": "request",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/req.UpdateCustomerReq"
-                        }
-                    }
-                ],
-                "responses": {}
-            },
-            "delete": {
-                "description": "Thực hiện xóa khách hàng theo ID",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Customers"
-                ],
-                "summary": "Xóa tài khoản khách hàng",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Customer ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {}
-            }
-        },
-        "/delivery-persons/{id}": {
-            "get": {
-                "description": "Truy xuất thông tin chi tiết về người giao hàng cụ thể theo ID",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "DeliveryPersons"
-                ],
-                "summary": "Lấy thông tin người giao hàng",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Delivery Person ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {}
-            },
-            "put": {
-                "description": "Cập nhật chi tiết người giao hàng cụ thể theo ID\nExample delivery person payload:\n``` {\n\"current_address\": \"Shop Address of Customer\",\n\"date_of_birth\": \"23/10/2002\",\n\"full_name\": \"Nguyen Cong Manh\",\n\"gender\": \"Nam\",\n\"identification_number\": \"052202014579\",\n\"nationality\": \"VN\",\n\"place_of_origin\": \"Hoài Sơn, Thị xã Hoài Nhơn, Bình Định\",\n\"place_of_residence\": \"Thôn Phú Nông, Hoài Sơn, Hoài Nhơn, Bình Định\",\n} ```",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "DeliveryPersons"
-                ],
-                "summary": "Cập nhật thông tin người giao hàng",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Delivery Person ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "description": "Delivery Person Update Request",
-                        "name": "request",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/req.UpdateDeliveryPersonReq"
-                        }
-                    }
-                ],
-                "responses": {}
-            },
-            "delete": {
-                "description": "Thực hiện xóa người giao hàng theo ID",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "DeliveryPersons"
-                ],
-                "summary": "Xóa tài khoản người giao hàng",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Delivery Person ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {}
-            }
-        },
         "/login": {
             "post": {
                 "description": "Login for different roles (admin, customer, delivery_person, accounting)\nExample customer payload:\n``` {\n\"phone\": \"0977683511\",\n\"password\": \"strongpassword123\"\n} ```",
@@ -331,6 +171,29 @@
             }
         },
         "/users/{id}": {
+            "get": {
+                "description": "Fetch the details of a user based on their ID. The user can be either a customer or a delivery person.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Get user information",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            },
             "patch": {
                 "description": "Cập nhật trạng thái của một khách hàng dựa trên ID",
                 "consumes": [
@@ -340,7 +203,7 @@
                     "application/json"
                 ],
                 "tags": [
-                    "Admin"
+                    "Users"
                 ],
                 "summary": "Cập nhật trạng thái khách hàng",
                 "parameters": [
@@ -457,91 +320,6 @@
                     "type": "string"
                 },
                 "phone": {
-                    "type": "string"
-                }
-            }
-        },
-        "req.UpdateCustomerReq": {
-            "type": "object",
-            "properties": {
-                "account_type": {
-                    "type": "string"
-                },
-                "city": {
-                    "type": "string"
-                },
-                "date_of_birth": {
-                    "type": "string"
-                },
-                "district": {
-                    "type": "string"
-                },
-                "full_name": {
-                    "type": "string"
-                },
-                "gender": {
-                    "type": "string"
-                },
-                "identification_number": {
-                    "type": "string"
-                },
-                "latitude": {
-                    "type": "number"
-                },
-                "longtitude": {
-                    "type": "number"
-                },
-                "nationality": {
-                    "type": "string"
-                },
-                "place_of_origin": {
-                    "type": "string"
-                },
-                "place_of_residence": {
-                    "type": "string"
-                },
-                "specific_address": {
-                    "type": "string"
-                },
-                "ward": {
-                    "type": "string"
-                }
-            }
-        },
-        "req.UpdateDeliveryPersonReq": {
-            "type": "object",
-            "properties": {
-                "city": {
-                    "type": "string"
-                },
-                "date_of_birth": {
-                    "type": "string"
-                },
-                "district": {
-                    "type": "string"
-                },
-                "full_name": {
-                    "type": "string"
-                },
-                "gender": {
-                    "type": "string"
-                },
-                "identification_number": {
-                    "type": "string"
-                },
-                "nationality": {
-                    "type": "string"
-                },
-                "place_of_origin": {
-                    "type": "string"
-                },
-                "place_of_residence": {
-                    "type": "string"
-                },
-                "specific_address": {
-                    "type": "string"
-                },
-                "ward": {
                     "type": "string"
                 }
             }

@@ -4,16 +4,15 @@ import (
 	"context"
 	"express_be/repository/user/entity"
 	"express_be/usecase"
-	"net/http"
 )
 
 func (c *userUsecaseImpl) GetUsers(ctx context.Context, status, role *string, page, pageSize *int) ([]entity.CustomerDetails, []entity.DeliveryPersonDetails, *usecase.Error) {
 	switch *role {
 	case "customer":
-		customers, err := c.repo.FetchCustomerUsers(ctx, status, page, pageSize)
+		customers, err := c.userRepo.FetchCustomerUsers(ctx, status, page, pageSize)
 		if err != nil {
 			return nil, nil, &usecase.Error{
-				Code:    http.StatusInternalServerError,
+				Code:    500,
 				Message: err.Error(),
 				Err:     err,
 			}
@@ -21,10 +20,10 @@ func (c *userUsecaseImpl) GetUsers(ctx context.Context, status, role *string, pa
 		return customers, nil, nil
 
 	case "delivery_person":
-		deliveryPersons, err := c.repo.FetchDeliveryPersonUsers(ctx, status, page, pageSize)
+		deliveryPersons, err := c.userRepo.FetchDeliveryPersonUsers(ctx, status, page, pageSize)
 		if err != nil {
 			return nil, nil, &usecase.Error{
-				Code:    http.StatusInternalServerError,
+				Code:    500,
 				Message: err.Error(),
 				Err:     err,
 			}
@@ -33,7 +32,7 @@ func (c *userUsecaseImpl) GetUsers(ctx context.Context, status, role *string, pa
 	}
 
 	return nil, nil, &usecase.Error{
-		Code:    http.StatusBadRequest,
-		Message: "Invalid role provided. Role should be either 'customer' or 'delivery_person'",
+		Code:    400,
+		Message: "Invalid role. Please provide 'customer' or 'delivery_person'.",
 	}
 }

@@ -10,9 +10,7 @@ import (
 	"express_be/provider"
 
 	authHandler "express_be/handler/auth"
-	customerHandler "express_be/handler/customer"
-	dashboardHandler "express_be/handler/dashboard"
-	deliveryPersonHandler "express_be/handler/delivery"
+	userHandler "express_be/handler/user"
 
 	accountingRepo "express_be/repository/accounting"
 	adminRepo "express_be/repository/admin"
@@ -22,8 +20,6 @@ import (
 	userRepo "express_be/repository/user"
 
 	"express_be/usecase/auth"
-	"express_be/usecase/customer"
-	"express_be/usecase/delivery"
 	"express_be/usecase/user"
 
 	echoSwagger "github.com/swaggo/echo-swagger"
@@ -76,28 +72,24 @@ func Run(confPath string) {
 
 	// Khởi tạo Usecase
 	authUsecase := auth.NewAuthUsecase(userRepo, adminRepo, custRepo, deliRepo, accountingRepo, tokenRepo)
-	userUsecase := user.NewUserUsecase(userRepo)
-	customerUsecase := customer.NewCustomerUsecase(userRepo, custRepo)
-	deliveryUsecase := delivery.NewDeliveryPersonUsecase(userRepo, deliRepo)
+	userUsecase := user.NewUserUsecase(userRepo, custRepo, deliRepo)
 
 	// Khởi tạo handler
-	dashboardHandl := dashboardHandler.NewHandler(dashboardHandler.HandlerInject{
-		UserUsecase:           userUsecase,
-		CustomerUsecase:       customerUsecase,
-		DeliveryPersonUsecase: deliveryUsecase,
+	userHandl := userHandler.NewHandler(userHandler.HandlerInject{
+		UserUsecase: userUsecase,
 	})
-	customerHandl := customerHandler.NewHandler(customerHandler.HandlerInject{
-		CustomerUsecase: customerUsecase,
-	})
-	deliveryHandl := deliveryPersonHandler.NewHandler(deliveryPersonHandler.HandlerInject{
-		DeliveryPersonUsecase: deliveryUsecase,
-	})
+	// customerHandl := customerHandler.NewHandler(customerHandler.HandlerInject{
+	// 	CustomerUsecase: customerUsecase,
+	// })
+	// deliveryHandl := deliveryPersonHandler.NewHandler(deliveryPersonHandler.HandlerInject{
+	// 	DeliveryPersonUsecase: deliveryUsecase,
+	// })
 	authHandl := authHandler.NewHandler(authHandler.HandlerInject{
 		AuthUsecase: authUsecase,
 	})
 
 	// Khởi tạo routes
-	routes := SetupRoutes(dashboardHandl, customerHandl, deliveryHandl, authHandl, jwtSecret)
+	routes := SetupRoutes(userHandl, authHandl, jwtSecret)
 
 	s := NewServer(serviceConf, routes)
 	s.Run()

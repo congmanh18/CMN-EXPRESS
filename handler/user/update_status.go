@@ -10,7 +10,7 @@ import (
 // HandleVerifyCustomer implements Handler.
 // @Summary Cập nhật trạng thái khách hàng
 // @Description Cập nhật trạng thái của một khách hàng dựa trên ID
-// @Tags Admin
+// @Tags Users
 // @Accept json
 // @Produce json
 // @Param id path string true "Customer ID"
