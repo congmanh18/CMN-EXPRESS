@@ -52,7 +52,7 @@ func SetupRoutes(
 					Handler: userHandler.HandleUpdateUserStatus,
 				},
 				{
-					Path:    "/users",
+					Path:    "/users/:id",
 					Method:  method.GET,
 					Handler: userHandler.HandleListUsers,
 				},
