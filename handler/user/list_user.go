@@ -33,10 +33,6 @@ func (h *handlerImpl) HandleListUsers(c echo.Context) error {
 	}
 
 	status := c.QueryParam("status")
-	if status == "" {
-		return response.Error(c, http.StatusBadRequest, "status is required")
-	}
-
 	role := c.QueryParam("role")
 	if role == "" {
 		return response.Error(c, http.StatusBadRequest, "role is required")
