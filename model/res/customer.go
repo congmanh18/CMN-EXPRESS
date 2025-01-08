@@ -1,10 +1,13 @@
 package res
 
 type CustomerRes struct {
-	ID             *string `json:"id"`
-	Phone          *string `json:"phone"`
-	CurrentAddress *string `json:"current_address"`
-	AccountType    *string `json:"account_type"`
+	ID              *string `json:"id"`
+	Phone           *string `json:"phone"`
+	SpecificAddress *string `json:"specific_address"`
+	Ward            *string `json:"ward"`
+	District        *string `json:"district"`
+	City            *string `json:"city"`
+	AccountType     *string `json:"account_type"`
 
 	Status    *string  `json:"status"`
 	Latitude  *float64 `json:"latitude"`
@@ -19,10 +22,11 @@ type CustomerRes struct {
 	PlaceOfResidence     *string `json:"place_of_residence"`
 }
 
-type CustomerPaginationResponse struct {
-	Page       int           `json:"page"`
-	PageSize   int           `json:"page_size"`
-	TotalPages int           `json:"total_pages,omitempty"` // Nếu cần tổng số trang
-	TotalCount int64         `json:"total_count,omitempty"` // Nếu cần tổng số bản ghi
-	List       []CustomerRes `json:"list"`
+type UserPaginationResponse struct {
+	Page            int                 `json:"page"`
+	PageSize        int                 `json:"page_size"`
+	TotalPages      int                 `json:"total_pages,omitempty"` // Nếu cần tổng số trang
+	TotalCount      int64               `json:"total_count,omitempty"` // Nếu cần tổng số bản ghi
+	Customers       []CustomerRes       `json:"customers,omitempty"`
+	DeliveryPersons []DeliveryPersonRes `json:"delivery_persons,omitempty"`
 }

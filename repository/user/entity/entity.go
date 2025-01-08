@@ -35,7 +35,10 @@ type User struct {
 	record.BaseEntity
 	Phone                *string `gorm:"uniqueIndex:idx_phone_deleted_at"`
 	Password             *string
-	CurrentAddress       *string
+	SpecificAddress      *string
+	Ward                 *string
+	District             *string
+	City                 *string
 	IdentificationNumber *string
 	FullName             *string
 	DateOfBirth          *string

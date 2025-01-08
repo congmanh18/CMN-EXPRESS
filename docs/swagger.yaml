@@ -15,9 +15,11 @@ definitions:
       account_type:
         description: 2. Field for customer
         type: string
-      current_address:
+      city:
         type: string
       date_of_birth:
+        type: string
+      district:
         type: string
       full_name:
         type: string
@@ -43,6 +45,10 @@ definitions:
       role:
         description: 3. Field for delivery person
         type: string
+      specific_address:
+        type: string
+      ward:
+        type: string
     required:
     - password
     - phone
@@ -55,21 +61,20 @@ definitions:
         type: string
       phone:
         type: string
-      role:
-        type: string
     required:
     - confirm_password
     - new_password
     - phone
-    - role
     type: object
   req.UpdateCustomerReq:
     properties:
       account_type:
         type: string
-      current_address:
+      city:
         type: string
       date_of_birth:
+        type: string
+      district:
         type: string
       full_name:
         type: string
@@ -87,12 +92,18 @@ definitions:
         type: string
       place_of_residence:
         type: string
+      specific_address:
+        type: string
+      ward:
+        type: string
     type: object
   req.UpdateDeliveryPersonReq:
     properties:
-      current_address:
+      city:
         type: string
       date_of_birth:
+        type: string
+      district:
         type: string
       full_name:
         type: string
@@ -105,6 +116,10 @@ definitions:
       place_of_origin:
         type: string
       place_of_residence:
+        type: string
+      specific_address:
+        type: string
+      ward:
         type: string
     type: object
 host: 203.145.47.225
@@ -123,110 +138,6 @@ info:
   title: CMN Express API Documentation
   version: "1.0"
 paths:
-  /admin/customers/all:
-    get:
-      consumes:
-      - application/json
-      description: Truy xuất danh sách tất cả khách hàng được phân trang
-      parameters:
-      - description: Page number, defaults to 1
-        in: query
-        name: page
-        type: integer
-      - description: Page size, defaults to 10
-        in: query
-        name: page_size
-        type: integer
-      produces:
-      - application/json
-      responses: {}
-      summary: Liệt kê tất cả khách hàng
-      tags:
-      - Admin
-  /admin/customers/pending:
-    get:
-      consumes:
-      - application/json
-      description: Truy xuất danh sách khách hàng được phân trang với trạng thái "PENDING"
-      parameters:
-      - description: Page number, defaults to 1
-        in: query
-        name: page
-        type: integer
-      - description: Page size, defaults to 10
-        in: query
-        name: page_size
-        type: integer
-      produces:
-      - application/json
-      responses: {}
-      summary: Liệt kê khách hàng đang "PENDING"
-      tags:
-      - Admin
-  /admin/delivery-persons/all:
-    get:
-      consumes:
-      - application/json
-      description: Truy xuất danh sách được phân trang của tất cả những người giao
-        hàng
-      parameters:
-      - description: Page number, defaults to 1
-        in: query
-        name: page
-        type: integer
-      - description: Page size, defaults to 10
-        in: query
-        name: page_size
-        type: integer
-      produces:
-      - application/json
-      responses: {}
-      summary: Liệt kê tất cả những người giao hàng
-      tags:
-      - Admin
-  /admin/delivery-persons/pending:
-    get:
-      consumes:
-      - application/json
-      description: Truy xuất danh sách được phân trang của những người giao hàng với
-        trạng thái "PENDING"
-      parameters:
-      - description: Page number, defaults to 1
-        in: query
-        name: page
-        type: integer
-      - description: Page size, defaults to 10
-        in: query
-        name: page_size
-        type: integer
-      produces:
-      - application/json
-      responses: {}
-      summary: Liệt kê những người giao hàng đang "PENDING"
-      tags:
-      - Admin
-  /admin/users/{id}:
-    patch:
-      consumes:
-      - application/json
-      description: Cập nhật trạng thái của một khách hàng dựa trên ID
-      parameters:
-      - description: Customer ID
-        in: path
-        name: id
-        required: true
-        type: string
-      - description: Trạng thái mới của khách hàng (accept, deny)
-        in: query
-        name: approval-status
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses: {}
-      summary: Cập nhật trạng thái khách hàng
-      tags:
-      - Admin
   /customers/{id}:
     delete:
       consumes:
@@ -467,4 +378,59 @@ paths:
       summary: Đổi mật khẩu
       tags:
       - Authentication
+  /users:
+    get:
+      consumes:
+      - application/json
+      description: Get a list of users (customers and delivery persons) with optional
+        filters by status and role, including pagination.
+      parameters:
+      - default: 1
+        description: Page number (default is 1)
+        in: query
+        name: page
+        type: integer
+      - default: 10
+        description: Page size (default is 10)
+        in: query
+        name: page_size
+        type: integer
+      - description: Filter by user status (e.g., pending, verified)
+        in: query
+        name: status
+        required: true
+        type: string
+      - description: Filter by user role (e.g., customer, delivery-person)
+        in: query
+        name: role
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses: {}
+      summary: Fetch paginated users
+      tags:
+      - Users
+  /users/{id}:
+    patch:
+      consumes:
+      - application/json
+      description: Cập nhật trạng thái của một khách hàng dựa trên ID
+      parameters:
+      - description: Customer ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Trạng thái mới của khách hàng (accept, deny)
+        in: query
+        name: approval-status
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses: {}
+      summary: Cập nhật trạng thái khách hàng
+      tags:
+      - Admin
 swagger: "2.0"

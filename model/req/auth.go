@@ -13,7 +13,10 @@ type RegisterRequest struct {
 	// 1. Default field
 	Phone                string `json:"phone" validate:"required"`
 	Password             string `json:"password" validate:"required"`
-	CurrentAddress       string `json:"current_address,omitempty"`
+	SpecificAddress      string `json:"specific_address"`
+	Ward                 string `json:"ward"`
+	District             string `json:"district"`
+	City                 string `json:"city"`
 	IdentificationNumber string `json:"identification_number,omitempty"`
 	FullName             string `json:"full_name,omitempty"`
 	DateOfBirth          string `json:"date_of_birth,omitempty"`
@@ -36,7 +39,6 @@ type ForgotPasswordRequest struct {
 }
 
 type ResetPasswordRequest struct {
-	Role            *string `json:"role" validate:"required"`
 	Phone           *string `json:"phone" validate:"required"`
 	NewPassword     *string `json:"new_password" validate:"required"`
 	ConfirmPassword *string `json:"confirm_password" validate:"required"`

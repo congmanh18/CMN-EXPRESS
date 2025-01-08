@@ -19,6 +19,17 @@ func RegisterToCustomer(req model.RegisterRequest) (*entity.Customer, *user.User
 	if err != nil {
 		return nil, nil
 	}
+
+	var status user.Status
+	var approvalStatus user.ApprovalStatus
+	if req.CustomerAccountType == string(entity.Postpaid) {
+		status = user.Verified
+		approvalStatus = user.Accepted
+	} else {
+		status = user.Pending
+		approvalStatus = ""
+	}
+
 	id := pointer.String(uuid.New().String())
 	customer := &entity.Customer{
 		BaseEntity: record.BaseEntity{
@@ -37,7 +48,10 @@ func RegisterToCustomer(req model.RegisterRequest) (*entity.Customer, *user.User
 		},
 		Phone:                &req.Phone,
 		Password:             &hashedPassword,
-		CurrentAddress:       &req.CurrentAddress,
+		SpecificAddress:      &req.SpecificAddress,
+		Ward:                 &req.Ward,
+		District:             &req.District,
+		City:                 &req.City,
 		IdentificationNumber: &req.IdentificationNumber,
 		FullName:             &req.FullName,
 		DateOfBirth:          &req.DateOfBirth,
@@ -45,7 +59,8 @@ func RegisterToCustomer(req model.RegisterRequest) (*entity.Customer, *user.User
 		Nationality:          &req.Nationality,
 		PlaceOfOrigin:        &req.PlaceOfOrigin,
 		PlaceOfResidence:     &req.PlaceOfResidence,
-		Status:               user.Pending,
+		Status:               status,
+		ApprovalStatus:       approvalStatus,
 		Role:                 user.Customer,
 	}
 	return customer, user
@@ -54,7 +69,10 @@ func RegisterToCustomer(req model.RegisterRequest) (*entity.Customer, *user.User
 func UpdateToCustomer(req model.UpdateCustomerReq) (*entity.Customer, *user.User) {
 	geohash := geohash.Encode(req.Latitude, req.Longtitude)
 	user := &user.User{
-		CurrentAddress:       &req.CurrentAddress,
+		SpecificAddress:      &req.SpecificAddress,
+		Ward:                 &req.Ward,
+		District:             &req.District,
+		City:                 &req.City,
 		IdentificationNumber: &req.IdentificationNumber,
 		FullName:             &req.FullName,
 		DateOfBirth:          &req.DateOfBirth,

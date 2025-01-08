@@ -8,10 +8,13 @@ import (
 func DeliveryPersonToRes(user *userEntity.DeliveryPersonDetails) res.DeliveryPersonRes {
 	status := string(user.Status)
 	return res.DeliveryPersonRes{
-		ID:             user.ID,
-		Phone:          user.Phone,
-		CurrentAddress: user.CurrentAddress,
-		Status:         &status,
+		ID:              user.ID,
+		Phone:           user.Phone,
+		SpecificAddress: user.SpecificAddress,
+		Ward:            user.Ward,
+		District:        user.District,
+		City:            user.City,
+		Status:          &status,
 
 		IdentificationNumber: user.IdentificationNumber,
 		FullName:             user.FullName,

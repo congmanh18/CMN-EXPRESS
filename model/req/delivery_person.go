@@ -1,7 +1,10 @@
 package req
 
 type UpdateDeliveryPersonReq struct {
-	CurrentAddress       string `json:"current_address,omitempty"`
+	SpecificAddress      string `json:"specific_address"`
+	Ward                 string `json:"ward"`
+	District             string `json:"district"`
+	City                 string `json:"city"`
 	IdentificationNumber string `json:"identification_number,omitempty"`
 	FullName             string `json:"full_name,omitempty"`
 	DateOfBirth          string `json:"date_of_birth,omitempty"`

@@ -11,3 +11,8 @@ type DeliveryPersonDetails struct {
 	User
 	SalaryRate *float64 `json:"salary_rate" gorm:"column:salary_rate"`
 }
+
+type UserDetails struct {
+	User
+	AccountType *string `json:"account_type" gorm:"column:account_type"`
+}

@@ -24,158 +24,6 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/admin/customers/all": {
-            "get": {
-                "description": "Truy xuất danh sách tất cả khách hàng được phân trang",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Admin"
-                ],
-                "summary": "Liệt kê tất cả khách hàng",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "description": "Page number, defaults to 1",
-                        "name": "page",
-                        "in": "query"
-                    },
-                    {
-                        "type": "integer",
-                        "description": "Page size, defaults to 10",
-                        "name": "page_size",
-                        "in": "query"
-                    }
-                ],
-                "responses": {}
-            }
-        },
-        "/admin/customers/pending": {
-            "get": {
-                "description": "Truy xuất danh sách khách hàng được phân trang với trạng thái \"PENDING\"",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Admin"
-                ],
-                "summary": "Liệt kê khách hàng đang \"PENDING\"",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "description": "Page number, defaults to 1",
-                        "name": "page",
-                        "in": "query"
-                    },
-                    {
-                        "type": "integer",
-                        "description": "Page size, defaults to 10",
-                        "name": "page_size",
-                        "in": "query"
-                    }
-                ],
-                "responses": {}
-            }
-        },
-        "/admin/delivery-persons/all": {
-            "get": {
-                "description": "Truy xuất danh sách được phân trang của tất cả những người giao hàng",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Admin"
-                ],
-                "summary": "Liệt kê tất cả những người giao hàng",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "description": "Page number, defaults to 1",
-                        "name": "page",
-                        "in": "query"
-                    },
-                    {
-                        "type": "integer",
-                        "description": "Page size, defaults to 10",
-                        "name": "page_size",
-                        "in": "query"
-                    }
-                ],
-                "responses": {}
-            }
-        },
-        "/admin/delivery-persons/pending": {
-            "get": {
-                "description": "Truy xuất danh sách được phân trang của những người giao hàng với trạng thái \"PENDING\"",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Admin"
-                ],
-                "summary": "Liệt kê những người giao hàng đang \"PENDING\"",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "description": "Page number, defaults to 1",
-                        "name": "page",
-                        "in": "query"
-                    },
-                    {
-                        "type": "integer",
-                        "description": "Page size, defaults to 10",
-                        "name": "page_size",
-                        "in": "query"
-                    }
-                ],
-                "responses": {}
-            }
-        },
-        "/admin/users/{id}": {
-            "patch": {
-                "description": "Cập nhật trạng thái của một khách hàng dựa trên ID",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Admin"
-                ],
-                "summary": "Cập nhật trạng thái khách hàng",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Customer ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Trạng thái mới của khách hàng (accept, deny)",
-                        "name": "approval-status",
-                        "in": "query",
-                        "required": true
-                    }
-                ],
-                "responses": {}
-            }
-        },
         "/customers/{id}": {
             "get": {
                 "description": "Truy xuất thông tin chi tiết về một khách hàng cụ thể theo ID",
@@ -441,6 +289,84 @@ const docTemplate = `{
                 ],
                 "responses": {}
             }
+        },
+        "/users": {
+            "get": {
+                "description": "Get a list of users (customers and delivery persons) with optional filters by status and role, including pagination.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Fetch paginated users",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "default": 1,
+                        "description": "Page number (default is 1)",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "default": 10,
+                        "description": "Page size (default is 10)",
+                        "name": "page_size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Filter by user status (e.g., pending, verified)",
+                        "name": "status",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Filter by user role (e.g., customer, delivery-person)",
+                        "name": "role",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/users/{id}": {
+            "patch": {
+                "description": "Cập nhật trạng thái của một khách hàng dựa trên ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Cập nhật trạng thái khách hàng",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Customer ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Trạng thái mới của khách hàng (accept, deny)",
+                        "name": "approval-status",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            }
         }
     },
     "definitions": {
@@ -470,10 +396,13 @@ const docTemplate = `{
                     "description": "2. Field for customer",
                     "type": "string"
                 },
-                "current_address": {
+                "city": {
                     "type": "string"
                 },
                 "date_of_birth": {
+                    "type": "string"
+                },
+                "district": {
                     "type": "string"
                 },
                 "full_name": {
@@ -510,6 +439,12 @@ const docTemplate = `{
                 "role": {
                     "description": "3. Field for delivery person",
                     "type": "string"
+                },
+                "specific_address": {
+                    "type": "string"
+                },
+                "ward": {
+                    "type": "string"
                 }
             }
         },
@@ -518,8 +453,7 @@ const docTemplate = `{
             "required": [
                 "confirm_password",
                 "new_password",
-                "phone",
-                "role"
+                "phone"
             ],
             "properties": {
                 "confirm_password": {
@@ -530,9 +464,6 @@ const docTemplate = `{
                 },
                 "phone": {
                     "type": "string"
-                },
-                "role": {
-                    "type": "string"
                 }
             }
         },
@@ -542,10 +473,13 @@ const docTemplate = `{
                 "account_type": {
                     "type": "string"
                 },
-                "current_address": {
+                "city": {
                     "type": "string"
                 },
                 "date_of_birth": {
+                    "type": "string"
+                },
+                "district": {
                     "type": "string"
                 },
                 "full_name": {
@@ -571,16 +505,25 @@ const docTemplate = `{
                 },
                 "place_of_residence": {
                     "type": "string"
+                },
+                "specific_address": {
+                    "type": "string"
+                },
+                "ward": {
+                    "type": "string"
                 }
             }
         },
         "req.UpdateDeliveryPersonReq": {
             "type": "object",
             "properties": {
-                "current_address": {
+                "city": {
                     "type": "string"
                 },
                 "date_of_birth": {
+                    "type": "string"
+                },
+                "district": {
                     "type": "string"
                 },
                 "full_name": {
@@ -599,6 +542,12 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "place_of_residence": {
+                    "type": "string"
+                },
+                "specific_address": {
+                    "type": "string"
+                },
+                "ward": {
                     "type": "string"
                 }
             }

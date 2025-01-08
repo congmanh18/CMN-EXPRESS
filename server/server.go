@@ -9,9 +9,9 @@ import (
 	"express_be/migration"
 	"express_be/provider"
 
-	adminHandler "express_be/handler/admin"
 	authHandler "express_be/handler/auth"
 	customerHandler "express_be/handler/customer"
+	dashboardHandler "express_be/handler/dashboard"
 	deliveryPersonHandler "express_be/handler/delivery"
 
 	accountingRepo "express_be/repository/accounting"
@@ -81,8 +81,8 @@ func Run(confPath string) {
 	deliveryUsecase := delivery.NewDeliveryPersonUsecase(userRepo, deliRepo)
 
 	// Khởi tạo handler
-	adminHandl := adminHandler.NewHandler(adminHandler.HandlerInject{
-		AdminUserUsecase:      userUsecase,
+	dashboardHandl := dashboardHandler.NewHandler(dashboardHandler.HandlerInject{
+		UserUsecase:           userUsecase,
 		CustomerUsecase:       customerUsecase,
 		DeliveryPersonUsecase: deliveryUsecase,
 	})
@@ -97,7 +97,7 @@ func Run(confPath string) {
 	})
 
 	// Khởi tạo routes
-	routes := SetupRoutes(adminHandl, customerHandl, deliveryHandl, authHandl, jwtSecret)
+	routes := SetupRoutes(dashboardHandl, customerHandl, deliveryHandl, authHandl, jwtSecret)
 
 	s := NewServer(serviceConf, routes)
 	s.Run()

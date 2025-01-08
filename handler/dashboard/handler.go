@@ -1,4 +1,4 @@
-package admin
+package dashboard
 
 import (
 	"express_be/usecase/customer"
@@ -9,28 +9,25 @@ import (
 )
 
 type Handler interface {
-	HandleListPendingCustomer(c echo.Context) error
-	HandleListPendingDeliveryPerson(c echo.Context) error
-	HandleAllCustomers(c echo.Context) error
-	HandleAllDeliveryPersons(c echo.Context) error
-	HandleUpdateStatus(c echo.Context) error
+	HandleListUsers(c echo.Context) error
+	HandleUpdateUserStatus(c echo.Context) error
 }
 
 type handlerImpl struct {
-	adminUserUsecase      user.UserUsecase
+	userUsecase           user.UserUsecase
 	customerUsecase       customer.CustomerUsecase
 	deliveryPersonUsecase delivery.DeliveryPersonUsecase
 }
 
 type HandlerInject struct {
-	AdminUserUsecase      user.UserUsecase
+	UserUsecase           user.UserUsecase
 	CustomerUsecase       customer.CustomerUsecase
 	DeliveryPersonUsecase delivery.DeliveryPersonUsecase
 }
 
 func NewHandler(inj HandlerInject) Handler {
 	return &handlerImpl{
-		adminUserUsecase:      inj.AdminUserUsecase,
+		userUsecase:           inj.UserUsecase,
 		customerUsecase:       inj.CustomerUsecase,
 		deliveryPersonUsecase: inj.DeliveryPersonUsecase,
 	}

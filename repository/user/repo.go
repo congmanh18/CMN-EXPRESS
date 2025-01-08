@@ -11,12 +11,10 @@ type Repo interface {
 	FindByPhone(ctx context.Context, phone *string) (*user.User, error)
 	Update(ctx context.Context, id *string, user *user.User) error
 	UpdateStatus(ctx context.Context, id *string, approval_status *user.ApprovalStatus, status *user.Status) error // Dùng để verify tài khoản 2
-	FetchPendingStatusCustomers(ctx context.Context, page, pageSize *int) ([]user.CustomerDetails, error)
-	FetchPendingStatusDeliveryPerson(ctx context.Context, page, pageSize *int) ([]user.DeliveryPersonDetails, error)
+	FetchCustomerUsers(ctx context.Context, status *string, page, pageSize *int) ([]user.CustomerDetails, error)
+	FetchDeliveryPersonUsers(ctx context.Context, status *string, page, pageSize *int) ([]user.DeliveryPersonDetails, error)
 	ChangePassword(ctx context.Context, phone *string, newPassword *string) error
 	FindByID(ctx context.Context, id *string) (*user.User, error)
-	FetchAllCustomer(ctx context.Context, page, pageSize *int) ([]user.CustomerDetails, error)
-	FetchAllDeliveryPerson(ctx context.Context, page, pageSize *int) ([]user.DeliveryPersonDetails, error)
 }
 
 type userImpl struct {

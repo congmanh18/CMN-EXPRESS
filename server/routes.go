@@ -3,15 +3,15 @@ package server
 import (
 	"express_be/core/transport/http/method"
 	"express_be/core/transport/http/route"
-	adminHandler "express_be/handler/admin"
 	customerHandler "express_be/handler/customer"
+	dashboardHandler "express_be/handler/dashboard"
 	deliveryPersonHandler "express_be/handler/delivery"
 
 	"express_be/handler/auth"
 )
 
 func SetupRoutes(
-	adminHandler adminHandler.Handler,
+	dashboardHandler dashboardHandler.Handler,
 	customerHandler customerHandler.Handler,
 	deliveryPersonHandler deliveryPersonHandler.Handler,
 	authhandler auth.Handler,
@@ -20,33 +20,7 @@ func SetupRoutes(
 	return []route.GroupRoute{
 		{
 			Prefix: "/admin",
-			Routes: []route.Route{
-				{
-					Path:    "/users/:id",
-					Method:  method.PATCH,
-					Handler: adminHandler.HandleUpdateStatus,
-				},
-				{
-					Path:    "/customers/pending",
-					Method:  method.GET,
-					Handler: adminHandler.HandleListPendingCustomer,
-				},
-				{
-					Path:    "/customers/all",
-					Method:  method.GET,
-					Handler: adminHandler.HandleAllCustomers,
-				},
-				{
-					Path:    "/delivery-persons/pending",
-					Method:  method.GET,
-					Handler: adminHandler.HandleListPendingDeliveryPerson,
-				},
-				{
-					Path:    "/delivery-persons/all",
-					Method:  method.GET,
-					Handler: adminHandler.HandleAllDeliveryPersons,
-				},
-			},
+			Routes: []route.Route{},
 		},
 		{
 			// Middlewares: []echo.MiddlewareFunc{
@@ -72,6 +46,16 @@ func SetupRoutes(
 					Path:    "/reset-password",
 					Method:  method.PATCH,
 					Handler: authhandler.HandleChangePassword,
+				},
+				{
+					Path:    "/users/:id",
+					Method:  method.PATCH,
+					Handler: dashboardHandler.HandleUpdateUserStatus,
+				},
+				{
+					Path:    "/users",
+					Method:  method.GET,
+					Handler: dashboardHandler.HandleListUsers,
 				},
 			},
 		},

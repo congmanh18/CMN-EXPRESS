@@ -30,7 +30,10 @@ func RegisterToDeliveryPerson(req model.RegisterRequest) (*entity.DeliveryPerson
 		},
 		Phone:                &req.Phone,
 		Password:             &hashedPassword,
-		CurrentAddress:       &req.CurrentAddress,
+		SpecificAddress:      &req.SpecificAddress,
+		Ward:                 &req.Ward,
+		District:             &req.District,
+		City:                 &req.City,
 		IdentificationNumber: &req.IdentificationNumber,
 		FullName:             &req.FullName,
 		DateOfBirth:          &req.DateOfBirth,
@@ -46,7 +49,10 @@ func RegisterToDeliveryPerson(req model.RegisterRequest) (*entity.DeliveryPerson
 
 func UpdateToDeliveryPerson(req model.UpdateDeliveryPersonReq) (*entity.DeliveryPerson, *user.User) {
 	user := &user.User{
-		CurrentAddress:       &req.CurrentAddress,
+		SpecificAddress:      &req.SpecificAddress,
+		Ward:                 &req.Ward,
+		District:             &req.District,
+		City:                 &req.City,
 		IdentificationNumber: &req.IdentificationNumber,
 		FullName:             &req.FullName,
 		DateOfBirth:          &req.DateOfBirth,
