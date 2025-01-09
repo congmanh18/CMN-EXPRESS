@@ -17,7 +17,7 @@ func CustomerToRes(user *userEntity.CustomerDetails) res.CustomerRes {
 		Status:          &status,
 
 		IdentificationNumber: user.IdentificationNumber,
-		FullName:             user.FullName,
+		FirstName:            user.FirstName,
 		DateOfBirth:          user.DateOfBirth,
 		Gender:               user.Gender,
 		Nationality:          user.Nationality,

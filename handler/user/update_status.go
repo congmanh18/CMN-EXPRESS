@@ -1,4 +1,4 @@
-package dashboard
+package user
 
 import (
 	"express_be/core/transport/http/response"
@@ -14,7 +14,7 @@ import (
 // @Accept json
 // @Produce json
 // @Param id path string true "Customer ID"
-// @Param approval-status query string true "Trạng thái mới của khách hàng (accept, deny)"
+// @Param approval_status query string true "Trạng thái mới của khách hàng (accept, deny)"
 // @Router /users/{id} [patch]
 func (h *handlerImpl) HandleUpdateUserStatus(c echo.Context) error {
 	id := c.Param("id")
@@ -22,7 +22,7 @@ func (h *handlerImpl) HandleUpdateUserStatus(c echo.Context) error {
 		return response.Error(c, http.StatusBadRequest, "id is required")
 	}
 
-	status := c.QueryParam("approval-status")
+	status := c.QueryParam("approval_status")
 	if status == "" {
 		return response.Error(c, http.StatusBadRequest, "status is required")
 	}

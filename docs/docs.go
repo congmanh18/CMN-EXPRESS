@@ -132,7 +132,7 @@ const docTemplate = `{
         },
         "/users": {
             "get": {
-                "description": "Get a list of users (customers and delivery persons) with optional filters by status and role, including pagination.",
+                "description": "Search a list of users (customers and delivery persons) with optional filters by status and role, including pagination.",
                 "consumes": [
                     "application/json"
                 ],
@@ -142,7 +142,7 @@ const docTemplate = `{
                 "tags": [
                     "Users"
                 ],
-                "summary": "Fetch paginated users",
+                "summary": "Search paginated users",
                 "parameters": [
                     {
                         "type": "integer",
@@ -160,13 +160,25 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
-                        "description": "Filter by user status (e.g., pending, verified)",
+                        "description": "Filter by customer status (e.g., pending, verified, blocked, active, inactive) Filter by delivery_person (e.g., on_duty, off_duty)",
                         "name": "status",
                         "in": "query"
                     },
                     {
                         "type": "string",
-                        "description": "Filter by user role (e.g., customer, delivery-person)",
+                        "description": "Search by user name",
+                        "name": "name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Search by user phone",
+                        "name": "phone",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Filter by user role (e.g., customer, delivery_person)",
                         "name": "role",
                         "in": "query",
                         "required": true
@@ -222,7 +234,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "Trạng thái mới của khách hàng (accept, deny)",
-                        "name": "approval-status",
+                        "name": "approval_status",
                         "in": "query",
                         "required": true
                     }
@@ -267,7 +279,7 @@ const docTemplate = `{
                 "district": {
                     "type": "string"
                 },
-                "full_name": {
+                "first_name": {
                     "type": "string"
                 },
                 "gender": {
@@ -276,11 +288,17 @@ const docTemplate = `{
                 "identification_number": {
                     "type": "string"
                 },
+                "last_name": {
+                    "type": "string"
+                },
                 "latitude": {
                     "type": "number"
                 },
                 "longtitude": {
                     "type": "number"
+                },
+                "middle_name": {
+                    "type": "string"
                 },
                 "nationality": {
                     "type": "string"

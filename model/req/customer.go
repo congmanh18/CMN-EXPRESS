@@ -6,7 +6,9 @@ type UpdateCustomerReq struct {
 	District             string  `json:"district"`
 	City                 string  `json:"city"`
 	IdentificationNumber string  `json:"identification_number,omitempty"`
-	FullName             string  `json:"full_name,omitempty"`
+	LastName             string  `json:"last_name,omitempty"`
+	MiddleName           string  `json:"middle_name,omitempty"`
+	FirstName            string  `json:"first_name,omitempty"`
 	DateOfBirth          string  `json:"date_of_birth,omitempty"`
 	Gender               string  `json:"gender,omitempty"`
 	Nationality          string  `json:"nationality,omitempty"`

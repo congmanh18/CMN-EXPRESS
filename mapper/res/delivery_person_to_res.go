@@ -17,7 +17,9 @@ func DeliveryPersonToRes(user *userEntity.DeliveryPersonDetails) res.DeliveryPer
 		Status:          &status,
 
 		IdentificationNumber: user.IdentificationNumber,
-		FullName:             user.FullName,
+		LastName:             user.LastName,
+		FirstName:            user.FirstName,
+		MiddleName:           user.MiddleName,
 		DateOfBirth:          user.DateOfBirth,
 		Gender:               user.Gender,
 		Nationality:          user.Nationality,

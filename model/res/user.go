@@ -14,7 +14,9 @@ type CustomerRes struct {
 	Longitude *float64 `json:"longitude"`
 
 	IdentificationNumber *string `json:"identification_number"`
-	FullName             *string `json:"full_name"`
+	LastName             *string `json:"last_name"`
+	FirstName            *string `json:"first_name"`
+	MiddleName           *string `json:"middle_name"`
 	DateOfBirth          *string `json:"date_of_birth"`
 	Gender               *string `json:"gender"`
 	Nationality          *string `json:"nationality"`
@@ -32,7 +34,9 @@ type DeliveryPersonRes struct {
 	SalaryRate           *float64 `json:"salary_rate"`
 	Status               *string  `json:"status"`
 	IdentificationNumber *string  `json:"identification_number"`
-	FullName             *string  `json:"full_name"`
+	LastName             *string  `json:"last_name"`
+	FirstName            *string  `json:"first_name"`
+	MiddleName           *string  `json:"middle_name"`
 	DateOfBirth          *string  `json:"date_of_birth"`
 	Gender               *string  `json:"gender"`
 	Nationality          *string  `json:"nationality"`

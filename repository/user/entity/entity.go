@@ -19,8 +19,8 @@ const (
 	Active    Status = "active"
 	Inactive  Status = "inactive"
 	Suspended Status = "suspended"
-	OnDuty    Status = "on-duty"
-	OffDuty   Status = "off-duty"
+	OnDuty    Status = "on_duty"
+	OffDuty   Status = "off_duty"
 
 	Accepted ApprovalStatus = "accept"
 	Denied   ApprovalStatus = "deny"
@@ -40,7 +40,9 @@ type User struct {
 	District             *string
 	City                 *string
 	IdentificationNumber *string
-	FullName             *string
+	LastName             *string
+	MiddleName           *string
+	FirstName            *string
 	DateOfBirth          *string
 	Gender               *string
 	Nationality          *string

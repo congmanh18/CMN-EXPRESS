@@ -13,6 +13,7 @@ type UserUsecase interface {
 	GetInfoUser(ctx context.Context, id *string) (*entity.CustomerDetails, *entity.DeliveryPersonDetails, *usecase.Error)
 	GetUsers(ctx context.Context, status, role *string, page, pageSize *int) ([]entity.CustomerDetails, []entity.DeliveryPersonDetails, *usecase.Error)
 	UpdateStatus(ctx context.Context, userID *string, status *string) *usecase.Error
+	Search(ctx context.Context, role, phone, name, status *string, page, pageSize *int) ([]entity.CustomerDetails, []entity.DeliveryPersonDetails, *usecase.Error)
 }
 
 type userUsecaseImpl struct {

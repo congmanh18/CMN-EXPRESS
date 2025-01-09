@@ -21,16 +21,20 @@ definitions:
         type: string
       district:
         type: string
-      full_name:
+      first_name:
         type: string
       gender:
         type: string
       identification_number:
         type: string
+      last_name:
+        type: string
       latitude:
         type: number
       longtitude:
         type: number
+      middle_name:
+        type: string
       nationality:
         type: string
       password:
@@ -189,7 +193,7 @@ paths:
     get:
       consumes:
       - application/json
-      description: Get a list of users (customers and delivery persons) with optional
+      description: Search a list of users (customers and delivery persons) with optional
         filters by status and role, including pagination.
       parameters:
       - default: 1
@@ -202,11 +206,20 @@ paths:
         in: query
         name: page_size
         type: integer
-      - description: Filter by user status (e.g., pending, verified)
+      - description: Filter by customer status (e.g., pending, verified, blocked,
+          active, inactive) Filter by delivery_person (e.g., on_duty, off_duty)
         in: query
         name: status
         type: string
-      - description: Filter by user role (e.g., customer, delivery-person)
+      - description: Search by user name
+        in: query
+        name: name
+        type: string
+      - description: Search by user phone
+        in: query
+        name: phone
+        type: string
+      - description: Filter by user role (e.g., customer, delivery_person)
         in: query
         name: role
         required: true
@@ -214,7 +227,7 @@ paths:
       produces:
       - application/json
       responses: {}
-      summary: Fetch paginated users
+      summary: Search paginated users
       tags:
       - Users
   /users/{id}:
@@ -247,7 +260,7 @@ paths:
         type: string
       - description: Trạng thái mới của khách hàng (accept, deny)
         in: query
-        name: approval-status
+        name: approval_status
         required: true
         type: string
       produces:

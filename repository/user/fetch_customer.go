@@ -7,6 +7,15 @@ import (
 
 func (c *userImpl) FetchCustomerUsers(ctx context.Context, status *string, page, pageSize *int) ([]entity.CustomerDetails, error) {
 	var result []entity.CustomerDetails
+
+	defaultPage, defaultPageSize := 1, 10
+	if page == nil || *page < 1 {
+		page = &defaultPage
+	}
+	if pageSize == nil || *pageSize < 1 {
+		pageSize = &defaultPageSize
+	}
+
 	offset := (*page - 1) * *pageSize
 
 	// Bắt đầu xây dựng câu truy vấn
@@ -28,7 +37,7 @@ func (c *userImpl) FetchCustomerUsers(ctx context.Context, status *string, page,
 	}
 	// Thêm sắp xếp, phân trang
 	query = query.
-		Order("users.full_name ASC").
+		Order("users.first_name ASC").
 		Offset(offset).
 		Limit(*pageSize).
 		Find(&result)

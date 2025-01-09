@@ -15,6 +15,9 @@ type Repo interface {
 	FetchDeliveryPersonUsers(ctx context.Context, status *string, page, pageSize *int) ([]user.DeliveryPersonDetails, error)
 	ChangePassword(ctx context.Context, phone *string, newPassword *string) error
 	FindByID(ctx context.Context, id *string) (*user.User, error)
+	CheckRoleByID(ctx context.Context, id *string) (*string, error)
+	SearchCustomers(ctx context.Context, phone, name, status *string, page, pageSize *int) ([]user.CustomerDetails, int64, error)
+	SearchDeliveryPersons(ctx context.Context, phone, name, status *string, page, pageSize *int) ([]user.DeliveryPersonDetails, int64, error)
 }
 
 type userImpl struct {

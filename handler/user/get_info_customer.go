@@ -1,4 +1,4 @@
-package dashboard
+package user
 
 import (
 	"express_be/core/transport/http/response"
