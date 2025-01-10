@@ -1,0 +1,310 @@
+basePath: /
+definitions:
+  req.LoginRequest:
+    properties:
+      password:
+        type: string
+      phone:
+        type: string
+    required:
+    - password
+    - phone
+    type: object
+  req.RegisterRequest:
+    properties:
+      account_type:
+        description: 2. Field for customer
+        type: string
+      city:
+        type: string
+      date_of_birth:
+        type: string
+      district:
+        type: string
+      first_name:
+        type: string
+      gender:
+        type: string
+      identification_number:
+        type: string
+      last_name:
+        type: string
+      latitude:
+        type: number
+      longtitude:
+        type: number
+      middle_name:
+        type: string
+      nationality:
+        type: string
+      password:
+        type: string
+      phone:
+        description: 1. Default field
+        type: string
+      place_of_origin:
+        type: string
+      place_of_residence:
+        type: string
+      role:
+        description: 3. Field for delivery person
+        type: string
+      specific_address:
+        type: string
+      ward:
+        type: string
+    required:
+    - password
+    - phone
+    type: object
+  req.ResetPasswordRequest:
+    properties:
+      confirm_password:
+        type: string
+      new_password:
+        type: string
+      phone:
+        type: string
+    required:
+    - confirm_password
+    - new_password
+    - phone
+    type: object
+host: 203.145.47.225
+info:
+  contact:
+    email: nguyenmanh180102@gmail.com
+    name: Lucas
+    url: https://sharkytech.vercel.app
+  description: |-
+    Welcome to the CMN Express API documentation. This server facilitates seamless integration for managing logistics, tracking, and delivery services efficiently.
+    Explore the endpoints to unlock robust features designed to enhance your operational workflow.
+  license:
+    name: MIT License
+    url: https://opensource.org/licenses/MIT
+  termsOfService: https://sharkytech.vercel.app/terms
+  title: CMN Express API Documentation
+  version: "1.0"
+paths:
+  /login:
+    post:
+      consumes:
+      - application/json
+      description: |-
+        Login for different roles (admin, customer, delivery_person, accounting)
+        Example customer payload:
+        ``` {
+        "phone": "0977683511",
+        "password": "nguyenmanhcong"
+        } ```
+      parameters:
+      - description: Login Request
+        in: body
+        name: login
+        required: true
+        schema:
+          $ref: '#/definitions/req.LoginRequest'
+      produces:
+      - application/json
+      responses: {}
+      summary: Login
+      tags:
+      - Authentication
+  /refresh-token:
+    post:
+      consumes:
+      - application/json
+      description: Refresh Access Token using a valid Refresh Token from headers.
+      parameters:
+      - description: The refresh token identifier stored in headers
+        in: header
+        name: refresh_token_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses: {}
+      summary: Refresh Access Token
+      tags:
+      - Authentication
+  /register:
+    post:
+      consumes:
+      - application/json
+      description: |-
+        Register for different roles (admin, accounting, customer, delivery_person) account_type customer (prepaid, postpaid)
+        Example customer payload:
+        {
+        "phone": "0990123456",
+        "password": "wrightdaniel",
+        "last_name": "Wright",
+        "middle_name": "Thomas",
+        "first_name": "Daniel",
+        "specific_address": "789 Tran Hung Dao",
+        "ward": "Duong Dong",
+        "district": "Duong Dong",
+        "city": "Phu Quoc",
+        "identification_number": "321987654",
+        "gender": "male",
+        "date_of_birth": "1994-09-09",
+        "nationality": "Vietnamese",
+        "place_of_origin": "Phu Quoc",
+        "place_of_residence": "Phu Quoc",
+        "latitude": 10.2899,
+        "longtitude": 103.9840,
+        "account_type": "postpaid",
+        "role": "customer"
+        }
+      parameters:
+      - description: Register Request Example
+        in: body
+        name: register
+        required: true
+        schema:
+          $ref: '#/definitions/req.RegisterRequest'
+      produces:
+      - application/json
+      responses: {}
+      summary: Register
+      tags:
+      - Authentication
+  /reset-password:
+    patch:
+      consumes:
+      - application/json
+      description: |-
+        Đổi mật khẩu người dùng bằng số điện thoại
+        Example reset password payload:
+        ``` {
+        "confirm_password": "strongpassword123",
+        "new_password": "strongpassword321",
+        "phone": "0977683511",
+        "role": "customer"
+        } ```
+      parameters:
+      - description: Reset Password Request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/req.ResetPasswordRequest'
+      produces:
+      - application/json
+      responses: {}
+      summary: Đổi mật khẩu
+      tags:
+      - Authentication
+  /search:
+    get:
+      consumes:
+      - application/json
+      description: Search a list of users (customers and delivery persons) with optional
+        filters by status and role, including pagination.
+      parameters:
+      - default: 1
+        description: Page number (default is 1)
+        in: query
+        name: page
+        type: integer
+      - default: 10
+        description: Page size (default is 10)
+        in: query
+        name: page_size
+        type: integer
+      - description: Filter by customer status (e.g., pending, verified, blocked,
+          active, inactive) Filter by delivery_person (e.g., on_duty, off_duty)
+        in: query
+        name: status
+        type: string
+      - description: Search by user name
+        in: query
+        name: name
+        type: string
+      - description: Search by user phone
+        in: query
+        name: phone
+        type: string
+      - description: Filter by user role (e.g., customer, delivery_person)
+        in: query
+        name: role
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses: {}
+      summary: Search paginated users
+      tags:
+      - Users
+  /users:
+    get:
+      consumes:
+      - application/json
+      description: Get a list of users (customers and delivery persons) with optional
+        filters by status and role, including pagination.
+      parameters:
+      - default: 1
+        description: Page number (default is 1)
+        in: query
+        name: page
+        type: integer
+      - default: 10
+        description: Page size (default is 10)
+        in: query
+        name: page_size
+        type: integer
+      - description: Filter by customer status (e.g., pending, verified, blocked,
+          active, inactive) Filter by delivery_person (e.g., on_duty, off_duty)
+        in: query
+        name: status
+        type: string
+      - description: Filter by user role (e.g., customer, delivery_person)
+        in: query
+        name: role
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses: {}
+      summary: Fetch paginated users
+      tags:
+      - Users
+  /users/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Fetch the details of a user based on their ID. The user can be
+        either a customer or a delivery person.
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses: {}
+      summary: Get user information
+      tags:
+      - Users
+    patch:
+      consumes:
+      - application/json
+      description: Cập nhật trạng thái của một khách hàng dựa trên ID
+      parameters:
+      - description: Customer ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Trạng thái mới của khách hàng (accept, deny)
+        in: query
+        name: approval_status
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses: {}
+      summary: Cập nhật trạng thái khách hàng
+      tags:
+      - Users
+swagger: "2.0"

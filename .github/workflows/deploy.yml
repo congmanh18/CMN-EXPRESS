@@ -1,0 +1,56 @@
+name: CI/CD for Go Backend
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout code từ repository
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      # 2. Setup Docker để sử dụng trong workflow
+      - name: Setup Docker
+        uses: docker/setup-buildx-action@v2
+
+      # 3. Create service.env from GitHub Secret
+      - name: Create service.env
+        run: |
+          mkdir -p ./conf
+          echo "${{ secrets.SERVICE_ENV }}" > ./conf/service.env
+
+      # 4. Build Docker Image
+      - name: Build Docker Image
+        run: |
+          docker build -t manh18/be:latest .
+
+      # 5. Push Docker Image lên Docker Hub
+      - name: Push Docker Image to Docker Hub
+        run: |
+          echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+          docker push manh18/be:latest
+
+      # 6. Deploy to VPS qua SSH
+      - name: Deploy to VPS
+        uses: appleboy/ssh-action@v0.1.6
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          port: ${{ secrets.VPS_PORT }}
+          script: |
+            set -e
+            echo "Pulling the latest Docker image..."
+            docker pull manh18/be:latest
+            echo "Stopping and removing the old container if it exists..."
+            docker stop backend_container || true
+            docker rm backend_container || true
+            echo "Creating Docker network if it doesn't exist..."
+            docker network inspect app-network >/dev/null 2>&1 || docker network create app-network
+            echo "Running the new container..."
+            docker run --name backend_container --network app-network -p 4579:4579 -d manh18/be:latest
