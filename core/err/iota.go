@@ -1,15 +1,19 @@
 package err
 
 const (
-	_ = iota // Skip 0
-	// Password-related errors
-	WrongPasswordBlank
+	// Skip 0
+	_ = iota
+
+	// Password-related errors (100+)
+	PasswordErrorStart = 100
+	WrongPasswordBlank = PasswordErrorStart + iota
 	WrongPasswordMatchConfirm
 	IncorrectPassword
 	AccountLocked
 
-	// Authentication errors
-	AccessDenied
+	// Authentication errors (200+)
+	AuthErrorStart = 200
+	AccessDenied   = AuthErrorStart + iota
 	InvalidToken
 	GentokenFailure
 	SaveTokenFailure
@@ -17,19 +21,22 @@ const (
 	TokenMissing
 	ValidateTokenFailure
 
-	// Validation errors
-	MissingField
+	// Validation errors (300+)
+	ValidationErrorStart = 300
+	MissingField         = ValidationErrorStart + iota
 	InvalidFormat
 	ValueOutOfRange
 	InvalidRole
 
-	// Database errors
-	ChangePassword
+	// Database errors (400+)
+	DatabaseErrorStart = 400
+	ChangePassword     = DatabaseErrorStart + iota
 	RegisterUser
 	NotFound
 
-	// Server errors
-	InternalServer
+	// Server errors (500+)
+	ServerErrorStart = 500
+	InternalServer   = ServerErrorStart + iota
 	DatabaseError
 	ServiceUnavailable
 )
