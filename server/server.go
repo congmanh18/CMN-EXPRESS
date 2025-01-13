@@ -6,10 +6,8 @@ import (
 	httpServer "express_be/core/transport/http"
 	"express_be/core/transport/http/engine"
 	"express_be/core/transport/http/route"
-	"express_be/core/utils/md"
 	"express_be/migration"
 	"express_be/provider"
-	"net/http"
 
 	authHandler "express_be/handler/auth"
 	userHandler "express_be/handler/user"
@@ -24,11 +22,8 @@ import (
 	"express_be/usecase/auth"
 	"express_be/usecase/user"
 
-	"github.com/labstack/echo/v4"
 	echoSwagger "github.com/swaggo/echo-swagger"
 )
-
-const enableMigrations = false
 
 func RunMigration(appProvider *provider.AppProvider, enableMigrate bool) {
 	if enableMigrate {
@@ -44,21 +39,6 @@ func LoadServiceConfig(confPath string) conf.ServiceConfig {
 
 func NewServer(serviceConf conf.ServiceConfig, routes []route.GroupRoute) *httpServer.Server {
 	e := engine.NewEcho()
-
-	e.GET("/error", func(c echo.Context) error {
-		// Đường dẫn tới file Markdown
-		markdownFilePath := "./docserror.md"
-
-		// Chuyển đổi Markdown thành HTML
-		htmlContent, err := md.ConvertMdToHtml(markdownFilePath)
-		if err != nil {
-			return c.String(http.StatusInternalServerError, err.Error())
-		}
-
-		// Trả về HTML
-		return c.HTML(http.StatusOK, htmlContent)
-	})
-
 	e.GET("/swagger/*", echoSwagger.WrapHandler)
 	return httpServer.NewHttpServer(
 		httpServer.AddName(serviceConf.ServiceName),
@@ -71,7 +51,7 @@ func NewServer(serviceConf conf.ServiceConfig, routes []route.GroupRoute) *httpS
 func Run(confPath string) {
 	serviceConf := LoadServiceConfig(confPath)
 	appProvider := provider.NewAppProvider(serviceConf)
-	RunMigration(appProvider, enableMigrations)
+	RunMigration(appProvider, serviceConf.EnableMigrations)
 
 	// firebasAuth, err := auth.NewFirebaseAuthService("./conf/express-2227f-firebase-adminsdk-vbu9s-83580ceea5.json")
 	// if err != nil {

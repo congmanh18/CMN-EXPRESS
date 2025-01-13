@@ -1,8 +1,9 @@
 package conf
 
 type ServiceConfig struct {
-	ServiceName string `mapstructure:"SERVICE_NAME"`
-	ServicePort int    `mapstructure:"SERVICE_PORT"`
+	ServiceName      string `mapstructure:"SERVICE_NAME"`
+	ServicePort      int    `mapstructure:"SERVICE_PORT"`
+	EnableMigrations bool   `mapstructure:"ENABLE_MIGRATION"`
 
 	DBHost string `mapstructure:"POSTGRES_HOST"`
 	DBPort int    `mapstructure:"POSTGRES_PORT"`
