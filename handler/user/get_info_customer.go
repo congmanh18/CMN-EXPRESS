@@ -12,7 +12,7 @@ import (
 
 // @Summary      Get user information
 // @Description  Fetch the details of a user based on their ID. The user can be either a customer or a delivery person.
-// @Tags         Users
+// @Tags         Sprint1
 // @Accept       json
 // @Produce      json
 // @Param        id   path      string  true  "User ID"

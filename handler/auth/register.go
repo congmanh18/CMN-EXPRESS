@@ -38,7 +38,7 @@ import (
 //	@Description     "role": "customer"
 //	@Description   }
 //
-// @Tags Authentication
+// @Tags Sprint1
 // @Accept json
 // @Produce json
 // @Param register body req.RegisterRequest true "Register Request Example"

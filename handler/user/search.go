@@ -14,7 +14,7 @@ import (
 // HandleSearch implements Handler.
 // @Summary      Search paginated users
 // @Description  Search a list of users (customers and delivery persons) with optional filters by status and role, including pagination.
-// @Tags         Users
+// @Tags         Sprint1
 // @Accept       json
 // @Produce      json
 // @Param        page        query     int     false  "Page number (default is 1)"       default(1)

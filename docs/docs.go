@@ -26,7 +26,6 @@ const docTemplate = `{
     "paths": {
         "/login": {
             "post": {
-                "description": "Login for different roles (admin, customer, delivery_person, accounting)\nExample customer payload:\n` + "`" + `` + "`" + `` + "`" + ` {\n\"phone\": \"0977683511\",\n\"password\": \"nguyenmanhcong\"\n} ` + "`" + `` + "`" + `` + "`" + `",
                 "consumes": [
                     "application/json"
                 ],
@@ -34,9 +33,8 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Authentication"
+                    "Sprint1"
                 ],
-                "summary": "Login",
                 "parameters": [
                     {
                         "description": "Login Request",
@@ -61,7 +59,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Authentication"
+                    "Sprint1"
                 ],
                 "summary": "Refresh Access Token",
                 "parameters": [
@@ -86,7 +84,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Authentication"
+                    "Sprint1"
                 ],
                 "summary": "Register",
                 "parameters": [
@@ -105,7 +103,6 @@ const docTemplate = `{
         },
         "/reset-password": {
             "patch": {
-                "description": "Đổi mật khẩu người dùng bằng số điện thoại\nExample reset password payload:\n` + "`" + `` + "`" + `` + "`" + ` {\n\"confirm_password\": \"strongpassword123\",\n\"new_password\": \"strongpassword321\",\n\"phone\": \"0977683511\",\n\"role\": \"customer\"\n} ` + "`" + `` + "`" + `` + "`" + `",
                 "consumes": [
                     "application/json"
                 ],
@@ -113,9 +110,8 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Authentication"
+                    "Sprint1"
                 ],
-                "summary": "Đổi mật khẩu",
                 "parameters": [
                     {
                         "description": "Reset Password Request",
@@ -140,7 +136,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Users"
+                    "Sprint1"
                 ],
                 "summary": "Search paginated users",
                 "parameters": [
@@ -197,7 +193,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Users"
+                    "Sprint1"
                 ],
                 "summary": "Fetch paginated users",
                 "parameters": [
@@ -242,7 +238,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Users"
+                    "Sprint1"
                 ],
                 "summary": "Get user information",
                 "parameters": [
@@ -265,7 +261,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Users"
+                    "Sprint1"
                 ],
                 "summary": "Cập nhật trạng thái khách hàng",
                 "parameters": [

@@ -25,10 +25,10 @@ type Err struct {
 func newError(code int, message string, debug error, description string) *Err {
 	prefix := getPrefix(code)
 	return &Err{
-		Message:     fmt.Sprintf("%s%03d: %s", prefix, code%100, message),
+		Message:     fmt.Sprintf("%s%03d", prefix, code%100),
 		Code:        code,
 		Debug:       debug,
-		Description: description,
+		Description: fmt.Sprintf("%s: %s", message, description),
 	}
 }
 

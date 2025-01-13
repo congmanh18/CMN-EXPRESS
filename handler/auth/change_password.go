@@ -13,14 +13,15 @@ import (
 // @Description Đổi mật khẩu người dùng bằng số điện thoại
 // @Description Example reset password payload:
 //
-//	@Description ``` {
+//	@Description ```
+//	@Description {
 //	@Description	"confirm_password": "strongpassword123",
 //	@Description	"new_password": "strongpassword321",
 //	@Description	"phone": "0977683511",
-//	@Description	"role": "customer"
-//	@Description } ```
-//
-// @Tags Authentication
+//	@Description }
+//	@Description ```
+
+// @Tags Sprint1
 // @Accept  json
 // @Produce  json
 // @Param request body model.ResetPasswordRequest true "Reset Password Request"

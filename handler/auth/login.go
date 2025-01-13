@@ -15,12 +15,15 @@ import (
 // @Description Login for different roles (admin, customer, delivery_person, accounting)
 // @Description Example customer payload:
 //
-//	@Description ``` {
+//	@Description ```
+//	@Description {
 //	@Description	"phone": "0977683511",
 //	@Description	"password": "nguyenmanhcong"
-//	@Description } ```
+//	@Description }
+//	@Description ```
+
 //
-// @Tags Authentication
+// @Tags Sprint1
 // @Accept json
 // @Produce json
 // @Param login body req.LoginRequest true "Login Request"

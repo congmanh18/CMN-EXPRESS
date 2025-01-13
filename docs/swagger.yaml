@@ -90,13 +90,6 @@ paths:
     post:
       consumes:
       - application/json
-      description: |-
-        Login for different roles (admin, customer, delivery_person, accounting)
-        Example customer payload:
-        ``` {
-        "phone": "0977683511",
-        "password": "nguyenmanhcong"
-        } ```
       parameters:
       - description: Login Request
         in: body
@@ -107,9 +100,8 @@ paths:
       produces:
       - application/json
       responses: {}
-      summary: Login
       tags:
-      - Authentication
+      - Sprint1
   /refresh-token:
     post:
       consumes:
@@ -126,7 +118,7 @@ paths:
       responses: {}
       summary: Refresh Access Token
       tags:
-      - Authentication
+      - Sprint1
   /register:
     post:
       consumes:
@@ -167,20 +159,11 @@ paths:
       responses: {}
       summary: Register
       tags:
-      - Authentication
+      - Sprint1
   /reset-password:
     patch:
       consumes:
       - application/json
-      description: |-
-        Đổi mật khẩu người dùng bằng số điện thoại
-        Example reset password payload:
-        ``` {
-        "confirm_password": "strongpassword123",
-        "new_password": "strongpassword321",
-        "phone": "0977683511",
-        "role": "customer"
-        } ```
       parameters:
       - description: Reset Password Request
         in: body
@@ -191,9 +174,8 @@ paths:
       produces:
       - application/json
       responses: {}
-      summary: Đổi mật khẩu
       tags:
-      - Authentication
+      - Sprint1
   /search:
     get:
       consumes:
@@ -234,7 +216,7 @@ paths:
       responses: {}
       summary: Search paginated users
       tags:
-      - Users
+      - Sprint1
   /users:
     get:
       consumes:
@@ -267,7 +249,7 @@ paths:
       responses: {}
       summary: Fetch paginated users
       tags:
-      - Users
+      - Sprint1
   /users/{id}:
     get:
       consumes:
@@ -285,7 +267,7 @@ paths:
       responses: {}
       summary: Get user information
       tags:
-      - Users
+      - Sprint1
     patch:
       consumes:
       - application/json
@@ -306,5 +288,5 @@ paths:
       responses: {}
       summary: Cập nhật trạng thái khách hàng
       tags:
-      - Users
+      - Sprint1
 swagger: "2.0"
