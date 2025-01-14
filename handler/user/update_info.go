@@ -18,12 +18,22 @@ import (
 // @Tags User-information
 // @Accept json
 // @Produce json
-// @Param Authorization header string true "Bearer token"
+// @Param Authorization header string true "Bearer token" default(Bearer <access-token>)
+// @Param id path string true "UserID"
 // @Param update_info body req.UpdateUserReq true "Update Request Example"
-// @Router /users [put]
+// @Router /users/{id} [put]
 func (h handlerImpl) HandleUpdateInfo(c echo.Context) error {
-	id, ok := c.Get("user_id").(string)
+	roleCheck, ok := c.Get("role").(string)
 	if !ok {
+		return response.Error(c, handlerError.ErrTokenMissing.Code, handlerError.ErrTokenMissing.Message)
+	}
+
+	if roleCheck == "" {
+		return response.Error(c, handlerError.ErrAccessDenied.Code, handlerError.ErrAccessDenied.Message)
+	}
+
+	id := c.Param("id")
+	if id == "" {
 		return response.Error(c, handlerError.ErrMissingField.Code, handlerError.ErrMissingField.Message)
 	}
 

@@ -1,4 +1,4 @@
-package mapper
+package res
 
 import (
 	"express_be/core/record"

@@ -59,7 +59,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Sprint1"
+                    "Public"
                 ],
                 "summary": "Refresh Access Token",
                 "parameters": [
@@ -142,6 +142,7 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
+                        "default": "Bearer \u003caccess-token\u003e",
                         "description": "Bearer token",
                         "name": "Authorization",
                         "in": "header",
@@ -238,6 +239,7 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
+                        "default": "Bearer \u003caccess-token\u003e",
                         "description": "Bearer token",
                         "name": "Authorization",
                         "in": "header",
@@ -288,9 +290,17 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
+                        "default": "Bearer \u003caccess-token\u003e",
                         "description": "Bearer token",
                         "name": "Authorization",
                         "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "UserID",
+                        "name": "id",
+                        "in": "path",
                         "required": true
                     },
                     {
@@ -304,9 +314,47 @@ const docTemplate = `{
                     }
                 ],
                 "responses": {}
-            }
-        },
-        "/users/{id}": {
+            },
+            "put": {
+                "description": "Update for different roles (customer, delivery_person) account_type customer (prepaid, postpaid)\nExample user payload:",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User-information"
+                ],
+                "summary": "Update",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "Bearer \u003caccess-token\u003e",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "UserID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Update Request Example",
+                        "name": "update_info",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/req.UpdateUserReq"
+                        }
+                    }
+                ],
+                "responses": {}
+            },
             "patch": {
                 "description": "Cập nhật trạng thái của một khách hàng dựa trên ID",
                 "consumes": [
@@ -322,6 +370,7 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
+                        "default": "Bearer \u003caccess-token\u003e",
                         "description": "Bearer token",
                         "name": "Authorization",
                         "in": "header",
@@ -329,7 +378,7 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
-                        "description": "Customer ID",
+                        "description": "UserID",
                         "name": "id",
                         "in": "path",
                         "required": true

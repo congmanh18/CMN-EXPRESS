@@ -12,7 +12,7 @@ import (
 // HandleRefreshToken godoc
 // @Summary Refresh Access Token
 // @Description Refresh Access Token using a valid Refresh Token from headers.
-// @Tags Sprint1
+// @Tags Public
 // @Accept json
 // @Produce json
 // @Param refresh_token_id header string true "The refresh token identifier stored in headers"
