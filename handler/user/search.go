@@ -14,9 +14,10 @@ import (
 // HandleSearch implements Handler.
 // @Summary      Search paginated users
 // @Description  Search a list of users (customers and delivery persons) with optional filters by status and role, including pagination.
-// @Tags         Sprint1
+// @Tags         User-information
 // @Accept       json
 // @Produce      json
+// @Param Authorization header string true "Bearer token"
 // @Param        page        query     int     false  "Page number (default is 1)"       default(1)
 // @Param        page_size   query     int     false  "Page size (default is 10)"       default(10)
 // @Param        status      query     string  false  "Filter by customer status (e.g., pending, verified, blocked, active, inactive) Filter by delivery_person (e.g., on_duty, off_duty)"
@@ -25,6 +26,15 @@ import (
 // @Param        role        query     string  true   "Filter by user role (e.g., customer, delivery_person)"
 // @Router       /search [get]
 func (h *handlerImpl) HandleSearch(c echo.Context) error {
+	roleCheck, ok := c.Get("role").(string)
+	if !ok {
+		return response.Error(c, handlerError.ErrTokenMissing.Code, handlerError.ErrTokenMissing.Message)
+	}
+
+	if roleCheck != "admin" && roleCheck != "accounting" {
+		return response.Error(c, handlerError.ErrAccessDenied.Code, handlerError.ErrAccessDenied.Message)
+	}
+
 	page, err := strconv.Atoi(c.QueryParam("page"))
 	if err != nil || page < 1 {
 		page = 1

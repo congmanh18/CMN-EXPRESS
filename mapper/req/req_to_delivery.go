@@ -34,6 +34,7 @@ func RegisterToDeliveryPerson(req model.RegisterRequest) (*entity.DeliveryPerson
 		Ward:                 &req.Ward,
 		District:             &req.District,
 		City:                 &req.City,
+		IDCard:               &req.IDCard,
 		IdentificationNumber: &req.IdentificationNumber,
 		LastName:             &req.LastName,
 		MiddleName:           &req.MiddleName,
@@ -49,12 +50,13 @@ func RegisterToDeliveryPerson(req model.RegisterRequest) (*entity.DeliveryPerson
 	return deliveryPerson, user
 }
 
-func UpdateToDeliveryPerson(req model.UpdateDeliveryPersonReq) (*entity.DeliveryPerson, *user.User) {
+func UpdateToDeliveryPerson(req model.UpdateUserReq) (*entity.DeliveryPerson, *user.User) {
 	user := &user.User{
 		SpecificAddress:      &req.SpecificAddress,
 		Ward:                 &req.Ward,
 		District:             &req.District,
 		City:                 &req.City,
+		IDCard:               &req.IDCard,
 		IdentificationNumber: &req.IdentificationNumber,
 		LastName:             &req.LastName,
 		MiddleName:           &req.MiddleName,

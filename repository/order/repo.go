@@ -8,11 +8,6 @@ import (
 
 type Repo interface {
 	Create(ctx context.Context, order *entity.Order) error
-	// Xóa Orders
-	// Hủy Orders
-	// Xem Orders
-	// Xem lịch sử Orders
-	// Xem chi tiết Orders
 }
 
 type orderImpl struct {

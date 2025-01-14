@@ -12,14 +12,15 @@ import (
 
 // @Summary      Get user information
 // @Description  Fetch the details of a user based on their ID. The user can be either a customer or a delivery person.
-// @Tags         Sprint1
+// @Tags         User-information
 // @Accept       json
 // @Produce      json
+// @Param Authorization header string true "Bearer token"
 // @Param        id   path      string  true  "User ID"
-// @Router       /users/{id} [get]
+// @Router       /user-info [get]
 func (h *handlerImpl) HandleGetInfoUser(c echo.Context) error {
-	id := c.Param("id")
-	if id == "" {
+	id, ok := c.Get("user_id").(string)
+	if !ok {
 		return response.Error(c, handlerError.ErrMissingField.Code, handlerError.ErrMissingField.Message)
 	}
 

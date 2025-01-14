@@ -10,19 +10,19 @@ import (
 )
 
 // ValidateRefreshToken implements AuthUsecase.
-func (a *authUsecaseImpl) ValidateRefreshToken(ctx context.Context, refreshToken *string) (*string, *error.Err) {
+func (a *authUsecaseImpl) ValidateRefreshToken(ctx context.Context, refreshToken *string) (*string, *string, *error.Err) {
 	// 1. Truy vấn token từ repository
 	token, err := a.tokenRepo.ValidateToken(ctx, refreshToken)
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
-			return nil, error.ErrInvalidToken
+			return nil, nil, error.ErrInvalidToken
 		}
-		return nil, error.ErrInternalServer
+		return nil, nil, error.ErrInternalServer
 	}
 	// 2. Kiểm tra thời gian hết hạn
 	if time.Now().After(token.ExpiresAt) {
-		return nil, error.ErrTokenExpired
+		return nil, nil, error.ErrTokenExpired
 	}
 	// 3. Trả về UserID
-	return token.UserID, nil
+	return token.UserID, token.Role, nil
 }

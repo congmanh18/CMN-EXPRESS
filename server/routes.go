@@ -1,30 +1,29 @@
 package server
 
 import (
+	"express_be/core/jwt"
 	"express_be/core/transport/http/method"
 	"express_be/core/transport/http/route"
 
 	// customerHandler "express_be/handler/customer"
 	// deliveryPersonHandler "express_be/handler/delivery"
+	priceHandler "express_be/handler/price"
 	userHandler "express_be/handler/user"
 
 	"express_be/handler/auth"
+
+	"github.com/labstack/echo/v4"
 )
 
 func SetupRoutes(
 	userHandler userHandler.Handler,
 	authhandler auth.Handler,
+	priceHandler priceHandler.Handler,
 	jwtSecret string,
 ) []route.GroupRoute {
 	return []route.GroupRoute{
+		// Nhóm công khai (Không cần xác thực)
 		{
-			Prefix: "/admin",
-			Routes: []route.Route{},
-		},
-		{
-			// Middlewares: []echo.MiddlewareFunc{
-			// 	authen.JWTMiddleware(jwtSecret),
-			// },
 			Routes: []route.Route{
 				{
 					Path:    "/refresh-token",
@@ -46,6 +45,15 @@ func SetupRoutes(
 					Method:  method.PATCH,
 					Handler: authhandler.HandleChangePassword,
 				},
+			},
+		},
+
+		// Nhóm cần xác thực (AuthMiddleware)
+		{
+			Middlewares: []echo.MiddlewareFunc{
+				jwt.AuthMiddleware(jwtSecret),
+			},
+			Routes: []route.Route{
 				{
 					Path:    "/users/:id",
 					Method:  method.PATCH,
@@ -57,66 +65,52 @@ func SetupRoutes(
 					Handler: userHandler.HandleListUsers,
 				},
 				{
-					Path:    "/users/:id",
+					Path:    "/user-info",
 					Method:  method.GET,
 					Handler: userHandler.HandleGetInfoUser,
+				},
+				{
+					Path:    "/users/:id",
+					Method:  method.PUT,
+					Handler: userHandler.HandleUpdateInfo,
 				},
 				{
 					Path:    "/search",
 					Method:  method.GET,
 					Handler: userHandler.HandleSearch,
 				},
+				{
+					Path:    "/price-list",
+					Method:  method.GET,
+					Handler: priceHandler.HandleRead,
+				},
 			},
 		},
-		// {
-		// 	Prefix: "/accountings",
-		// 	Routes: []route.Route{
-		// 		{
-		// 			Path:    "/register",
-		// 			Method:  method.PATCH,
-		// 			Handler: adminHandler.HandleUpdateDeliveryPersonStatus,
-		// 		},
-		// 	},
-		// },
-		// {
-		// 	Prefix: "/customers",
-		// 	Routes: []route.Route{
-		// 		{
-		// 			Path:    "/:id",
-		// 			Method:  method.GET,
-		// 			Handler: customerHandler.HandleGetInfoCustomer,
-		// 		},
-		// 		{
-		// 			Path:    "/:id",
-		// 			Method:  method.DELETE,
-		// 			Handler: customerHandler.HandleDeleteCustomer,
-		// 		},
-		// 		{
-		// 			Path:    "/:id",
-		// 			Method:  method.PUT,
-		// 			Handler: customerHandler.HandleUpdateCustomer,
-		// 		},
-		// 	},
-		// },
-		// {
-		// 	Prefix: "/delivery-persons",
-		// 	Routes: []route.Route{
-		// 		{
-		// 			Path:    "/:id",
-		// 			Method:  method.GET,
-		// 			Handler: deliveryPersonHandler.HandleGetInfoDeliveryPerson,
-		// 		},
-		// 		{
-		// 			Path:    "/:id",
-		// 			Method:  method.DELETE,
-		// 			Handler: deliveryPersonHandler.HandleDeleteDeliveryPerson,
-		// 		},
-		// 		{
-		// 			Path:    "/:id",
-		// 			Method:  method.PUT,
-		// 			Handler: deliveryPersonHandler.HandleUpdateDeliveryPerson,
-		// 		},
-		// 	},
-		// },
+
+		// Nhóm quản lý bảng giá (Auth + RoleMiddleware)
+		{
+			Prefix: "/prices",
+			Middlewares: []echo.MiddlewareFunc{
+				jwt.AuthMiddleware(jwtSecret),
+				jwt.RoleMiddleware("admin"),
+			},
+			Routes: []route.Route{
+				{
+					Path:    "/add",
+					Method:  method.POST,
+					Handler: priceHandler.HandleCreate,
+				},
+				{
+					Path:    "/:id",
+					Method:  method.PUT,
+					Handler: priceHandler.HandleUpdate,
+				},
+				{
+					Path:    "/:id",
+					Method:  method.DELETE,
+					Handler: priceHandler.HandleDelete,
+				},
+			},
+		},
 	}
 }

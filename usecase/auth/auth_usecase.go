@@ -3,7 +3,7 @@ package auth
 import (
 	"context"
 	"express_be/core/err"
-	"express_be/core/security"
+	core "express_be/core/jwt"
 	"express_be/repository/accounting"
 	accountingEntity "express_be/repository/accounting/entity"
 	"express_be/repository/admin"
@@ -15,6 +15,7 @@ import (
 	"express_be/repository/token"
 	"express_be/repository/user"
 	userEntity "express_be/repository/user/entity"
+	"time"
 )
 
 type AuthUsecase interface {
@@ -24,11 +25,14 @@ type AuthUsecase interface {
 	CreateCustomer(ctx context.Context, user *userEntity.User, customer *customerEntity.Customer) *err.Err
 	CreateDeliveryPerson(ctx context.Context, user *userEntity.User, deliveryPerson *deliveryPersonEntity.DeliveryPerson) *err.Err
 	// Login useaces
-	Login(ctx context.Context, phone, password *string) (*security.Token, *err.Err)
+	Login(ctx context.Context, phone, password *string) (*core.TokenPair, *err.Err)
 	// ChangePassword useacses
 	ChangePassword(ctx context.Context, phone *string, password *string) *err.Err
 	// Validate Token
-	ValidateRefreshToken(ctx context.Context, refreshToken *string) (*string, *err.Err)
+	ValidateRefreshToken(ctx context.Context, refreshToken *string) (*string, *string, *err.Err)
+	GenAccessToken(userID, role string, duration time.Duration) (string, error)
+	GenRefreshToken(userID string, duration time.Duration) (string, error)
+	GenToken(userID, role string, accessTokenDuration, refreshTokenDuration time.Duration) (*core.TokenPair, error)
 }
 
 type authUsecaseImpl struct {
@@ -38,6 +42,7 @@ type authUsecaseImpl struct {
 	deliveryPersonRepo delivery.Repo
 	accountingRepo     accounting.Repo
 	tokenRepo          token.Repo
+	jwtSecret          string
 }
 
 func NewAuthUsecase(
@@ -47,6 +52,7 @@ func NewAuthUsecase(
 	deliveryPersonRepo delivery.Repo,
 	accountingRepo accounting.Repo,
 	tokenRepo token.Repo,
+	jwtSecret string,
 ) AuthUsecase {
 	return &authUsecaseImpl{
 		userRepo:           userRepo,
@@ -55,5 +61,7 @@ func NewAuthUsecase(
 		deliveryPersonRepo: deliveryPersonRepo,
 		tokenRepo:          tokenRepo,
 		accountingRepo:     accountingRepo,
+		jwtSecret:          jwtSecret, // Lưu jwtSecret trong authUsecase
+
 	}
 }

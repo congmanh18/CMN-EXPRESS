@@ -17,6 +17,7 @@ type RegisterRequest struct {
 	Ward                 string `json:"ward"`
 	District             string `json:"district"`
 	City                 string `json:"city"`
+	IDCard               string `json:"id_card"`
 	IdentificationNumber string `json:"identification_number,omitempty"`
 	LastName             string `json:"last_name,omitempty"`
 	MiddleName           string `json:"middle_name,omitempty"`
@@ -32,8 +33,7 @@ type RegisterRequest struct {
 	Latitude            float64 `json:"latitude,omitempty"`
 	Longtitude          float64 `json:"longtitude,omitempty"`
 
-	// 3. Field for delivery person
-	Role string `json:"role,omitempty"`
+	Role string `json:"role" validate:"required"`
 }
 
 type ForgotPasswordRequest struct {
