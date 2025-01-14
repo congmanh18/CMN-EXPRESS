@@ -4,7 +4,6 @@ import (
 	handlerError "express_be/core/err"
 
 	"express_be/core/transport/http/response"
-	mapper "express_be/mapper/res"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
@@ -15,12 +14,21 @@ import (
 // @Tags         User-information
 // @Accept       json
 // @Produce      json
-// @Param Authorization header string true "Bearer token"
-// @Param        id   path      string  true  "User ID"
-// @Router       /user-info [get]
+// @Param Authorization header string true "Bearer token" default(Bearer <access-token>)
+// @Param id path string true "UserID"
+// @Router       /users/{id} [get]
 func (h *handlerImpl) HandleGetInfoUser(c echo.Context) error {
-	id, ok := c.Get("user_id").(string)
+	roleCheck, ok := c.Get("role").(string)
 	if !ok {
+		return response.Error(c, handlerError.ErrTokenMissing.Code, handlerError.ErrTokenMissing.Message)
+	}
+
+	if roleCheck == "" {
+		return response.Error(c, handlerError.ErrAccessDenied.Code, handlerError.ErrAccessDenied.Message)
+	}
+
+	id := c.Param("id")
+	if id == "" {
 		return response.Error(c, handlerError.ErrMissingField.Code, handlerError.ErrMissingField.Message)
 	}
 
@@ -32,11 +40,9 @@ func (h *handlerImpl) HandleGetInfoUser(c echo.Context) error {
 			usecaseErr.Message,
 		)
 	}
-	if customer != nil {
-		resp := mapper.CustomerToRes(customer)
-		return response.OK(c, http.StatusOK, "success", resp)
+	if customer != nil && deliveryPerson == nil && usecaseErr == nil {
+		return response.OK(c, http.StatusOK, "success", customer)
 	} else {
-		resp := mapper.DeliveryPersonToRes(deliveryPerson)
-		return response.OK(c, http.StatusOK, "success", resp)
+		return response.OK(c, http.StatusOK, "success", deliveryPerson)
 	}
 }

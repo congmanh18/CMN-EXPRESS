@@ -59,7 +59,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Sprint1"
+                    "Public"
                 ],
                 "summary": "Refresh Access Token",
                 "parameters": [
@@ -142,6 +142,7 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
+                        "default": "Bearer \u003caccess-token\u003e",
                         "description": "Bearer token",
                         "name": "Authorization",
                         "in": "header",
@@ -190,38 +191,6 @@ const docTemplate = `{
                 "responses": {}
             }
         },
-        "/user-info": {
-            "get": {
-                "description": "Fetch the details of a user based on their ID. The user can be either a customer or a delivery person.",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "User-information"
-                ],
-                "summary": "Get user information",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Bearer token",
-                        "name": "Authorization",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "User ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {}
-            }
-        },
         "/users": {
             "get": {
                 "description": "Get a list of users (customers and delivery persons) with optional filters by status and role, including pagination.",
@@ -238,6 +207,7 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
+                        "default": "Bearer \u003caccess-token\u003e",
                         "description": "Bearer token",
                         "name": "Authorization",
                         "in": "header",
@@ -272,6 +242,39 @@ const docTemplate = `{
                     }
                 ],
                 "responses": {}
+            }
+        },
+        "/users/{id}": {
+            "get": {
+                "description": "Fetch the details of a user based on their ID. The user can be either a customer or a delivery person.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User-information"
+                ],
+                "summary": "Get user information",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "Bearer \u003caccess-token\u003e",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "UserID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
             },
             "put": {
                 "description": "Update for different roles (customer, delivery_person) account_type customer (prepaid, postpaid)\nExample user payload:",
@@ -288,9 +291,17 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
+                        "default": "Bearer \u003caccess-token\u003e",
                         "description": "Bearer token",
                         "name": "Authorization",
                         "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "UserID",
+                        "name": "id",
+                        "in": "path",
                         "required": true
                     },
                     {
@@ -304,9 +315,7 @@ const docTemplate = `{
                     }
                 ],
                 "responses": {}
-            }
-        },
-        "/users/{id}": {
+            },
             "patch": {
                 "description": "Cập nhật trạng thái của một khách hàng dựa trên ID",
                 "consumes": [
@@ -322,6 +331,7 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
+                        "default": "Bearer \u003caccess-token\u003e",
                         "description": "Bearer token",
                         "name": "Authorization",
                         "in": "header",
@@ -329,7 +339,7 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
-                        "description": "Customer ID",
+                        "description": "UserID",
                         "name": "id",
                         "in": "path",
                         "required": true

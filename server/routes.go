@@ -65,7 +65,7 @@ func SetupRoutes(
 					Handler: userHandler.HandleListUsers,
 				},
 				{
-					Path:    "/user-info",
+					Path:    "/users/:id",
 					Method:  method.GET,
 					Handler: userHandler.HandleGetInfoUser,
 				},

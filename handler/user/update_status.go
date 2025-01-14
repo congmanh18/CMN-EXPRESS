@@ -8,14 +8,14 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-// HandleVerifyCustomer implements Handler.
+// HandleVerifyUser implements Handler.
 // @Summary Cập nhật trạng thái khách hàng
 // @Description Cập nhật trạng thái của một khách hàng dựa trên ID
 // @Tags User-information
 // @Accept json
 // @Produce json
-// @Param Authorization header string true "Bearer token"
-// @Param id path string true "Customer ID"
+// @Param Authorization header string true "Bearer token" default(Bearer <access-token>)
+// @Param id path string true "UserID"
 // @Param approval_status query string true "Trạng thái mới của khách hàng (accept, deny)"
 // @Router /users/{id} [patch]
 func (h *handlerImpl) HandleUpdateUserStatus(c echo.Context) error {
@@ -28,8 +28,8 @@ func (h *handlerImpl) HandleUpdateUserStatus(c echo.Context) error {
 		return response.Error(c, handlerError.ErrAccessDenied.Code, handlerError.ErrAccessDenied.Message)
 	}
 
-	id, ok := c.Get("user_id").(string)
-	if !ok {
+	id := c.Param("id")
+	if id == "" {
 		return response.Error(c, handlerError.ErrMissingField.Code, handlerError.ErrMissingField.Message)
 	}
 
