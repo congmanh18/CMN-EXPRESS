@@ -32,6 +32,7 @@ const (
 	DatabaseErrorStart = 400
 	ChangePassword     = DatabaseErrorStart + iota
 	RegisterUser
+	Forbidden
 	NotFound
 
 	// Server errors (500+)

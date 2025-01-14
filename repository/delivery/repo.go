@@ -12,7 +12,7 @@ type Repo interface {
 	FindByPhone(ctx context.Context, phone *string) (*entity.DeliveryPerson, error)
 	FindByID(ctx context.Context, id *string) (*entity.DeliveryPerson, error)
 	DeleteDeliveryPerson(ctx context.Context, id *string) error
-	UpdateDeliveryPerson(ctx context.Context, id *string, deliveryPerson *entity.DeliveryPerson) error
+	Update(ctx context.Context, id *string, deliveryPerson *entity.DeliveryPerson) error
 	FetchAllDeliveryPersons(ctx context.Context, page, pageSize *int) ([]entity.DeliveryPerson, error)
 	FetchPhone(ctx context.Context, phone *string) (*string, error)
 }

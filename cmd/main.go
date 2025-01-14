@@ -36,5 +36,6 @@ func main() {
 	configPath := *configPathFlag
 
 	log.Printf("Starting server with config: %s", configPath)
+
 	server.Run(configPath)
 }

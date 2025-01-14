@@ -11,6 +11,7 @@ type Handler interface {
 	HandleGetInfoUser(c echo.Context) error
 	HandleListUsers(c echo.Context) error
 	HandleUpdateUserStatus(c echo.Context) error
+	HandleUpdateInfo(c echo.Context) error
 }
 
 type handlerImpl struct {

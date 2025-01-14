@@ -8,7 +8,7 @@ import (
 	"reflect"
 )
 
-func (d *deliveryImpl) UpdateDeliveryPerson(ctx context.Context, id *string, deliveryPerson *entity.DeliveryPerson) error {
+func (d *deliveryImpl) Update(ctx context.Context, id *string, deliveryPerson *entity.DeliveryPerson) error {
 	omitFields := gorm.OmitFields(deliveryPerson, func(fieldValue reflect.Value) bool {
 		return fieldValue.IsZero()
 	})

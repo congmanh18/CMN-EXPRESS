@@ -12,6 +12,10 @@ type Status string
 type ApprovalStatus string
 type Role string
 
+func (r Role) String() string {
+	return string(r)
+}
+
 const (
 	Pending   Status = "pending"
 	Verified  Status = "verified"
@@ -39,6 +43,7 @@ type User struct {
 	Ward                 *string
 	District             *string
 	City                 *string
+	IDCard               *string
 	IdentificationNumber *string
 	LastName             *string
 	MiddleName           *string

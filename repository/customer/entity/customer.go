@@ -13,9 +13,11 @@ const (
 	Postpaid CustomerAccountType = "postpaid"
 )
 
+// Shop/Sender/Customer
 type Customer struct {
 	record.BaseEntity
 	AccountType CustomerAccountType
+	ShopName    *string
 	Phone       *string  `gorm:"not null;index"`
 	GeoHash     *string  `json:"geo_hash"`
 	Latitude    *float64 `json:"latitude"`

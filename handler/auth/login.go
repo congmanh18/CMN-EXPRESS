@@ -4,7 +4,6 @@ import (
 	handlerError "express_be/core/err"
 	"express_be/core/transport/http/response"
 	"express_be/model/req"
-	"express_be/model/res"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
@@ -22,8 +21,7 @@ import (
 //	@Description }
 //	@Description ```
 
-//
-// @Tags Sprint1
+// @Tags Public
 // @Accept json
 // @Produce json
 // @Param login body req.LoginRequest true "Login Request"
@@ -43,11 +41,7 @@ func (h *handlerImpl) HandleLogin(c echo.Context) error {
 		return response.Error(c, err.Code, err.Message)
 	}
 
-	resp := &res.LoginRes{
-		AccessToken:  *token.AccessToken,
-		RefreshToken: *token.RefreshToken,
-	}
-	return response.OK(c, http.StatusOK, "success", resp)
+	return response.OK(c, http.StatusOK, "success", token)
 }
 
 // c.SetCookie(&http.Cookie{

@@ -9,7 +9,7 @@ import (
 )
 
 // UpdateCustomer implements Repo.
-func (c *customerImpl) UpdateCustomer(ctx context.Context, id *string, customer *entity.Customer) error {
+func (c *customerImpl) Update(ctx context.Context, id *string, customer *entity.Customer) error {
 	omitFields := gorm.OmitFields(customer, func(fieldValue reflect.Value) bool {
 		return fieldValue.IsZero()
 	})

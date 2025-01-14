@@ -4,14 +4,30 @@ import (
 	"express_be/core/record"
 )
 
+type Status string
+
+const (
+	Created          Status = "created"
+	PickingUp        Status = "picking_up"
+	PickedUp         Status = "picked_up"
+	PickupCanceled   Status = "pickup_canceled"
+	ReturnToHub      Status = "return_to_hub"
+	AtHub            Status = "at_hub"
+	OutForDelivery   Status = "out_for_delivery"
+	Delivered        Status = "delivered"
+	Returned         Status = "returned"
+	DeliveryCanceled Status = "delivery_canceled"
+)
+
 type Order struct {
 	record.BaseEntity
 
-	DeliveryPersonID       *string `json:"delivery_person_id"`
+	PickerID               *string `json:"picker_id"`
+	DelivererID            *string `json:"deliverer_id"`
 	WarehouseTransactionID *string `json:"warehouse_transaction_id"`
 
-	SenderID        *uint    `gorm:"foreignKey:SenderID" json:"sender_id"`
-	SenderName      *string  `json:"sender_name"`
+	SenderID        *string  `gorm:"foreignKey:SenderID" json:"sender_id"`
+	ShopName        *string  `json:"shop_name"`
 	SenderPhone     *string  `json:"sender_phone"`
 	SenderAddress   *string  `json:"sender_address"`
 	SenderLatitude  *float64 `json:"sender_latitude"`
@@ -31,16 +47,13 @@ type Order struct {
 	Dimensions  *string  `json:"dimensions"`
 	DeclaredCod *float64 `json:"declared_cod"`
 	TotalCod    *float64 `json:"total_cod"`
-	Status      *string  `json:"status"`
+	Status      Status   `json:"status"`
 
-	AdditionalServices *string  `json:"additional_services"`
-	ShippingFee        *float64 `json:"shipping_fee"`
-	TotalAmount        *float64 `json:"total_amount"`
+	ShippingFee *float64 `json:"shipping_fee"`
+	TotalAmount *float64 `json:"total_amount"`
 
 	// Quan hệ với bảng con OrderStatus
-	OrderStatus       []OrderStatus       `gorm:"foreignKey:OrderID" json:"order_status"`
-	AdditionalService []AdditionalService `gorm:"foreignKey:OrderID" json:"additional_service"`
-	CODTransaction    []CODTransaction    `gorm:"foreignKey:OrderID" json:"cod_transaction"`
+	OrderStatus []OrderStatus `gorm:"foreignKey:OrderID" json:"order_status"`
 }
 
 func (o *Order) TableName() string {

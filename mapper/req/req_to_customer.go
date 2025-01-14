@@ -52,6 +52,7 @@ func RegisterToCustomer(req model.RegisterRequest) (*entity.Customer, *user.User
 		Ward:                 &req.Ward,
 		District:             &req.District,
 		City:                 &req.City,
+		IDCard:               &req.IDCard,
 		IdentificationNumber: &req.IdentificationNumber,
 		LastName:             &req.LastName,
 		MiddleName:           &req.MiddleName,
@@ -68,13 +69,14 @@ func RegisterToCustomer(req model.RegisterRequest) (*entity.Customer, *user.User
 	return customer, user
 }
 
-func UpdateToCustomer(req model.UpdateCustomerReq) (*entity.Customer, *user.User) {
+func UpdateToCustomer(req model.UpdateUserReq) (*entity.Customer, *user.User) {
 	geohash := geohash.Encode(req.Latitude, req.Longtitude)
 	user := &user.User{
 		SpecificAddress:      &req.SpecificAddress,
 		Ward:                 &req.Ward,
 		District:             &req.District,
 		City:                 &req.City,
+		IDCard:               &req.IDCard,
 		IdentificationNumber: &req.IdentificationNumber,
 		LastName:             &req.LastName,
 		MiddleName:           &req.MiddleName,

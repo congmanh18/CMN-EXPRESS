@@ -33,7 +33,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Sprint1"
+                    "Public"
                 ],
                 "parameters": [
                     {
@@ -84,7 +84,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Sprint1"
+                    "Public"
                 ],
                 "summary": "Register",
                 "parameters": [
@@ -110,7 +110,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Sprint1"
+                    "Public"
                 ],
                 "parameters": [
                     {
@@ -136,10 +136,17 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Sprint1"
+                    "User-information"
                 ],
                 "summary": "Search paginated users",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
                     {
                         "type": "integer",
                         "default": 1,
@@ -183,6 +190,38 @@ const docTemplate = `{
                 "responses": {}
             }
         },
+        "/user-info": {
+            "get": {
+                "description": "Fetch the details of a user based on their ID. The user can be either a customer or a delivery person.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User-information"
+                ],
+                "summary": "Get user information",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            }
+        },
         "/users": {
             "get": {
                 "description": "Get a list of users (customers and delivery persons) with optional filters by status and role, including pagination.",
@@ -193,10 +232,17 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Sprint1"
+                    "User-information"
                 ],
                 "summary": "Fetch paginated users",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
                     {
                         "type": "integer",
                         "default": 1,
@@ -226,11 +272,9 @@ const docTemplate = `{
                     }
                 ],
                 "responses": {}
-            }
-        },
-        "/users/{id}": {
-            "get": {
-                "description": "Fetch the details of a user based on their ID. The user can be either a customer or a delivery person.",
+            },
+            "put": {
+                "description": "Update for different roles (customer, delivery_person) account_type customer (prepaid, postpaid)\nExample user payload:",
                 "consumes": [
                     "application/json"
                 ],
@@ -238,20 +282,31 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Sprint1"
+                    "User-information"
                 ],
-                "summary": "Get user information",
+                "summary": "Update",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "User ID",
-                        "name": "id",
-                        "in": "path",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
                         "required": true
+                    },
+                    {
+                        "description": "Update Request Example",
+                        "name": "update_info",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/req.UpdateUserReq"
+                        }
                     }
                 ],
                 "responses": {}
-            },
+            }
+        },
+        "/users/{id}": {
             "patch": {
                 "description": "Cập nhật trạng thái của một khách hàng dựa trên ID",
                 "consumes": [
@@ -261,10 +316,17 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Sprint1"
+                    "User-information"
                 ],
                 "summary": "Cập nhật trạng thái khách hàng",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
                     {
                         "type": "string",
                         "description": "Customer ID",
@@ -304,7 +366,8 @@ const docTemplate = `{
             "type": "object",
             "required": [
                 "password",
-                "phone"
+                "phone",
+                "role"
             ],
             "properties": {
                 "account_type": {
@@ -324,6 +387,9 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "gender": {
+                    "type": "string"
+                },
+                "id_card": {
                     "type": "string"
                 },
                 "identification_number": {
@@ -358,7 +424,6 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "role": {
-                    "description": "3. Field for delivery person",
                     "type": "string"
                 },
                 "specific_address": {
@@ -384,6 +449,69 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "phone": {
+                    "type": "string"
+                }
+            }
+        },
+        "req.UpdateUserReq": {
+            "type": "object",
+            "required": [
+                "role"
+            ],
+            "properties": {
+                "account_type": {
+                    "description": "2. Field for customer",
+                    "type": "string"
+                },
+                "city": {
+                    "type": "string"
+                },
+                "date_of_birth": {
+                    "type": "string"
+                },
+                "district": {
+                    "type": "string"
+                },
+                "first_name": {
+                    "type": "string"
+                },
+                "gender": {
+                    "type": "string"
+                },
+                "id_card": {
+                    "type": "string"
+                },
+                "identification_number": {
+                    "type": "string"
+                },
+                "last_name": {
+                    "type": "string"
+                },
+                "latitude": {
+                    "type": "number"
+                },
+                "longtitude": {
+                    "type": "number"
+                },
+                "middle_name": {
+                    "type": "string"
+                },
+                "nationality": {
+                    "type": "string"
+                },
+                "place_of_origin": {
+                    "type": "string"
+                },
+                "place_of_residence": {
+                    "type": "string"
+                },
+                "role": {
+                    "type": "string"
+                },
+                "specific_address": {
+                    "type": "string"
+                },
+                "ward": {
                     "type": "string"
                 }
             }
