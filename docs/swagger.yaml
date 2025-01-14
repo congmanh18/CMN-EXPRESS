@@ -310,9 +310,8 @@ paths:
     get:
       consumes:
       - application/json
-      description: |-
-        Update for different roles (customer, delivery_person) account_type customer (prepaid, postpaid)
-        Example user payload:
+      description: Fetch the details of a user based on their ID. The user can be
+        either a customer or a delivery person.
       parameters:
       - default: Bearer <access-token>
         description: Bearer token
@@ -325,16 +324,10 @@ paths:
         name: id
         required: true
         type: string
-      - description: Update Request Example
-        in: body
-        name: update_info
-        required: true
-        schema:
-          $ref: '#/definitions/req.UpdateUserReq'
       produces:
       - application/json
       responses: {}
-      summary: Update
+      summary: Get user information
       tags:
       - User-information
     patch:

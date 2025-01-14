@@ -191,38 +191,6 @@ const docTemplate = `{
                 "responses": {}
             }
         },
-        "/user-info": {
-            "get": {
-                "description": "Fetch the details of a user based on their ID. The user can be either a customer or a delivery person.",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "User-information"
-                ],
-                "summary": "Get user information",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Bearer token",
-                        "name": "Authorization",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "User ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {}
-            }
-        },
         "/users": {
             "get": {
                 "description": "Get a list of users (customers and delivery persons) with optional filters by status and role, including pagination.",
@@ -274,9 +242,11 @@ const docTemplate = `{
                     }
                 ],
                 "responses": {}
-            },
-            "put": {
-                "description": "Update for different roles (customer, delivery_person) account_type customer (prepaid, postpaid)\nExample user payload:",
+            }
+        },
+        "/users/{id}": {
+            "get": {
+                "description": "Fetch the details of a user based on their ID. The user can be either a customer or a delivery person.",
                 "consumes": [
                     "application/json"
                 ],
@@ -286,7 +256,7 @@ const docTemplate = `{
                 "tags": [
                     "User-information"
                 ],
-                "summary": "Update",
+                "summary": "Get user information",
                 "parameters": [
                     {
                         "type": "string",
@@ -302,15 +272,6 @@ const docTemplate = `{
                         "name": "id",
                         "in": "path",
                         "required": true
-                    },
-                    {
-                        "description": "Update Request Example",
-                        "name": "update_info",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/req.UpdateUserReq"
-                        }
                     }
                 ],
                 "responses": {}
