@@ -6,6 +6,7 @@ import (
 	httpServer "express_be/core/transport/http"
 	"express_be/core/transport/http/engine"
 	"express_be/core/transport/http/route"
+	"express_be/docs"
 	"express_be/migration"
 	"express_be/provider"
 
@@ -22,8 +23,8 @@ import (
 	priceRepo "express_be/repository/price"
 	"express_be/repository/token"
 	userRepo "express_be/repository/user"
-
 	"express_be/usecase/auth"
+
 	"express_be/usecase/order"
 	"express_be/usecase/price"
 	"express_be/usecase/user"
@@ -45,6 +46,11 @@ func LoadServiceConfig(confPath string) conf.ServiceConfig {
 
 func NewServer(serviceConf conf.ServiceConfig, routes []route.GroupRoute) *httpServer.Server {
 	e := engine.NewEcho()
+	if serviceConf.Environment == "production" {
+		docs.SwaggerInfo.Host = "203.145.47.225" // Host cho production
+	} else {
+		docs.SwaggerInfo.Host = "localhost:4579" // Host cho local
+	}
 	e.GET("/swagger/*", echoSwagger.WrapHandler)
 	return httpServer.NewHttpServer(
 		httpServer.AddName(serviceConf.ServiceName),

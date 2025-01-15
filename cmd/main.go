@@ -19,7 +19,7 @@ import (
 // @contact.url https://sharkytech.vercel.app
 // @contact.email nguyenmanh180102@gmail.com
 // @contact.description For technical inquiries or support, feel free to reach out to our dedicated team.
-// @host localhost:4579
+// @host 203.145.47.225
 // @BasePath /
 // @termsOfService https://sharkytech.vercel.app/terms
 // @license.name MIT License

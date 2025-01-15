@@ -17,6 +17,7 @@ type ServiceConfig struct {
 
 	SecretKey    string `mapstructure:"SECRET_KEY"`
 	JwtSecretKey string `mapstructure:"JWT_SECRET_KEY"`
+	Environment  string `mapstructure:"ENVIRONMENT"`
 }
 
 // docker run --name db -e POSTGRES_DB=local -e POSTGRES_USER=local -e POSTGRES_PASSWORD=123456 -p 5432:5432 -d postgres:17-alpine
