@@ -88,8 +88,6 @@ func SetupRoutes(
 				},
 			},
 		},
-
-		// Nhóm quản lý bảng giá (Auth + RoleMiddleware)
 		{
 			Prefix: "/admin/services/prices",
 			Middlewares: []echo.MiddlewareFunc{
