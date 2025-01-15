@@ -16,6 +16,7 @@ import (
 // @Produce      json
 // @Param Authorization header string true "Bearer token" default(Bearer <access-token>)
 // @Param id path string true "UserID"
+// @Security ApiKeyAuth
 // @Router       /users/{id} [get]
 func (h *handlerImpl) HandleGetInfoUser(c echo.Context) error {
 	roleCheck, ok := c.Get("role").(string)

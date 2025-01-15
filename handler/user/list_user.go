@@ -22,6 +22,7 @@ import (
 // @Param        page_size   query     int     false  "Page size (default is 10)"       default(10)
 // @Param        status      query     string  false  "Filter by customer status (e.g., pending, verified, blocked, active, inactive) Filter by delivery_person (e.g., on_duty, off_duty)"
 // @Param        role        query     string  true   "Filter by user role (e.g., customer, delivery_person)"
+// @Security ApiKeyAuth
 // @Router       /users [get]
 func (h *handlerImpl) HandleListUsers(c echo.Context) error {
 	roleCheck, ok := c.Get("role").(string)
@@ -69,7 +70,7 @@ func (h *handlerImpl) HandleListUsers(c echo.Context) error {
 		deliveryPersonResponses = append(deliveryPersonResponses, deliveryPersonResponse)
 	}
 
-	resp := model.UserPaginationResponse{
+	resp := model.PaginationResponse{
 		Page:            page,
 		PageSize:        pageSize,
 		Customers:       customerResponses,

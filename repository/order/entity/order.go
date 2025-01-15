@@ -21,10 +21,11 @@ const (
 
 type Order struct {
 	record.BaseEntity
-
-	PickerID               *string `gorm:"foreignKey:DeliveryPersonID" json:"picker_id"`
-	DelivererID            *string `gorm:"foreignKey:DeliveryPersonID" json:"deliverer_id"`
+	TrackingNumber         *string `json:"tracking_number"`
 	WarehouseTransactionID *string `json:"warehouse_transaction_id"`
+
+	PickerID    *string `gorm:"foreignKey:DeliveryPersonID" json:"picker_id"`
+	DelivererID *string `gorm:"foreignKey:DeliveryPersonID" json:"deliverer_id"`
 
 	SenderID        *string  `gorm:"foreignKey:CustomerID" json:"sender_id"`
 	ShopName        *string  `json:"shop_name"`
@@ -33,6 +34,7 @@ type Order struct {
 	SenderLatitude  *float64 `json:"sender_latitude"`
 	SenderLongitude *float64 `json:"sender_longitude"`
 	SenderGeohash   *string  `json:"sender_geohash"`
+	AutonomousCode  *string  `json:"autonomous_code"`
 
 	ReceiverName      *string  `json:"receiver_name"`
 	ReceiverPhone     *string  `json:"receiver_phone"`
@@ -41,21 +43,22 @@ type Order struct {
 	ReceiverLongitude *float64 `json:"receiver_longitude"`
 	ReceiverGeohash   *string  `json:"receiver_geohash"`
 
-	Product     *string  `json:"product"`
-	Quantity    *int     `json:"quantity"`
-	Weight      *float64 `json:"weight"`
-	Dimensions  *string  `json:"dimensions"`
-	DeclaredCod *float64 `json:"declared_cod"`
-	TotalCod    *float64 `json:"total_cod"`
-	Status      Status   `json:"status"`
+	Product         *string  `json:"product"`
+	Quantity        *int     `json:"quantity"`
+	Weight          *float64 `json:"weight"`
+	Dimensions      *string  `json:"dimensions"`
+	DeclaredCod     *float64 `json:"declared_cod"`
+	TotalCod        *float64 `json:"total_cod"`
+	Status          Status   `json:"status"`
+	SpecialFeatures *string  `json:"special_features"`
+	PickUpNotes     *string  `json:"pick_up_notes"`
+	DeliveryNotes   *string  `json:"delivery_notes"`
 
 	ShippingFee *float64 `json:"shipping_fee"`
 	TotalAmount *float64 `json:"total_amount"`
-
-	// Quan hệ với bảng con OrderStatus
-	OrderStatus []OrderStatus `gorm:"foreignKey:OrderID" json:"order_status"`
 }
 
+// OrderStatus []OrderStatus `gorm:"foreignKey:OrderID" json:"order_status"`
 func (o *Order) TableName() string {
 	return "orders"
 }

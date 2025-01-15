@@ -16,6 +16,7 @@ import (
 // @Produce      json
 // @Param Authorization header string true "Bearer token" default(Bearer <access-token>)
 // @Param        body body model.PriceReq true "Price request payload"
+// @Security ApiKeyAuth
 // @Router       /admin/services/prices [post]
 func (h *handlerImpl) HandleCreate(c echo.Context) error {
 	roleCheck, ok := c.Get("role").(string)
@@ -67,6 +68,7 @@ func (h *handlerImpl) HandleRead(c echo.Context) error {
 // @Param Authorization header string true "Bearer token" default(Bearer <access-token>)
 // @Param        id path string true "Price ID"
 // @Param        body body model.PriceReq true "Price request payload"
+// @Security ApiKeyAuth
 // @Router       /admin/services/prices/{id} [put]
 func (h *handlerImpl) HandleUpdate(c echo.Context) error {
 	roleCheck, ok := c.Get("role").(string)
@@ -108,6 +110,7 @@ func (h *handlerImpl) HandleUpdate(c echo.Context) error {
 // @Produce      json
 // @Param Authorization header string true "Bearer token" default(Bearer <access-token>)
 // @Param        id path string true "Price ID"
+// @Security ApiKeyAuth
 // @Router       /admin/services/prices/{id} [delete]
 func (h *handlerImpl) HandleDelete(c echo.Context) error {
 	roleCheck, ok := c.Get("role").(string)

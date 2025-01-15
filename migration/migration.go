@@ -22,6 +22,7 @@ import (
 
 func Migration(db *gorm.DB) {
 	log.Printf("Migration.....")
+	db.Exec("CREATE SCHEMA IF NOT EXISTS log")
 	err := db.AutoMigrate(
 		&token.RefreshToken{},
 		&user.User{},

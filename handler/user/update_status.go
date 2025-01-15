@@ -17,6 +17,7 @@ import (
 // @Param Authorization header string true "Bearer token" default(Bearer <access-token>)
 // @Param id path string true "UserID"
 // @Param approval_status query string true "Trạng thái mới của khách hàng (accept, deny)"
+// @Security ApiKeyAuth
 // @Router /users/{id} [patch]
 func (h *handlerImpl) HandleUpdateUserStatus(c echo.Context) error {
 	roleCheck, ok := c.Get("role").(string)

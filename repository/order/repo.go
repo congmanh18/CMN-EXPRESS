@@ -9,6 +9,11 @@ import (
 type Repo interface {
 	Create(ctx context.Context, order *entity.Order) error
 	UpdateOrderStatus(ctx context.Context, id *string, status *entity.Status) error
+	FetchOrderByCustomer(ctx context.Context, id *string, page, pageSize *int) ([]entity.OrderDetail, error)
+	FetchOrderByDeliveryPerson(ctx context.Context, id *string, page, pageSize *int) ([]entity.OrderDetail, error)
+	FetchAllOrders(ctx context.Context, page, pageSize *int) ([]entity.OrderDetail, error)
+	FindByID(ctx context.Context, id *string) (*entity.OrderDetail, error) // OKEY Admin xem thông tin chi tiết tài khoản
+
 }
 
 type orderImpl struct {

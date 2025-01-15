@@ -3,6 +3,7 @@ package req
 import (
 	"express_be/core/pointer"
 	"express_be/core/record"
+	"express_be/core/utils/gen"
 	model "express_be/model/req"
 	"express_be/repository/order/entity"
 
@@ -14,10 +15,12 @@ func CreateOrderReqToOrder(req model.CreateOrderReq) *entity.Order {
 	senderGeohash := geohash.Encode(*req.SenderLatitude, *req.SenderLongitude)
 	receiverGeohash := geohash.Encode(*req.ReceiverLatitude, *req.ReceiverLongitude)
 
+	id, _ := gen.GenerateShipmentCode()
 	return &entity.Order{
 		BaseEntity: record.BaseEntity{
 			ID: pointer.String(uuid.New().String()),
 		},
+		TrackingNumber:  pointer.String(id),
 		SenderID:        req.SenderID,
 		ShopName:        req.ShopName,
 		SenderPhone:     req.SenderPhone,

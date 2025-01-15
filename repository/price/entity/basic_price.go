@@ -9,3 +9,7 @@ type BasicPrice struct {
 	BasePrice *float64 `json:"base_price"`
 	// SpecialRates []SpecialRate `gorm:"foreignKey:ShippingRateID" json:"special_rates"`
 }
+
+func (b *BasicPrice) TableName() string {
+	return "basic_prices"
+}

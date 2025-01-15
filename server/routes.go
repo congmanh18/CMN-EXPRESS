@@ -130,6 +130,16 @@ func SetupRoutes(
 					Method:  method.PATCH,
 					Handler: orderHandler.HandleUpdateOrderStatus,
 				},
+				{
+					Path:    "/:id",
+					Method:  method.GET,
+					Handler: orderHandler.HandlerOrderDetail,
+				},
+				{
+					Path:    "",
+					Method:  method.GET,
+					Handler: orderHandler.HandleListOrder,
+				},
 			},
 		},
 	}

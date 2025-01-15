@@ -24,6 +24,7 @@ import (
 // @Param        name      query     string  false  "Search by user name"
 // @Param        phone      query     string  false  "Search by user phone"
 // @Param        role        query     string  true   "Filter by user role (e.g., customer, delivery_person)"
+// @Security ApiKeyAuth
 // @Router       /search [get]
 func (h *handlerImpl) HandleSearch(c echo.Context) error {
 	roleCheck, ok := c.Get("role").(string)
@@ -72,7 +73,7 @@ func (h *handlerImpl) HandleSearch(c echo.Context) error {
 		deliveryPersonResponse := mapper.DeliveryPersonToRes(&deliveryPerson)
 		deliveryPersonResponses = append(deliveryPersonResponses, deliveryPersonResponse)
 	}
-	resp := model.UserPaginationResponse{
+	resp := model.PaginationResponse{
 		Customers:       customerResponses,
 		DeliveryPersons: deliveryPersonResponses,
 	}

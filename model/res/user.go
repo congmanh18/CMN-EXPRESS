@@ -44,11 +44,12 @@ type DeliveryPersonRes struct {
 	PlaceOfResidence     *string  `json:"place_of_residence"`
 }
 
-type UserPaginationResponse struct {
+type PaginationResponse struct {
 	Page            int                 `json:"page"`
 	PageSize        int                 `json:"page_size"`
 	TotalPages      int                 `json:"total_pages,omitempty"` // Nếu cần tổng số trang
 	TotalCount      int64               `json:"total_count,omitempty"` // Nếu cần tổng số bản ghi
 	Customers       []CustomerRes       `json:"customers,omitempty"`
 	DeliveryPersons []DeliveryPersonRes `json:"delivery_persons,omitempty"`
+	Orders          []OrderRes          `json:"orders,omitempty"`
 }
