@@ -7,6 +7,7 @@ import (
 
 	// customerHandler "express_be/handler/customer"
 	// deliveryPersonHandler "express_be/handler/delivery"
+	orderHandler "express_be/handler/order"
 	priceHandler "express_be/handler/price"
 	userHandler "express_be/handler/user"
 
@@ -19,6 +20,7 @@ func SetupRoutes(
 	userHandler userHandler.Handler,
 	authhandler auth.Handler,
 	priceHandler priceHandler.Handler,
+	orderHandler orderHandler.Handler,
 	jwtSecret string,
 ) []route.GroupRoute {
 	return []route.GroupRoute{
@@ -89,7 +91,7 @@ func SetupRoutes(
 
 		// Nhóm quản lý bảng giá (Auth + RoleMiddleware)
 		{
-			Prefix: "/prices",
+			Prefix: "/admin/services/prices",
 			Middlewares: []echo.MiddlewareFunc{
 				jwt.AuthMiddleware(jwtSecret),
 				jwt.RoleMiddleware("admin"),
@@ -109,6 +111,24 @@ func SetupRoutes(
 					Path:    "/:id",
 					Method:  method.DELETE,
 					Handler: priceHandler.HandleDelete,
+				},
+			},
+		},
+		{
+			Prefix: "/orders",
+			Middlewares: []echo.MiddlewareFunc{
+				jwt.AuthMiddleware(jwtSecret),
+			},
+			Routes: []route.Route{
+				{
+					Path:    "",
+					Method:  method.POST,
+					Handler: orderHandler.HandleCreate,
+				},
+				{
+					Path:    "/:id",
+					Method:  method.PATCH,
+					Handler: orderHandler.HandleUpdateOrderStatus,
 				},
 			},
 		},

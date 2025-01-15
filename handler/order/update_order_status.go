@@ -1,4 +1,4 @@
-package user
+package order
 
 import (
 	handlerError "express_be/core/err"
@@ -8,23 +8,24 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-// HandleVerifyUser implements Handler.
-// @Summary Update customer status
-// @Description Update customer status by ID
-// @Tags User-information
+// HandleUpdateOrderStatus godoc
+// @Summary Update order status
+// @Description Update the status of an order by ID
+// @Tags Orders
 // @Accept json
 // @Produce json
 // @Param Authorization header string true "Bearer token" default(Bearer <access-token>)
-// @Param id path string true "UserID"
-// @Param approval_status query string true "Trạng thái mới của khách hàng (accept, deny)"
-// @Router /users/{id} [patch]
-func (h *handlerImpl) HandleUpdateUserStatus(c echo.Context) error {
+// @Param id path string true "Order ID"
+// @Param order_status query string true "New status of the order (picking_up, picked_up, pickup_canceled, return_to_hub, at_hub, out_for_delivery, delivered, returned, delivery_canceled)"
+// @Security ApiKeyAuth
+// @Router /orders/{id} [patch]
+func (h *handlerImpl) HandleUpdateOrderStatus(c echo.Context) error {
 	roleCheck, ok := c.Get("role").(string)
 	if !ok {
 		return response.Error(c, handlerError.ErrTokenMissing.Code, handlerError.ErrTokenMissing.Message)
 	}
 
-	if roleCheck != "admin" && roleCheck != "accounting" {
+	if roleCheck == "" {
 		return response.Error(c, handlerError.ErrAccessDenied.Code, handlerError.ErrAccessDenied.Message)
 	}
 
@@ -33,12 +34,12 @@ func (h *handlerImpl) HandleUpdateUserStatus(c echo.Context) error {
 		return response.Error(c, handlerError.ErrMissingField.Code, handlerError.ErrMissingField.Message)
 	}
 
-	status := c.QueryParam("approval_status")
+	status := c.QueryParam("order_status")
 	if status == "" {
 		return response.Error(c, handlerError.ErrMissingField.Code, handlerError.ErrMissingField.Message)
 	}
 
-	usecaseErr := h.userUsecase.UpdateStatus(c.Request().Context(), &id, &status)
+	usecaseErr := h.orderUsecase.UpdateOrderStatus(c.Request().Context(), &id, &status)
 	if usecaseErr != nil {
 		return response.Error(c, usecaseErr.Code, usecaseErr.Message)
 	}

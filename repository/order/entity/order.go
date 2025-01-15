@@ -22,11 +22,11 @@ const (
 type Order struct {
 	record.BaseEntity
 
-	PickerID               *string `json:"picker_id"`
-	DelivererID            *string `json:"deliverer_id"`
+	PickerID               *string `gorm:"foreignKey:DeliveryPersonID" json:"picker_id"`
+	DelivererID            *string `gorm:"foreignKey:DeliveryPersonID" json:"deliverer_id"`
 	WarehouseTransactionID *string `json:"warehouse_transaction_id"`
 
-	SenderID        *string  `gorm:"foreignKey:SenderID" json:"sender_id"`
+	SenderID        *string  `gorm:"foreignKey:CustomerID" json:"sender_id"`
 	ShopName        *string  `json:"shop_name"`
 	SenderPhone     *string  `json:"sender_phone"`
 	SenderAddress   *string  `json:"sender_address"`

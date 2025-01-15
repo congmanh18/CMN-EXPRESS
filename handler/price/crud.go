@@ -11,12 +11,12 @@ import (
 
 // @Summary      Create a new price
 // @Description  Admin creates a new price entry
-// @Tags         Prices
+// @Tags         Admin
 // @Accept       json
 // @Produce      json
 // @Param Authorization header string true "Bearer token" default(Bearer <access-token>)
 // @Param        body body model.PriceReq true "Price request payload"
-// @Router       /prices [post]
+// @Router       /admin/services/prices [post]
 func (h *handlerImpl) HandleCreate(c echo.Context) error {
 	roleCheck, ok := c.Get("role").(string)
 	if !ok {
@@ -47,7 +47,7 @@ func (h *handlerImpl) HandleCreate(c echo.Context) error {
 
 // @Summary      Get all prices
 // @Description  Retrieve all price entries
-// @Tags         Prices
+// @Tags         Public
 // @Accept       json
 // @Produce      json
 // @Router       /prices [get]
@@ -61,13 +61,13 @@ func (h *handlerImpl) HandleRead(c echo.Context) error {
 
 // @Summary      Update a price
 // @Description  Admin updates an existing price
-// @Tags         Prices
+// @Tags         Admin
 // @Accept       json
 // @Produce      json
 // @Param Authorization header string true "Bearer token" default(Bearer <access-token>)
 // @Param        id path string true "Price ID"
 // @Param        body body model.PriceReq true "Price request payload"
-// @Router       /prices/{id} [put]
+// @Router       /admin/services/prices/{id} [put]
 func (h *handlerImpl) HandleUpdate(c echo.Context) error {
 	roleCheck, ok := c.Get("role").(string)
 	if !ok {
@@ -103,12 +103,12 @@ func (h *handlerImpl) HandleUpdate(c echo.Context) error {
 
 // @Summary      Delete a price
 // @Description  Admin deletes a price entry
-// @Tags         Prices
+// @Tags         Admin
 // @Accept       json
 // @Produce      json
 // @Param Authorization header string true "Bearer token" default(Bearer <access-token>)
 // @Param        id path string true "Price ID"
-// @Router       /prices/{id} [delete]
+// @Router       /admin/services/prices/{id} [delete]
 func (h *handlerImpl) HandleDelete(c echo.Context) error {
 	roleCheck, ok := c.Get("role").(string)
 	if !ok {
@@ -135,5 +135,4 @@ func (h *handlerImpl) HandleDelete(c echo.Context) error {
 	}
 
 	return response.OK(c, http.StatusOK, "success", nil)
-
 }

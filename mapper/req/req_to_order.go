@@ -1,9 +1,12 @@
 package req
 
 import (
+	"express_be/core/pointer"
+	"express_be/core/record"
 	model "express_be/model/req"
 	"express_be/repository/order/entity"
 
+	"github.com/google/uuid"
 	"github.com/mmcloughlin/geohash"
 )
 
@@ -12,6 +15,9 @@ func CreateOrderReqToOrder(req model.CreateOrderReq) *entity.Order {
 	receiverGeohash := geohash.Encode(*req.ReceiverLatitude, *req.ReceiverLongitude)
 
 	return &entity.Order{
+		BaseEntity: record.BaseEntity{
+			ID: pointer.String(uuid.New().String()),
+		},
 		SenderID:        req.SenderID,
 		ShopName:        req.ShopName,
 		SenderPhone:     req.SenderPhone,

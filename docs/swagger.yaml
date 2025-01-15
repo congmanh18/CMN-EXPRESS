@@ -1,5 +1,57 @@
 basePath: /
 definitions:
+  express_be_model_req.CreateOrderReq:
+    properties:
+      declared_code:
+        type: number
+      dimensions:
+        type: string
+      product:
+        type: string
+      quantity:
+        type: integer
+      receiver_address:
+        type: string
+      receiver_latitude:
+        type: number
+      receiver_longitude:
+        type: number
+      receiver_name:
+        type: string
+      receiver_phone:
+        type: string
+      sender_address:
+        type: string
+      sender_id:
+        type: string
+      sender_latitude:
+        type: number
+      sender_longitude:
+        type: number
+      sender_phone:
+        type: string
+      shop_name:
+        type: string
+      weight:
+        type: number
+    required:
+    - declared_code
+    - dimensions
+    - product
+    - quantity
+    - receiver_address
+    - receiver_latitude
+    - receiver_longitude
+    - receiver_name
+    - receiver_phone
+    - sender_address
+    - sender_id
+    - sender_latitude
+    - sender_longitude
+    - sender_phone
+    - shop_name
+    - weight
+    type: object
   express_be_model_req.LoginRequest:
     properties:
       password:
@@ -139,33 +191,7 @@ info:
   title: CMN Express API Documentation
   version: "1.0"
 paths:
-  /login:
-    post:
-      consumes:
-      - application/json
-      parameters:
-      - description: Login Request
-        in: body
-        name: login
-        required: true
-        schema:
-          $ref: '#/definitions/express_be_model_req.LoginRequest'
-      produces:
-      - application/json
-      responses: {}
-      tags:
-      - Authentication
-  /prices:
-    get:
-      consumes:
-      - application/json
-      description: Retrieve all price entries
-      produces:
-      - application/json
-      responses: {}
-      summary: Get all prices
-      tags:
-      - Prices
+  /admin/services/prices:
     post:
       consumes:
       - application/json
@@ -188,8 +214,8 @@ paths:
       responses: {}
       summary: Create a new price
       tags:
-      - Prices
-  /prices/{id}:
+      - Admin
+  /admin/services/prices/{id}:
     delete:
       consumes:
       - application/json
@@ -211,7 +237,7 @@ paths:
       responses: {}
       summary: Delete a price
       tags:
-      - Prices
+      - Admin
     put:
       consumes:
       - application/json
@@ -239,7 +265,91 @@ paths:
       responses: {}
       summary: Update a price
       tags:
-      - Prices
+      - Admin
+  /login:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Login Request
+        in: body
+        name: login
+        required: true
+        schema:
+          $ref: '#/definitions/express_be_model_req.LoginRequest'
+      produces:
+      - application/json
+      responses: {}
+      tags:
+      - Authentication
+  /orders:
+    post:
+      consumes:
+      - application/json
+      description: Create a new order with the provided details
+      parameters:
+      - default: Bearer <access-token>
+        description: Bearer token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Create Order Request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/express_be_model_req.CreateOrderReq'
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - ApiKeyAuth: []
+      summary: Create a new order
+      tags:
+      - Orders
+  /orders/{id}:
+    patch:
+      consumes:
+      - application/json
+      description: Update the status of an order by ID
+      parameters:
+      - default: Bearer <access-token>
+        description: Bearer token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Order ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: New status of the order (picking_up, picked_up, pickup_canceled,
+          return_to_hub, at_hub, out_for_delivery, delivered, returned, delivery_canceled)
+        in: query
+        name: order_status
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - ApiKeyAuth: []
+      summary: Update order status
+      tags:
+      - Orders
+  /prices:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve all price entries
+      produces:
+      - application/json
+      responses: {}
+      summary: Get all prices
+      tags:
+      - Public
   /refresh-token:
     post:
       consumes:
@@ -427,7 +537,7 @@ paths:
     patch:
       consumes:
       - application/json
-      description: Cập nhật trạng thái của một khách hàng dựa trên ID
+      description: Update customer status by ID
       parameters:
       - default: Bearer <access-token>
         description: Bearer token
@@ -448,7 +558,7 @@ paths:
       produces:
       - application/json
       responses: {}
-      summary: Cập nhật trạng thái khách hàng
+      summary: Update customer status
       tags:
       - User-information
     put:

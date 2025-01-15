@@ -24,46 +24,7 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/login": {
-            "post": {
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Authentication"
-                ],
-                "parameters": [
-                    {
-                        "description": "Login Request",
-                        "name": "login",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/express_be_model_req.LoginRequest"
-                        }
-                    }
-                ],
-                "responses": {}
-            }
-        },
-        "/prices": {
-            "get": {
-                "description": "Retrieve all price entries",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Prices"
-                ],
-                "summary": "Get all prices",
-                "responses": {}
-            },
+        "/admin/services/prices": {
             "post": {
                 "description": "Admin creates a new price entry",
                 "consumes": [
@@ -73,7 +34,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Prices"
+                    "Admin"
                 ],
                 "summary": "Create a new price",
                 "parameters": [
@@ -98,7 +59,7 @@ const docTemplate = `{
                 "responses": {}
             }
         },
-        "/prices/{id}": {
+        "/admin/services/prices/{id}": {
             "put": {
                 "description": "Admin updates an existing price",
                 "consumes": [
@@ -108,7 +69,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Prices"
+                    "Admin"
                 ],
                 "summary": "Update a price",
                 "parameters": [
@@ -148,7 +109,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Prices"
+                    "Admin"
                 ],
                 "summary": "Delete a price",
                 "parameters": [
@@ -168,6 +129,132 @@ const docTemplate = `{
                         "required": true
                     }
                 ],
+                "responses": {}
+            }
+        },
+        "/login": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Authentication"
+                ],
+                "parameters": [
+                    {
+                        "description": "Login Request",
+                        "name": "login",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/express_be_model_req.LoginRequest"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/orders": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Create a new order with the provided details",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "Create a new order",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "Bearer \u003caccess-token\u003e",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Create Order Request",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/express_be_model_req.CreateOrderReq"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/orders/{id}": {
+            "patch": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Update the status of an order by ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "Update order status",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "Bearer \u003caccess-token\u003e",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Order ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "New status of the order (picking_up, picked_up, pickup_canceled, return_to_hub, at_hub, out_for_delivery, delivered, returned, delivery_canceled)",
+                        "name": "order_status",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/prices": {
+            "get": {
+                "description": "Retrieve all price entries",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Public"
+                ],
+                "summary": "Get all prices",
                 "responses": {}
             }
         },
@@ -439,7 +526,7 @@ const docTemplate = `{
                 "responses": {}
             },
             "patch": {
-                "description": "Cập nhật trạng thái của một khách hàng dựa trên ID",
+                "description": "Update customer status by ID",
                 "consumes": [
                     "application/json"
                 ],
@@ -449,7 +536,7 @@ const docTemplate = `{
                 "tags": [
                     "User-information"
                 ],
-                "summary": "Cập nhật trạng thái khách hàng",
+                "summary": "Update customer status",
                 "parameters": [
                     {
                         "type": "string",
@@ -479,6 +566,77 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "express_be_model_req.CreateOrderReq": {
+            "type": "object",
+            "required": [
+                "declared_code",
+                "dimensions",
+                "product",
+                "quantity",
+                "receiver_address",
+                "receiver_latitude",
+                "receiver_longitude",
+                "receiver_name",
+                "receiver_phone",
+                "sender_address",
+                "sender_id",
+                "sender_latitude",
+                "sender_longitude",
+                "sender_phone",
+                "shop_name",
+                "weight"
+            ],
+            "properties": {
+                "declared_code": {
+                    "type": "number"
+                },
+                "dimensions": {
+                    "type": "string"
+                },
+                "product": {
+                    "type": "string"
+                },
+                "quantity": {
+                    "type": "integer"
+                },
+                "receiver_address": {
+                    "type": "string"
+                },
+                "receiver_latitude": {
+                    "type": "number"
+                },
+                "receiver_longitude": {
+                    "type": "number"
+                },
+                "receiver_name": {
+                    "type": "string"
+                },
+                "receiver_phone": {
+                    "type": "string"
+                },
+                "sender_address": {
+                    "type": "string"
+                },
+                "sender_id": {
+                    "type": "string"
+                },
+                "sender_latitude": {
+                    "type": "number"
+                },
+                "sender_longitude": {
+                    "type": "number"
+                },
+                "sender_phone": {
+                    "type": "string"
+                },
+                "shop_name": {
+                    "type": "string"
+                },
+                "weight": {
+                    "type": "number"
+                }
+            }
+        },
         "express_be_model_req.LoginRequest": {
             "type": "object",
             "required": [

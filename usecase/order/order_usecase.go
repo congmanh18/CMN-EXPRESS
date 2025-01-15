@@ -9,6 +9,7 @@ import (
 
 type OrderUsecase interface {
 	CreateOrder(ctx context.Context, req model.CreateOrderReq) *error.Err
+	UpdateOrderStatus(ctx context.Context, id, status *string) *error.Err
 }
 
 type orderUsecaseImpl struct {

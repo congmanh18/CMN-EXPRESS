@@ -10,6 +10,7 @@ import (
 	"express_be/provider"
 
 	authHandler "express_be/handler/auth"
+	orderHandler "express_be/handler/order"
 	priceHandler "express_be/handler/price"
 	userHandler "express_be/handler/user"
 
@@ -17,11 +18,13 @@ import (
 	adminRepo "express_be/repository/admin"
 	customerRepo "express_be/repository/customer"
 	deliveryPersonRepo "express_be/repository/delivery"
+	orderRepo "express_be/repository/order"
 	priceRepo "express_be/repository/price"
 	"express_be/repository/token"
 	userRepo "express_be/repository/user"
 
 	"express_be/usecase/auth"
+	"express_be/usecase/order"
 	"express_be/usecase/price"
 	"express_be/usecase/user"
 
@@ -56,13 +59,9 @@ func Run(confPath string) {
 	appProvider := provider.NewAppProvider(serviceConf)
 	RunMigration(appProvider, serviceConf.EnableMigrations)
 
-	// firebasAuth, err := auth.NewFirebaseAuthService("./conf/express-2227f-firebase-adminsdk-vbu9s-83580ceea5.json")
-	// if err != nil {
-	// 	panic(err)
-	// }
-
 	// Khởi tạo Repo
 	userRepo := userRepo.NewRepo(appProvider.Postgres)
+	orderRepo := orderRepo.NewRepo(appProvider.Postgres)
 	adminRepo := adminRepo.NewRepo(appProvider.Postgres)
 	accountingRepo := accountingRepo.NewRepo(appProvider.Postgres)
 	custRepo := customerRepo.NewRepo(appProvider.Postgres)
@@ -72,6 +71,7 @@ func Run(confPath string) {
 
 	// Khởi tạo Usecase
 	authUsecase := auth.NewAuthUsecase(userRepo, adminRepo, custRepo, deliRepo, accountingRepo, tokenRepo, serviceConf.JwtSecretKey)
+	orderUsecase := order.NewOrderUsecase(orderRepo)
 	userUsecase := user.NewUserUsecase(userRepo, custRepo, deliRepo)
 	priceUsecase := price.NewPriceUsecase(priceRepo)
 
@@ -79,14 +79,11 @@ func Run(confPath string) {
 	userHandl := userHandler.NewHandler(userHandler.HandlerInject{
 		UserUsecase: userUsecase,
 	})
-	// customerHandl := customerHandler.NewHandler(customerHandler.HandlerInject{
-	// 	CustomerUsecase: customerUsecase,
-	// })
-	// deliveryHandl := deliveryPersonHandler.NewHandler(deliveryPersonHandler.HandlerInject{
-	// 	DeliveryPersonUsecase: deliveryUsecase,
-	// })
 	authHandl := authHandler.NewHandler(authHandler.HandlerInject{
 		AuthUsecase: authUsecase,
+	})
+	orderHandl := orderHandler.NewHandler(orderHandler.HandlerInject{
+		OrderUsecase: orderUsecase,
 	})
 
 	priceHandl := priceHandler.NewHandler(priceHandler.HandlerInject{
@@ -94,7 +91,7 @@ func Run(confPath string) {
 	})
 
 	// Khởi tạo routes
-	routes := SetupRoutes(userHandl, authHandl, priceHandl, serviceConf.JwtSecretKey)
+	routes := SetupRoutes(userHandl, authHandl, priceHandl, orderHandl, serviceConf.JwtSecretKey)
 
 	s := NewServer(serviceConf, routes)
 	s.Run()

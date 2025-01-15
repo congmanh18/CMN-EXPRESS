@@ -20,11 +20,7 @@ const (
 	Pending   Status = "pending"
 	Verified  Status = "verified"
 	Blocked   Status = "blocked"
-	Active    Status = "active"
-	Inactive  Status = "inactive"
 	Suspended Status = "suspended"
-	OnDuty    Status = "on_duty"
-	OffDuty   Status = "off_duty"
 
 	Accepted ApprovalStatus = "accept"
 	Denied   ApprovalStatus = "deny"

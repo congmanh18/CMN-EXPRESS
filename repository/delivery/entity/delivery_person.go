@@ -6,6 +6,13 @@ import (
 	warehouse "express_be/repository/warehouse/entity"
 )
 
+type ActiveStatus string
+
+const (
+	OnDuty  ActiveStatus = "on_duty"
+	OffDuty ActiveStatus = "off_duty"
+)
+
 type DeliveryPerson struct {
 	record.BaseEntity
 	Phone           *string `gorm:"not null;index"`
@@ -14,6 +21,9 @@ type DeliveryPerson struct {
 	TotalCod        *float64
 	DailyIncome     *float64
 	GeoHash         *string
+
+	IsAvailable  bool
+	ActiveStatus ActiveStatus
 
 	BankInfos []indentity.BankInfo             `gorm:"foreignKey:DeliveryPersonID"`
 	Salary    []Salary                         `gorm:"foreignKey:DeliveryPersonID"`

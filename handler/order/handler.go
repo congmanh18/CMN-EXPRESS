@@ -8,6 +8,7 @@ import (
 
 type Handler interface {
 	HandleCreate(c echo.Context) error
+	HandleUpdateOrderStatus(c echo.Context) error
 }
 
 type handlerImpl struct {

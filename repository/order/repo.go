@@ -8,6 +8,7 @@ import (
 
 type Repo interface {
 	Create(ctx context.Context, order *entity.Order) error
+	UpdateOrderStatus(ctx context.Context, id *string, status *entity.Status) error
 }
 
 type orderImpl struct {
@@ -18,8 +19,4 @@ func NewRepo(db *postgresql.Database) Repo {
 	return &orderImpl{
 		DB: db,
 	}
-}
-
-func (r *orderImpl) Create(ctx context.Context, order *entity.Order) error {
-	return r.DB.Executor.WithContext(ctx).Debug().Create(&order).Error
 }
