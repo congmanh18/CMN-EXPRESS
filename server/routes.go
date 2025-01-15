@@ -45,6 +45,11 @@ func SetupRoutes(
 					Method:  method.PATCH,
 					Handler: authhandler.HandleChangePassword,
 				},
+				{
+					Path:    "/prices",
+					Method:  method.GET,
+					Handler: priceHandler.HandleRead,
+				},
 			},
 		},
 
@@ -79,11 +84,6 @@ func SetupRoutes(
 					Method:  method.GET,
 					Handler: userHandler.HandleSearch,
 				},
-				{
-					Path:    "/price-list",
-					Method:  method.GET,
-					Handler: priceHandler.HandleRead,
-				},
 			},
 		},
 
@@ -96,7 +96,7 @@ func SetupRoutes(
 			},
 			Routes: []route.Route{
 				{
-					Path:    "/add",
+					Path:    "",
 					Method:  method.POST,
 					Handler: priceHandler.HandleCreate,
 				},

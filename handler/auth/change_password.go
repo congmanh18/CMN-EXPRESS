@@ -21,7 +21,7 @@ import (
 //	@Description }
 //	@Description ```
 
-// @Tags Public
+// @Tags Authentication
 // @Accept  json
 // @Produce  json
 // @Param request body model.ResetPasswordRequest true "Reset Password Request"

@@ -1,7 +1,7 @@
 package req
 
 type PriceReq struct {
-	Region    *string
-	Area      *string
-	BasePrice *float64
+	Region    *string  `json:"region"`
+	Area      *string  `json:"area"`
+	BasePrice *float64 `json:"base_price"`
 }

@@ -6,21 +6,21 @@ import (
 )
 
 type Connection struct {
-	Host                        string
-	Port                        int
-	Database                    string
-	User                        string
-	Password                    string
-	SSLMode                     SSLMode
-	SSLCertAuthorityCertificate string
-	SSLPublicCertificate        string
-	SSLPrivateKey               string
-	MaxOpenConnections          int
-	MaxIdleConnections          int
-	ConnectionMaxIdleTime       time.Duration
-	ConnectionMaxLifeTime       time.Duration
-	ConnectionTimeout           time.Duration
-	Replicas                    []Connection
+	Host                         string
+	Port                         int
+	Database                     string
+	User                         string
+	Password                     string
+	SSLMode                      SSLMode
+	SSLCertAuthorityCertificate  string
+	SSLAuthenticationCertificate string
+	SSLPrivateKey                string
+	MaxOpenConnections           int
+	MaxIdleConnections           int
+	ConnectionMaxIdleTime        time.Duration
+	ConnectionMaxLifeTime        time.Duration
+	ConnectionTimeout            time.Duration
+	Replicas                     []Connection
 }
 
 func (c Connection) ToConnectionString() string {
@@ -36,8 +36,8 @@ func (c Connection) ToConnectionString() string {
 		if c.SSLCertAuthorityCertificate != "" {
 			s += fmt.Sprintf("&sslrootcert=%s", c.SSLCertAuthorityCertificate)
 		}
-		if c.SSLPublicCertificate != "" {
-			s += fmt.Sprintf("&sslcert=%s", c.SSLPublicCertificate)
+		if c.SSLAuthenticationCertificate != "" {
+			s += fmt.Sprintf("&sslcert=%s", c.SSLAuthenticationCertificate)
 		}
 		if c.SSLPrivateKey != "" {
 			s += fmt.Sprintf("&sslkey=%s", c.SSLPrivateKey)
@@ -55,11 +55,11 @@ func SetConnection(host string, port int) ConnectionOption {
 	}
 }
 
-func SetSSL(mode SSLMode, caCertificate, publicCertificate, privateKey string) ConnectionOption {
+func SetSSL(mode SSLMode, caCertificate, AuthenticationCertificate, privateKey string) ConnectionOption {
 	return func(c *Connection) {
 		c.SSLMode = mode
 		c.SSLCertAuthorityCertificate = caCertificate
-		c.SSLPublicCertificate = publicCertificate
+		c.SSLAuthenticationCertificate = AuthenticationCertificate
 		c.SSLPrivateKey = privateKey
 	}
 }

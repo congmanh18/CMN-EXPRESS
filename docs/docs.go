@@ -33,7 +33,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Public"
+                    "Authentication"
                 ],
                 "parameters": [
                     {
@@ -42,8 +42,130 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/req.LoginRequest"
+                            "$ref": "#/definitions/express_be_model_req.LoginRequest"
                         }
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/prices": {
+            "get": {
+                "description": "Retrieve all price entries",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Prices"
+                ],
+                "summary": "Get all prices",
+                "responses": {}
+            },
+            "post": {
+                "description": "Admin creates a new price entry",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Prices"
+                ],
+                "summary": "Create a new price",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "Bearer \u003caccess-token\u003e",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Price request payload",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/express_be_model_req.PriceReq"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/prices/{id}": {
+            "put": {
+                "description": "Admin updates an existing price",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Prices"
+                ],
+                "summary": "Update a price",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "Bearer \u003caccess-token\u003e",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Price ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Price request payload",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/express_be_model_req.PriceReq"
+                        }
+                    }
+                ],
+                "responses": {}
+            },
+            "delete": {
+                "description": "Admin deletes a price entry",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Prices"
+                ],
+                "summary": "Delete a price",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "Bearer \u003caccess-token\u003e",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Price ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {}
@@ -59,7 +181,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Public"
+                    "Authentication"
                 ],
                 "summary": "Refresh Access Token",
                 "parameters": [
@@ -84,7 +206,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Public"
+                    "Authentication"
                 ],
                 "summary": "Register",
                 "parameters": [
@@ -94,7 +216,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/req.RegisterRequest"
+                            "$ref": "#/definitions/express_be_model_req.RegisterRequest"
                         }
                     }
                 ],
@@ -110,7 +232,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Public"
+                    "Authentication"
                 ],
                 "parameters": [
                     {
@@ -119,7 +241,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/req.ResetPasswordRequest"
+                            "$ref": "#/definitions/express_be_model_req.ResetPasswordRequest"
                         }
                     }
                 ],
@@ -310,7 +432,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/req.UpdateUserReq"
+                            "$ref": "#/definitions/express_be_model_req.UpdateUserReq"
                         }
                     }
                 ],
@@ -357,7 +479,7 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "req.LoginRequest": {
+        "express_be_model_req.LoginRequest": {
             "type": "object",
             "required": [
                 "password",
@@ -372,7 +494,21 @@ const docTemplate = `{
                 }
             }
         },
-        "req.RegisterRequest": {
+        "express_be_model_req.PriceReq": {
+            "type": "object",
+            "properties": {
+                "area": {
+                    "type": "string"
+                },
+                "base_price": {
+                    "type": "number"
+                },
+                "region": {
+                    "type": "string"
+                }
+            }
+        },
+        "express_be_model_req.RegisterRequest": {
             "type": "object",
             "required": [
                 "password",
@@ -444,7 +580,7 @@ const docTemplate = `{
                 }
             }
         },
-        "req.ResetPasswordRequest": {
+        "express_be_model_req.ResetPasswordRequest": {
             "type": "object",
             "required": [
                 "confirm_password",
@@ -463,7 +599,7 @@ const docTemplate = `{
                 }
             }
         },
-        "req.UpdateUserReq": {
+        "express_be_model_req.UpdateUserReq": {
             "type": "object",
             "required": [
                 "role"

@@ -1,6 +1,6 @@
 basePath: /
 definitions:
-  req.LoginRequest:
+  express_be_model_req.LoginRequest:
     properties:
       password:
         type: string
@@ -10,7 +10,16 @@ definitions:
     - password
     - phone
     type: object
-  req.RegisterRequest:
+  express_be_model_req.PriceReq:
+    properties:
+      area:
+        type: string
+      base_price:
+        type: number
+      region:
+        type: string
+    type: object
+  express_be_model_req.RegisterRequest:
     properties:
       account_type:
         description: 2. Field for customer
@@ -59,7 +68,7 @@ definitions:
     - phone
     - role
     type: object
-  req.ResetPasswordRequest:
+  express_be_model_req.ResetPasswordRequest:
     properties:
       confirm_password:
         type: string
@@ -72,7 +81,7 @@ definitions:
     - new_password
     - phone
     type: object
-  req.UpdateUserReq:
+  express_be_model_req.UpdateUserReq:
     properties:
       account_type:
         description: 2. Field for customer
@@ -140,12 +149,97 @@ paths:
         name: login
         required: true
         schema:
-          $ref: '#/definitions/req.LoginRequest'
+          $ref: '#/definitions/express_be_model_req.LoginRequest'
       produces:
       - application/json
       responses: {}
       tags:
-      - Public
+      - Authentication
+  /prices:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve all price entries
+      produces:
+      - application/json
+      responses: {}
+      summary: Get all prices
+      tags:
+      - Prices
+    post:
+      consumes:
+      - application/json
+      description: Admin creates a new price entry
+      parameters:
+      - default: Bearer <access-token>
+        description: Bearer token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Price request payload
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/express_be_model_req.PriceReq'
+      produces:
+      - application/json
+      responses: {}
+      summary: Create a new price
+      tags:
+      - Prices
+  /prices/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Admin deletes a price entry
+      parameters:
+      - default: Bearer <access-token>
+        description: Bearer token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Price ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses: {}
+      summary: Delete a price
+      tags:
+      - Prices
+    put:
+      consumes:
+      - application/json
+      description: Admin updates an existing price
+      parameters:
+      - default: Bearer <access-token>
+        description: Bearer token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Price ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Price request payload
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/express_be_model_req.PriceReq'
+      produces:
+      - application/json
+      responses: {}
+      summary: Update a price
+      tags:
+      - Prices
   /refresh-token:
     post:
       consumes:
@@ -162,7 +256,7 @@ paths:
       responses: {}
       summary: Refresh Access Token
       tags:
-      - Public
+      - Authentication
   /register:
     post:
       consumes:
@@ -197,13 +291,13 @@ paths:
         name: register
         required: true
         schema:
-          $ref: '#/definitions/req.RegisterRequest'
+          $ref: '#/definitions/express_be_model_req.RegisterRequest'
       produces:
       - application/json
       responses: {}
       summary: Register
       tags:
-      - Public
+      - Authentication
   /reset-password:
     patch:
       consumes:
@@ -214,12 +308,12 @@ paths:
         name: request
         required: true
         schema:
-          $ref: '#/definitions/req.ResetPasswordRequest'
+          $ref: '#/definitions/express_be_model_req.ResetPasswordRequest'
       produces:
       - application/json
       responses: {}
       tags:
-      - Public
+      - Authentication
   /search:
     get:
       consumes:
@@ -380,7 +474,7 @@ paths:
         name: update_info
         required: true
         schema:
-          $ref: '#/definitions/req.UpdateUserReq'
+          $ref: '#/definitions/express_be_model_req.UpdateUserReq'
       produces:
       - application/json
       responses: {}

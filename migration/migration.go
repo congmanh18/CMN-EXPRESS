@@ -7,7 +7,9 @@ import (
 	delivery "express_be/repository/delivery/entity"
 
 	// identity "express_be/repository/identity/entity"
-	// order "express_be/repository/order/entity"
+	order "express_be/repository/order/entity"
+	price "express_be/repository/price/entity"
+
 	"express_be/repository/token"
 	user "express_be/repository/user/entity"
 
@@ -31,7 +33,7 @@ func Migration(db *gorm.DB) {
 
 		// &identity.BankInfo{},
 
-		// &order.Order{},
+		&order.Order{},
 		// &order.OrderStatus{},
 		// &order.CODTransaction{},
 		// &order.CODReconciliation{},
@@ -39,6 +41,8 @@ func Migration(db *gorm.DB) {
 
 		// &warehouse.Warehouse{},
 		// &warehouse.WarehouseTransaction{},
+		&price.BasicPrice{},
+		&price.LogPrice{},
 	)
 	if err != nil {
 		panic("Failed to migrate: " + err.Error())

@@ -40,7 +40,7 @@ func (h *handlerImpl) HandleGetInfoUser(c echo.Context) error {
 			usecaseErr.Message,
 		)
 	}
-	if customer != nil && deliveryPerson == nil && usecaseErr == nil {
+	if customer != nil && deliveryPerson == nil {
 		return response.OK(c, http.StatusOK, "success", customer)
 	} else {
 		return response.OK(c, http.StatusOK, "success", deliveryPerson)

@@ -5,9 +5,12 @@ import (
 	"express_be/core/db/postgresql"
 	"express_be/core/gorm"
 	"express_be/core/pointer"
+	"express_be/core/record"
 	"express_be/repository/price/entity"
 	"fmt"
 	"reflect"
+
+	"github.com/google/uuid"
 )
 
 type Repo interface {
@@ -30,6 +33,9 @@ func (p *priceImpl) Create(ctx context.Context, price *entity.BasicPrice, adminI
 
 	// Ghi log thao tác
 	log := entity.LogPrice{
+		BaseEntity: record.BaseEntity{
+			ID: pointer.String(uuid.New().String()),
+		},
 		AdminID: adminID,
 		Action:  pointer.String("Create"),
 		Details: pointer.String(fmt.Sprintf("Created new price: %+v", price)),
@@ -45,7 +51,10 @@ func (p *priceImpl) Create(ctx context.Context, price *entity.BasicPrice, adminI
 // ReadAllPrice implements Repo.
 func (p *priceImpl) ReadAllPrice(ctx context.Context) ([]entity.BasicPrice, error) {
 	var result []entity.BasicPrice
-	if err := p.DB.Executor.WithContext(ctx).Find(&result).Error; err != nil {
+	if err := p.DB.Executor.WithContext(ctx).
+		Order("region ASC").
+		Order("base_price DESC"). // Sắp xếp theo giá giảm dần nếu region trùng
+		Find(&result).Error; err != nil {
 		return nil, fmt.Errorf("failed to read all prices: %w", err)
 	}
 
@@ -72,6 +81,9 @@ func (p *priceImpl) Update(ctx context.Context, id *string, price *entity.BasicP
 
 	// Ghi log thao tác
 	log := entity.LogPrice{
+		BaseEntity: record.BaseEntity{
+			ID: pointer.String(uuid.New().String()),
+		},
 		AdminID: adminID,
 		Action:  pointer.String("Update"),
 		Details: pointer.String(fmt.Sprintf("Updated price (ID: %s) with data: %+v", *id, price)),
@@ -97,6 +109,9 @@ func (p *priceImpl) Delete(ctx context.Context, id *string, adminID *string) err
 
 	// Ghi log thao tác
 	log := entity.LogPrice{
+		BaseEntity: record.BaseEntity{
+			ID: pointer.String(uuid.New().String()),
+		},
 		AdminID: adminID,
 		Action:  pointer.String("Delete"),
 		Details: pointer.String(fmt.Sprintf("Deleted price with ID: %s", *id)),

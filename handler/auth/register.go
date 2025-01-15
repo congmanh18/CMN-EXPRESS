@@ -38,10 +38,10 @@ import (
 //	@Description     "role": "customer"
 //	@Description   }
 //
-// @Tags Public
+// @Tags Authentication
 // @Accept json
 // @Produce json
-// @Param register body req.RegisterRequest true "Register Request Example"
+// @Param register body model.RegisterRequest true "Register Request Example"
 // @Router /register [post]
 func (h handlerImpl) HandleRegister(c echo.Context) error {
 	// 1. Parse dữ liệu đầu vào

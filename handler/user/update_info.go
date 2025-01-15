@@ -20,7 +20,7 @@ import (
 // @Produce json
 // @Param Authorization header string true "Bearer token" default(Bearer <access-token>)
 // @Param id path string true "UserID"
-// @Param update_info body req.UpdateUserReq true "Update Request Example"
+// @Param update_info body model.UpdateUserReq true "Update Request Example"
 // @Router /users/{id} [put]
 func (h handlerImpl) HandleUpdateInfo(c echo.Context) error {
 	roleCheck, ok := c.Get("role").(string)

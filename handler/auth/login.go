@@ -21,7 +21,7 @@ import (
 //	@Description }
 //	@Description ```
 
-// @Tags Public
+// @Tags Authentication
 // @Accept json
 // @Produce json
 // @Param login body req.LoginRequest true "Login Request"

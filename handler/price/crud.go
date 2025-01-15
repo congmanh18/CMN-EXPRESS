@@ -9,8 +9,25 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
+// @Summary      Create a new price
+// @Description  Admin creates a new price entry
+// @Tags         Prices
+// @Accept       json
+// @Produce      json
+// @Param Authorization header string true "Bearer token" default(Bearer <access-token>)
+// @Param        body body model.PriceReq true "Price request payload"
+// @Router       /prices [post]
 func (h *handlerImpl) HandleCreate(c echo.Context) error {
-	adminID := c.Param("id")
+	roleCheck, ok := c.Get("role").(string)
+	if !ok {
+		return response.Error(c, handlerError.ErrTokenMissing.Code, handlerError.ErrTokenMissing.Message)
+	}
+
+	if roleCheck != "admin" {
+		return response.Error(c, handlerError.ErrAccessDenied.Code, handlerError.ErrAccessDenied.Message)
+	}
+
+	adminID := c.Get("user_id").(string)
 	if adminID == "" {
 		return response.Error(c, handlerError.ErrMissingField.Code, handlerError.ErrMissingField.Message)
 	}
@@ -28,7 +45,12 @@ func (h *handlerImpl) HandleCreate(c echo.Context) error {
 	return response.OK(c, http.StatusOK, "success", nil)
 }
 
-// HandleRead implements Handler.
+// @Summary      Get all prices
+// @Description  Retrieve all price entries
+// @Tags         Prices
+// @Accept       json
+// @Produce      json
+// @Router       /prices [get]
 func (h *handlerImpl) HandleRead(c echo.Context) error {
 	resp, err := h.priceUsecase.ReadAllPrice(c.Request().Context())
 	if err != nil {
@@ -37,14 +59,32 @@ func (h *handlerImpl) HandleRead(c echo.Context) error {
 	return response.OK(c, http.StatusOK, "success", resp)
 }
 
-// HandleUpdate implements Handler.
+// @Summary      Update a price
+// @Description  Admin updates an existing price
+// @Tags         Prices
+// @Accept       json
+// @Produce      json
+// @Param Authorization header string true "Bearer token" default(Bearer <access-token>)
+// @Param        id path string true "Price ID"
+// @Param        body body model.PriceReq true "Price request payload"
+// @Router       /prices/{id} [put]
 func (h *handlerImpl) HandleUpdate(c echo.Context) error {
-	priceID := c.Param("id")
-	if priceID == "" {
+	roleCheck, ok := c.Get("role").(string)
+	if !ok {
+		return response.Error(c, handlerError.ErrTokenMissing.Code, handlerError.ErrTokenMissing.Message)
+	}
+
+	if roleCheck != "admin" {
+		return response.Error(c, handlerError.ErrAccessDenied.Code, handlerError.ErrAccessDenied.Message)
+	}
+
+	adminID := c.Get("user_id").(string)
+	if adminID == "" {
 		return response.Error(c, handlerError.ErrMissingField.Code, handlerError.ErrMissingField.Message)
 	}
-	adminID := c.Param("id")
-	if adminID == "" {
+
+	priceID := c.Param("id")
+	if priceID == "" {
 		return response.Error(c, handlerError.ErrMissingField.Code, handlerError.ErrMissingField.Message)
 	}
 
@@ -61,15 +101,31 @@ func (h *handlerImpl) HandleUpdate(c echo.Context) error {
 	return response.OK(c, http.StatusOK, "success", nil)
 }
 
-// HandleDelete implements Handler.
+// @Summary      Delete a price
+// @Description  Admin deletes a price entry
+// @Tags         Prices
+// @Accept       json
+// @Produce      json
+// @Param Authorization header string true "Bearer token" default(Bearer <access-token>)
+// @Param        id path string true "Price ID"
+// @Router       /prices/{id} [delete]
 func (h *handlerImpl) HandleDelete(c echo.Context) error {
-	priceID := c.Param("id")
-	if priceID == "" {
+	roleCheck, ok := c.Get("role").(string)
+	if !ok {
+		return response.Error(c, handlerError.ErrTokenMissing.Code, handlerError.ErrTokenMissing.Message)
+	}
+
+	if roleCheck != "admin" {
+		return response.Error(c, handlerError.ErrAccessDenied.Code, handlerError.ErrAccessDenied.Message)
+	}
+
+	adminID := c.Get("user_id").(string)
+	if adminID == "" {
 		return response.Error(c, handlerError.ErrMissingField.Code, handlerError.ErrMissingField.Message)
 	}
 
-	adminID := c.Param("id")
-	if adminID == "" {
+	priceID := c.Param("id")
+	if priceID == "" {
 		return response.Error(c, handlerError.ErrMissingField.Code, handlerError.ErrMissingField.Message)
 	}
 
