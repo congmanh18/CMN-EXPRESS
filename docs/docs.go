@@ -147,6 +147,125 @@ const docTemplate = `{
                 "responses": {}
             }
         },
+        "/conversations": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Retrieve all conversations for a user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Conversations"
+                ],
+                "summary": "Get all conversations",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "Bearer \u003caccess-token\u003e",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Page number",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Page size",
+                        "name": "page_size",
+                        "in": "query"
+                    }
+                ],
+                "responses": {}
+            },
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Create a new conversation for a user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Conversations"
+                ],
+                "summary": "Create a new conversation",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "Bearer \u003caccess-token\u003e",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Create Conversation Request",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/express_be_model_req.NewConversationReq"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/conversations/{id}/participants": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Retrieve all participants in a specific conversation",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Conversations"
+                ],
+                "summary": "Get participants by conversation ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "Bearer \u003caccess-token\u003e",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Conversation ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            }
+        },
         "/login": {
             "post": {
                 "consumes": [
@@ -771,6 +890,20 @@ const docTemplate = `{
                 }
             }
         },
+        "express_be_model_req.NewConversationReq": {
+            "type": "object",
+            "required": [
+                "receiver_id"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "receiver_id": {
+                    "type": "string"
+                }
+            }
+        },
         "express_be_model_req.PriceReq": {
             "type": "object",
             "properties": {
@@ -945,7 +1078,7 @@ const docTemplate = `{
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
 	Version:          "1.0",
-	Host:             "localhost:4579",
+	Host:             "203.145.47.225",
 	BasePath:         "/",
 	Schemes:          []string{},
 	Title:            "CMN Express API Documentation",

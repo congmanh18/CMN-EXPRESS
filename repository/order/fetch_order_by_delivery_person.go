@@ -2,7 +2,7 @@ package order
 
 import (
 	"context"
-	"express_be/repository/order/entity"
+	"express_be/entity"
 )
 
 func (r *orderImpl) FetchOrderByDeliveryPerson(ctx context.Context, id *string, page, pageSize *int) ([]entity.OrderDetail, error) {

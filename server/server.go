@@ -61,6 +61,7 @@ func NewServer(serviceConf conf.ServiceConfig, routes []route.GroupRoute) *httpS
 }
 
 func Run(confPath string) {
+
 	serviceConf := LoadServiceConfig(confPath)
 	appProvider := provider.NewAppProvider(serviceConf)
 	RunMigration(appProvider, serviceConf.EnableMigrations)
@@ -96,9 +97,8 @@ func Run(confPath string) {
 		PriceUsecase: priceUsecase,
 	})
 
-	// Khởi tạo routes
-	routes := SetupRoutes(userHandl, authHandl, priceHandl, orderHandl, serviceConf.JwtSecretKey)
+	httpRoutes := SetupRoutes(userHandl, authHandl, priceHandl, orderHandl, serviceConf.JwtSecretKey)
 
-	s := NewServer(serviceConf, routes)
+	s := NewServer(serviceConf, httpRoutes)
 	s.Run()
 }

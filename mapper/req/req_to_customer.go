@@ -5,14 +5,14 @@ import (
 	"express_be/core/record"
 	"express_be/core/security"
 	model "express_be/model/req"
-	"express_be/repository/customer/entity"
-	user "express_be/repository/user/entity"
+
+	"express_be/entity"
 
 	"github.com/google/uuid"
 	"github.com/mmcloughlin/geohash"
 )
 
-func RegisterToCustomer(req model.RegisterRequest) (*entity.Customer, *user.User) {
+func RegisterToCustomer(req model.RegisterRequest) (*entity.Customer, *entity.User) {
 	// Xử lý geohash luôn nếu cần
 	geohash := geohash.Encode(req.Latitude, req.Longtitude)
 	hashedPassword, err := security.HashPassword(req.Password)
@@ -20,13 +20,13 @@ func RegisterToCustomer(req model.RegisterRequest) (*entity.Customer, *user.User
 		return nil, nil
 	}
 
-	var status user.Status
-	var approvalStatus user.ApprovalStatus
+	var status entity.AccountStatus
+	var approvalStatus entity.ApprovalStatus
 	if req.CustomerAccountType == string(entity.Postpaid) {
-		status = user.Verified
-		approvalStatus = user.Accepted
+		status = entity.Verified
+		approvalStatus = entity.Accepted
 	} else {
-		status = user.Pending
+		status = entity.Pending
 		approvalStatus = ""
 	}
 
@@ -42,7 +42,7 @@ func RegisterToCustomer(req model.RegisterRequest) (*entity.Customer, *user.User
 		Longtitude:  &req.Longtitude,
 	}
 
-	user := &user.User{
+	user := &entity.User{
 		BaseEntity: record.BaseEntity{
 			ID: id,
 		},
@@ -64,14 +64,14 @@ func RegisterToCustomer(req model.RegisterRequest) (*entity.Customer, *user.User
 		PlaceOfResidence:     &req.PlaceOfResidence,
 		Status:               status,
 		ApprovalStatus:       approvalStatus,
-		Role:                 user.Customer,
+		Role:                 entity.CustomerRole,
 	}
 	return customer, user
 }
 
-func UpdateToCustomer(req model.UpdateUserReq) (*entity.Customer, *user.User) {
+func UpdateToCustomer(req model.UpdateUserReq) (*entity.Customer, *entity.User) {
 	geohash := geohash.Encode(req.Latitude, req.Longtitude)
-	user := &user.User{
+	user := &entity.User{
 		SpecificAddress:      &req.SpecificAddress,
 		Ward:                 &req.Ward,
 		District:             &req.District,

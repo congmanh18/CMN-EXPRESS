@@ -3,7 +3,7 @@ package user
 import (
 	"context"
 	error "express_be/core/err"
-	"express_be/repository/user/entity"
+	"express_be/entity"
 )
 
 // AdminAcceptCustomer implements AdminUsecase.
@@ -23,7 +23,7 @@ func (c *userUsecaseImpl) UpdateStatus(ctx context.Context, customerID *string, 
 		}
 	}
 
-	var accountStatus entity.Status
+	var accountStatus entity.AccountStatus
 	if approvalStatusValue == entity.Accepted {
 		accountStatus = entity.Verified
 	} else if approvalStatusValue == entity.Denied {

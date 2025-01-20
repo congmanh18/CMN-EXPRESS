@@ -7,7 +7,7 @@ import (
 	"express_be/core/pointer"
 	"express_be/core/record"
 	"express_be/core/security"
-	tokenEntity "express_be/repository/token"
+	"express_be/entity"
 
 	"time"
 
@@ -35,7 +35,7 @@ func (a *authUsecaseImpl) Login(ctx context.Context, phone, password *string) (*
 		return nil, error.ErrGentokenFailure
 	}
 
-	refreshToken := tokenEntity.RefreshToken{
+	refreshToken := entity.RefreshToken{
 		BaseEntity: record.BaseEntity{
 			ID: pointer.String(uuid.New().String()),
 		},

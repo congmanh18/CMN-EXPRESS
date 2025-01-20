@@ -3,11 +3,10 @@ package user
 import (
 	"context"
 	error "express_be/core/err"
-	customerEntity "express_be/repository/customer/entity"
-	userEntity "express_be/repository/user/entity"
+	"express_be/entity"
 )
 
-func (c *userUsecaseImpl) UpdateCustomerInfo(ctx context.Context, id *string, user *userEntity.User, customer *customerEntity.Customer) *error.Err {
+func (c *userUsecaseImpl) UpdateCustomerInfo(ctx context.Context, id *string, user *entity.User, customer *entity.Customer) *error.Err {
 	err := c.userRepo.Update(ctx, id, user)
 	if err != nil {
 		return error.ErrInternalServer

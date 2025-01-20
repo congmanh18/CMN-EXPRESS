@@ -3,7 +3,7 @@ package delivery
 import (
 	"context"
 	"express_be/core/db/postgresql"
-	"express_be/repository/delivery/entity"
+	"express_be/entity"
 )
 
 type Repo interface {

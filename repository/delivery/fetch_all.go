@@ -2,7 +2,7 @@ package delivery
 
 import (
 	"context"
-	"express_be/repository/delivery/entity"
+	"express_be/entity"
 )
 
 func (d *deliveryImpl) FetchAllDeliveryPersons(ctx context.Context, page, pageSize *int) ([]entity.DeliveryPerson, error) {

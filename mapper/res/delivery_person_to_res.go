@@ -1,11 +1,11 @@
 package res
 
 import (
+	"express_be/entity"
 	"express_be/model/res"
-	userEntity "express_be/repository/user/entity"
 )
 
-func DeliveryPersonToRes(user *userEntity.DeliveryPersonDetails) res.DeliveryPersonRes {
+func DeliveryPersonToRes(user *entity.DeliveryPersonDetails) res.DeliveryPersonRes {
 	status := string(user.Status)
 	return res.DeliveryPersonRes{
 		ID:              user.ID,

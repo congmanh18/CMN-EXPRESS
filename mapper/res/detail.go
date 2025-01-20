@@ -2,14 +2,12 @@ package res
 
 import (
 	"express_be/core/record"
-	customerEntity "express_be/repository/customer/entity"
-	deliveryPersonEntity "express_be/repository/delivery/entity"
-	userEntity "express_be/repository/user/entity"
+	"express_be/entity"
 )
 
-func CustomerInfoToDetail(user *userEntity.User, customer *customerEntity.Customer) *userEntity.CustomerDetails {
-	return &userEntity.CustomerDetails{
-		User: userEntity.User{
+func CustomerInfoToDetail(user *entity.User, customer *entity.Customer) *entity.CustomerDetails {
+	return &entity.CustomerDetails{
+		User: entity.User{
 			BaseEntity: record.BaseEntity{
 				ID: user.ID,
 			},
@@ -37,9 +35,9 @@ func CustomerInfoToDetail(user *userEntity.User, customer *customerEntity.Custom
 
 }
 
-func DeliveryPersonInfoToDetail(user *userEntity.User, deliveryPerson *deliveryPersonEntity.DeliveryPerson) *userEntity.DeliveryPersonDetails {
-	return &userEntity.DeliveryPersonDetails{
-		User: userEntity.User{
+func DeliveryPersonInfoToDetail(user *entity.User, deliveryPerson *entity.DeliveryPerson) *entity.DeliveryPersonDetails {
+	return &entity.DeliveryPersonDetails{
+		User: entity.User{
 			BaseEntity: record.BaseEntity{
 				ID: user.ID,
 			},

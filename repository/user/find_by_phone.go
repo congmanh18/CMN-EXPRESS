@@ -2,7 +2,7 @@ package user
 
 import (
 	"context"
-	"express_be/repository/user/entity"
+	"express_be/entity"
 )
 
 func (c *userImpl) FindByPhone(ctx context.Context, phone *string) (*entity.User, error) {

@@ -2,7 +2,7 @@ package accounting
 
 import (
 	"context"
-	"express_be/repository/accounting/entity"
+	"express_be/entity"
 )
 
 // FindByPhone implements Repo.

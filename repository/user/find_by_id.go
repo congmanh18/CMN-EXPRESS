@@ -2,7 +2,7 @@ package user
 
 import (
 	"context"
-	"express_be/repository/user/entity"
+	"express_be/entity"
 )
 
 func (d *userImpl) FindByID(ctx context.Context, id *string) (*entity.User, error) {

@@ -4,14 +4,13 @@ import (
 	"express_be/core/pointer"
 	"express_be/core/record"
 	"express_be/core/security"
+	"express_be/entity"
 	model "express_be/model/req"
-	"express_be/repository/delivery/entity"
-	user "express_be/repository/user/entity"
 
 	"github.com/google/uuid"
 )
 
-func RegisterToDeliveryPerson(req model.RegisterRequest) (*entity.DeliveryPerson, *user.User) {
+func RegisterToDeliveryPerson(req model.RegisterRequest) (*entity.DeliveryPerson, *entity.User) {
 	hashedPassword, err := security.HashPassword(req.Password)
 	if err != nil {
 		return nil, nil
@@ -24,7 +23,7 @@ func RegisterToDeliveryPerson(req model.RegisterRequest) (*entity.DeliveryPerson
 		},
 		Phone: &req.Phone,
 	}
-	user := &user.User{
+	user := &entity.User{
 		BaseEntity: record.BaseEntity{
 			ID: id,
 		},
@@ -44,14 +43,14 @@ func RegisterToDeliveryPerson(req model.RegisterRequest) (*entity.DeliveryPerson
 		Nationality:          &req.Nationality,
 		PlaceOfOrigin:        &req.PlaceOfOrigin,
 		PlaceOfResidence:     &req.PlaceOfResidence,
-		Status:               user.Pending,
-		Role:                 user.DeliveryPerson,
+		Status:               entity.Pending,
+		Role:                 entity.DeliveryPersonRole,
 	}
 	return deliveryPerson, user
 }
 
-func UpdateToDeliveryPerson(req model.UpdateUserReq) (*entity.DeliveryPerson, *user.User) {
-	user := &user.User{
+func UpdateToDeliveryPerson(req model.UpdateUserReq) (*entity.DeliveryPerson, *entity.User) {
+	user := &entity.User{
 		SpecificAddress:      &req.SpecificAddress,
 		Ward:                 &req.Ward,
 		District:             &req.District,

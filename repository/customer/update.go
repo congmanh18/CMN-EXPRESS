@@ -3,7 +3,7 @@ package customer
 import (
 	"context"
 	"express_be/core/gorm"
-	"express_be/repository/customer/entity"
+	"express_be/entity"
 	"fmt"
 	"reflect"
 )

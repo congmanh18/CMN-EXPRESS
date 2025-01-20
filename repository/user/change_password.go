@@ -2,7 +2,7 @@ package user
 
 import (
 	"context"
-	"express_be/repository/user/entity"
+	"express_be/entity"
 	"fmt"
 )
 

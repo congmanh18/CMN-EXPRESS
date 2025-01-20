@@ -3,7 +3,7 @@ package order
 import (
 	"context"
 	error "express_be/core/err"
-	"express_be/repository/order/entity"
+	"express_be/entity"
 )
 
 var validStatuses = map[string]entity.Status{

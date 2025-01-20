@@ -4,8 +4,8 @@ import (
 	"express_be/core/pointer"
 	"express_be/core/record"
 	"express_be/core/utils/gen"
+	"express_be/entity"
 	model "express_be/model/req"
-	"express_be/repository/order/entity"
 
 	"github.com/google/uuid"
 	"github.com/mmcloughlin/geohash"

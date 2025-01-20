@@ -1,8 +1,8 @@
 package res
 
 import (
+	"express_be/entity"
 	"express_be/model/res"
-	"express_be/repository/order/entity"
 )
 
 func OrderDetailToRes(orderDetail *entity.OrderDetail) res.OrderRes {

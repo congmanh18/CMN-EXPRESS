@@ -6,7 +6,7 @@ import (
 	"express_be/core/gorm"
 	"express_be/core/pointer"
 	"express_be/core/record"
-	"express_be/repository/price/entity"
+	"express_be/entity"
 	"fmt"
 	"reflect"
 

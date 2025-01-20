@@ -3,11 +3,10 @@ package auth
 import (
 	"context"
 	error "express_be/core/err"
-	adminEntity "express_be/repository/admin/entity"
-	userEntity "express_be/repository/user/entity"
+	"express_be/entity"
 )
 
-func (c *authUsecaseImpl) CreateAdmin(ctx context.Context, user *userEntity.User, admin *adminEntity.Admin) *error.Err {
+func (c *authUsecaseImpl) CreateAdmin(ctx context.Context, user *entity.User, admin *entity.Admin) *error.Err {
 	// Thêm user trước
 	err := c.userRepo.Create(ctx, user)
 	if err != nil {

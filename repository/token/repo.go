@@ -4,28 +4,29 @@ import (
 	"context"
 	"errors"
 	"express_be/core/db/postgresql"
+	"express_be/entity"
 	"fmt"
 
 	"gorm.io/gorm"
 )
 
 type Repo interface {
-	ValidateToken(ctx context.Context, refreshToken *string) (*RefreshToken, error)
-	SaveToken(ctx context.Context, refreshToken *RefreshToken) error
+	ValidateToken(ctx context.Context, refreshToken *string) (*entity.RefreshToken, error)
+	SaveToken(ctx context.Context, refreshToken *entity.RefreshToken) error
 }
 
 type tokenImpl struct {
 	DB *postgresql.Database
 }
 
-func (t *tokenImpl) SaveToken(ctx context.Context, refreshToken *RefreshToken) error {
+func (t *tokenImpl) SaveToken(ctx context.Context, refreshToken *entity.RefreshToken) error {
 	return t.DB.Executor.WithContext(ctx).Save(refreshToken).Error
 }
 
-func (t *tokenImpl) ValidateToken(ctx context.Context, refreshToken *string) (*RefreshToken, error) {
-	var result *RefreshToken
+func (t *tokenImpl) ValidateToken(ctx context.Context, refreshToken *string) (*entity.RefreshToken, error) {
+	var result *entity.RefreshToken
 	err := t.DB.Executor.WithContext(ctx).
-		Model(&RefreshToken{}).
+		Model(&entity.RefreshToken{}).
 		Where("token = ?", refreshToken).
 		First(&result).Error
 

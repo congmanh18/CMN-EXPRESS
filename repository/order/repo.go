@@ -3,7 +3,7 @@ package order
 import (
 	"context"
 	"express_be/core/db/postgresql"
-	"express_be/repository/order/entity"
+	"express_be/entity"
 )
 
 type Repo interface {
@@ -12,8 +12,7 @@ type Repo interface {
 	FetchOrderByCustomer(ctx context.Context, id *string, page, pageSize *int) ([]entity.OrderDetail, error)
 	FetchOrderByDeliveryPerson(ctx context.Context, id *string, page, pageSize *int) ([]entity.OrderDetail, error)
 	FetchAllOrders(ctx context.Context, page, pageSize *int) ([]entity.OrderDetail, error)
-	FindByID(ctx context.Context, id *string) (*entity.OrderDetail, error) // OKEY Admin xem thông tin chi tiết tài khoản
-
+	FindByID(ctx context.Context, id *string) (*entity.OrderDetail, error)
 }
 
 type orderImpl struct {

@@ -2,7 +2,7 @@ package admin
 
 import (
 	"context"
-	"express_be/repository/admin/entity"
+	"express_be/entity"
 )
 
 // FindByPhone implements Repo.

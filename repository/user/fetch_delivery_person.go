@@ -2,7 +2,7 @@ package user
 
 import (
 	"context"
-	"express_be/repository/user/entity"
+	"express_be/entity"
 )
 
 func (c *userImpl) FetchDeliveryPersonUsers(ctx context.Context, status *string, page, pageSize *int) ([]entity.DeliveryPersonDetails, error) {
@@ -27,7 +27,7 @@ func (c *userImpl) FetchDeliveryPersonUsers(ctx context.Context, status *string,
 			delivery_persons.salary_rate
 		`).
 		Joins("JOIN delivery_persons ON delivery_persons.phone = users.phone"). // Liên kết bảng
-		Where("users.role = ?", entity.DeliveryPerson)
+		Where("users.role = ?", entity.DeliveryPersonRole)
 	// Thêm điều kiện nếu `status` được truyền
 	if status != nil && *status != "" {
 		query = query.Where("users.status = ?", *status)

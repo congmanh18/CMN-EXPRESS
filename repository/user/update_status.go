@@ -2,11 +2,11 @@ package user
 
 import (
 	"context"
-	"express_be/repository/user/entity"
+	"express_be/entity"
 	"fmt"
 )
 
-func (c *userImpl) UpdateStatus(ctx context.Context, id *string, approval_status *entity.ApprovalStatus, status *entity.Status) error {
+func (c *userImpl) UpdateStatus(ctx context.Context, id *string, approval_status *entity.ApprovalStatus, status *entity.AccountStatus) error {
 	result := c.DB.Executor.WithContext(ctx).
 		Model(&entity.User{}).
 		Where("id = ?", *id).

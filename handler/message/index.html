@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-Time Chat</title>
+    <script src="https://cdn.socket.io/4.5.1/socket.io.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .chat-container {
+            width: 400px;
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        .chat-header {
+            background-color: #007bff;
+            color: #ffffff;
+            padding: 10px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .chat-output {
+            flex: 1;
+            padding: 10px;
+            overflow-y: auto;
+            background-color: #f9f9f9;
+        }
+        .chat-output p {
+            margin: 5px 0;
+        }
+        .chat-output .user-message {
+            text-align: right;
+            color: #007bff;
+        }
+        .chat-output .other-message {
+            text-align: left;
+            color: #333333;
+        }
+        .feedback {
+            color: #888;
+            font-style: italic;
+            margin: 5px 10px;
+        }
+        .chat-footer {
+            padding: 10px;
+            background-color: #ffffff;
+            display: flex;
+            gap: 10px;
+            border-top: 1px solid #ddd;
+        }
+        .chat-footer input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .chat-footer button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .chat-footer button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header" id="title">Real-Time Chat</div>
+        <div class="chat-output" id="output"></div>
+        <div class="feedback" id="feedback"></div>
+        <div class="chat-footer">
+            <input type="text" id="user" placeholder="Your name">
+            <input type="text" id="message" placeholder="Type a message">
+            <button id="send">Send</button>
+        </div>
+    </div>
+
+    <script>
+        // Connect to the server
+        const socket = io.connect('http://localhost:4579');
+
+        // Query DOM elements
+        const message = document.getElementById('message');
+        const user = document.getElementById('user');
+        const btn = document.getElementById('send');
+        const output = document.getElementById('output');
+        const feedback = document.getElementById('feedback');
+        const title = document.getElementById('title');
+
+        let userID = localStorage.getItem('userName');
+
+        if (userID) {
+            user.value = userID;
+            socket.emit('join', userID);
+        }
+
+        const onSend = () => {
+            if (!user.value.trim()) {
+                alert("Please enter your name");
+                return;
+            }
+
+            if (!message.value.trim()) return;
+
+            if (userID !== user.value) {
+                socket.emit('join', user.value);
+                userID = user.value;
+                localStorage.setItem('userName', user.value);
+            }
+
+            const timestamp = Math.floor(Date.now() / 1000);
+            const chatmsg = { user: user.value, timestamp, message: message.value };
+
+            socket.emit('chat', JSON.stringify(chatmsg));
+            message.value = "";
+        };
+
+        btn.addEventListener('click', onSend);
+
+        message.addEventListener('keypress', (e) => {
+            socket.emit('typing', user.value);
+
+            if (e.key === 'Enter') {
+                onSend();
+            }
+        });
+
+        // Handle events
+        socket.on('chat', (data) => {
+            feedback.innerHTML = '';
+            const time = new Date(data.Timestamp * 1000).toLocaleTimeString();
+
+            if (data.EvtType === 'join') {
+                output.innerHTML += `<p><em>${data.User} has joined the chat.</em></p>`;
+            } else if (data.EvtType === 'leave') {
+                output.innerHTML += `<p><em>${data.User} has left the chat.</em></p>`;
+            } else if (data.EvtType === 'message') {
+                if (data.User === userID) {
+                    output.innerHTML += `<p class="user-message"><strong>You</strong>: ${data.Text} <span>(${time})</span></p>`;
+                } else {
+                    output.innerHTML += `<p class="other-message"><strong>${data.User}</strong>: ${data.Text} <span>(${time})</span></p>`;
+                }
+            }
+
+            output.scrollTop = output.scrollHeight;
+        });
+
+        socket.on('participant', (data) => {
+            title.textContent = `Real-Time Chat (${data})`;
+        });
+
+        socket.on('typing', (data) => {
+            feedback.innerHTML = `<p><em>${data} is typing...</em></p>`;
+        });
+    </script>
+</body>
+</html>

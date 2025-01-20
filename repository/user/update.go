@@ -3,7 +3,7 @@ package user
 import (
 	"context"
 	"express_be/core/gorm"
-	"express_be/repository/user/entity"
+	"express_be/entity"
 	"fmt"
 	"reflect"
 )

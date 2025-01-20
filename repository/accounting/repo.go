@@ -3,7 +3,7 @@ package accounting
 import (
 	"context"
 	"express_be/core/db/postgresql"
-	"express_be/repository/accounting/entity"
+	"express_be/entity"
 )
 
 type Repo interface {

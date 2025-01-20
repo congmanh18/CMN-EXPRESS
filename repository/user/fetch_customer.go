@@ -2,7 +2,7 @@ package user
 
 import (
 	"context"
-	"express_be/repository/user/entity"
+	"express_be/entity"
 )
 
 func (c *userImpl) FetchCustomerUsers(ctx context.Context, status *string, page, pageSize *int) ([]entity.CustomerDetails, error) {
@@ -29,7 +29,7 @@ func (c *userImpl) FetchCustomerUsers(ctx context.Context, status *string, page,
 			customers.longtitude
 		`).
 		Joins("JOIN customers ON customers.phone = users.phone").
-		Where("users.role = ?", entity.Customer)
+		Where("users.role = ?", entity.CustomerRole)
 
 	// Thêm điều kiện nếu `status` được truyền
 	if status != nil && *status != "" {

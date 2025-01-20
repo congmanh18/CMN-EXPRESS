@@ -2,7 +2,7 @@ package customer
 
 import (
 	"context"
-	"express_be/repository/customer/entity"
+	"express_be/entity"
 )
 
 func (c *customerImpl) FetchAllCustomer(ctx context.Context, page, pageSize *int) ([]entity.Customer, error) {

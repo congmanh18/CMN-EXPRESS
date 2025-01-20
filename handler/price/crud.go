@@ -35,7 +35,7 @@ func (h *handlerImpl) HandleCreate(c echo.Context) error {
 
 	var req model.PriceReq
 	if err := c.Bind(&req); err != nil {
-		return err
+		return response.Error(c, handlerError.ErrMissingField.Code, handlerError.ErrMissingField.Message)
 	}
 
 	err := h.priceUsecase.CreateNewPrice(c.Request().Context(), req, &adminID)
@@ -92,7 +92,7 @@ func (h *handlerImpl) HandleUpdate(c echo.Context) error {
 
 	var req model.PriceReq
 	if err := c.Bind(&req); err != nil {
-		return err
+		return response.Error(c, handlerError.ErrMissingField.Code, handlerError.ErrMissingField.Message)
 	}
 
 	err := h.priceUsecase.UpdatePrice(c.Request().Context(), &priceID, req, &adminID)

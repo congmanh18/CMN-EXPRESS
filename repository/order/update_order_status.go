@@ -2,7 +2,7 @@ package order
 
 import (
 	"context"
-	"express_be/repository/order/entity"
+	"express_be/entity"
 	"fmt"
 )
 

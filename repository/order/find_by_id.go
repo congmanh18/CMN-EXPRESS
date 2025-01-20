@@ -2,7 +2,7 @@ package order
 
 import (
 	"context"
-	"express_be/repository/order/entity"
+	"express_be/entity"
 )
 
 func (r *orderImpl) FindByID(ctx context.Context, id *string) (*entity.OrderDetail, error) {

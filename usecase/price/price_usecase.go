@@ -7,8 +7,8 @@ import (
 	error "express_be/core/err"
 	model "express_be/model/req"
 
+	"express_be/entity"
 	"express_be/repository/price"
-	"express_be/repository/price/entity"
 )
 
 type PriceUsecase interface {

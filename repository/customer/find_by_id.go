@@ -3,7 +3,7 @@ package customer
 import (
 	"context"
 	"errors"
-	"express_be/repository/customer/entity"
+	"express_be/entity"
 
 	"gorm.io/gorm"
 )

@@ -3,11 +3,10 @@ package auth
 import (
 	"context"
 	error "express_be/core/err"
-	accountingEntity "express_be/repository/accounting/entity"
-	userEntity "express_be/repository/user/entity"
+	"express_be/entity"
 )
 
-func (c *authUsecaseImpl) CreateAccounting(ctx context.Context, user *userEntity.User, accounting *accountingEntity.Accounting) *error.Err {
+func (c *authUsecaseImpl) CreateAccounting(ctx context.Context, user *entity.User, accounting *entity.Accounting) *error.Err {
 	// Thêm user trước
 	err := c.userRepo.Create(ctx, user)
 	if err != nil {

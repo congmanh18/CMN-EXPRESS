@@ -3,7 +3,7 @@ package user
 import (
 	"context"
 	error "express_be/core/err"
-	"express_be/repository/user/entity"
+	"express_be/entity"
 )
 
 // Search implements UserUsecase.

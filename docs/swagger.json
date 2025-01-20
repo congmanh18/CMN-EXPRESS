@@ -15,7 +15,7 @@
         },
         "version": "1.0"
     },
-    "host": "localhost:4579",
+    "host": "203.145.47.225",
     "basePath": "/",
     "paths": {
         "/admin/services/prices": {
@@ -133,6 +133,125 @@
                     {
                         "type": "string",
                         "description": "Price ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/conversations": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Retrieve all conversations for a user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Conversations"
+                ],
+                "summary": "Get all conversations",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "Bearer \u003caccess-token\u003e",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Page number",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Page size",
+                        "name": "page_size",
+                        "in": "query"
+                    }
+                ],
+                "responses": {}
+            },
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Create a new conversation for a user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Conversations"
+                ],
+                "summary": "Create a new conversation",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "Bearer \u003caccess-token\u003e",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Create Conversation Request",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/express_be_model_req.NewConversationReq"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/conversations/{id}/participants": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Retrieve all participants in a specific conversation",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Conversations"
+                ],
+                "summary": "Get participants by conversation ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "Bearer \u003caccess-token\u003e",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Conversation ID",
                         "name": "id",
                         "in": "path",
                         "required": true
@@ -761,6 +880,20 @@
                     "type": "string"
                 },
                 "phone": {
+                    "type": "string"
+                }
+            }
+        },
+        "express_be_model_req.NewConversationReq": {
+            "type": "object",
+            "required": [
+                "receiver_id"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "receiver_id": {
                     "type": "string"
                 }
             }

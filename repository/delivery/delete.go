@@ -2,7 +2,7 @@ package delivery
 
 import (
 	"context"
-	"express_be/repository/delivery/entity"
+	"express_be/entity"
 )
 
 func (d *deliveryImpl) DeleteDeliveryPerson(ctx context.Context, id *string) error {

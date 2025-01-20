@@ -2,11 +2,11 @@ package delivery
 
 import (
 	"context"
-	deliveryPersonEntity "express_be/repository/delivery/entity"
+	"express_be/entity"
 	"fmt"
 )
 
-func (r *deliveryImpl) Create(ctx context.Context, deliveryPerson *deliveryPersonEntity.DeliveryPerson) error {
+func (r *deliveryImpl) Create(ctx context.Context, deliveryPerson *entity.DeliveryPerson) error {
 	if err := r.DB.Executor.WithContext(ctx).Create(deliveryPerson).Error; err != nil {
 		return fmt.Errorf("failed to create delivery person: %w", err)
 	}

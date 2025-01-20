@@ -3,8 +3,8 @@ package req
 import (
 	"express_be/core/pointer"
 	"express_be/core/record"
+	"express_be/entity"
 	model "express_be/model/req"
-	"express_be/repository/price/entity"
 
 	"github.com/google/uuid"
 )

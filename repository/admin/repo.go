@@ -3,7 +3,7 @@ package admin
 import (
 	"context"
 	"express_be/core/db/postgresql"
-	"express_be/repository/admin/entity"
+	"express_be/entity"
 )
 
 type Repo interface {

@@ -3,9 +3,9 @@ package user
 import (
 	"context"
 	error "express_be/core/err"
+	"express_be/entity"
 	mapper "express_be/mapper/res"
 	"express_be/model/res"
-	userEntity "express_be/repository/user/entity"
 )
 
 // AdminGetInfoCustomer implements AdminUsecase.
@@ -16,7 +16,7 @@ func (c *userUsecaseImpl) GetInfoUser(ctx context.Context, id *string) (*res.Cus
 
 	}
 	switch user.Role {
-	case userEntity.Customer:
+	case entity.CustomerRole:
 		customer, err := c.customerRepo.FindByID(ctx, id)
 		if err != nil {
 			return nil, nil, error.ErrNotFound
@@ -24,7 +24,7 @@ func (c *userUsecaseImpl) GetInfoUser(ctx context.Context, id *string) (*res.Cus
 		customerdetail := mapper.CustomerInfoToDetail(user, customer)
 		customers := mapper.CustomerToRes(customerdetail)
 		return &customers, nil, nil
-	case userEntity.DeliveryPerson:
+	case entity.DeliveryPersonRole:
 		deliveryPerson, err := c.deliveryPersonRepo.FindByID(ctx, id)
 		if err != nil {
 			return nil, nil, error.ErrNotFound

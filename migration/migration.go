@@ -1,19 +1,7 @@
 package migration
 
 import (
-	accounting "express_be/repository/accounting/entity"
-	admin "express_be/repository/admin/entity"
-	customer "express_be/repository/customer/entity"
-	delivery "express_be/repository/delivery/entity"
-
-	// identity "express_be/repository/identity/entity"
-	order "express_be/repository/order/entity"
-	price "express_be/repository/price/entity"
-
-	"express_be/repository/token"
-	user "express_be/repository/user/entity"
-
-	// warehouse "express_be/repository/warehouse/entity"
+	"express_be/entity"
 
 	"log"
 
@@ -24,17 +12,21 @@ func Migration(db *gorm.DB) {
 	log.Printf("Migration.....")
 	db.Exec("CREATE SCHEMA IF NOT EXISTS log")
 	err := db.AutoMigrate(
-		&token.RefreshToken{},
-		&user.User{},
-		&admin.Admin{},
-		&accounting.Accounting{},
-		&customer.Customer{},
-		&delivery.DeliveryPerson{},
-		&delivery.Salary{},
+		&entity.RefreshToken{},
+		&entity.User{},
+		&entity.Admin{},
+		&entity.Accounting{},
+		&entity.Customer{},
+		&entity.DeliveryPerson{},
+		&entity.Salary{},
 
-		// &identity.BankInfo{},
+		&entity.Conversation{},
+		&entity.Message{},
+		&entity.Participant{},
 
-		&order.Order{},
+		// &user.BankInfo{},
+
+		&entity.Order{},
 		// &order.OrderStatus{},
 		// &order.CODTransaction{},
 		// &order.CODReconciliation{},
@@ -42,8 +34,8 @@ func Migration(db *gorm.DB) {
 
 		// &warehouse.Warehouse{},
 		// &warehouse.WarehouseTransaction{},
-		&price.BasicPrice{},
-		&price.LogPrice{},
+		&entity.BasicPrice{},
+		&entity.LogPrice{},
 	)
 	if err != nil {
 		panic("Failed to migrate: " + err.Error())

@@ -2,7 +2,7 @@ package delivery
 
 import (
 	"context"
-	"express_be/repository/delivery/entity"
+	"express_be/entity"
 )
 
 func (d *deliveryImpl) FindByID(ctx context.Context, id *string) (*entity.DeliveryPerson, error) {

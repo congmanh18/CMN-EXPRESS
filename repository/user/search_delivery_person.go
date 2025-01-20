@@ -2,7 +2,7 @@ package user
 
 import (
 	"context"
-	"express_be/repository/user/entity"
+	"express_be/entity"
 )
 
 // SearchDeliveryPersons implements Repo.
@@ -29,7 +29,7 @@ func (c *userImpl) SearchDeliveryPersons(ctx context.Context, phone *string, nam
 			delivery_persons.salary_rate
 		`).
 		Joins("JOIN delivery_persons ON delivery_persons.phone = users.phone").
-		Where("users.role = ?", entity.DeliveryPerson)
+		Where("users.role = ?", entity.DeliveryPersonRole)
 
 	// Thêm điều kiện nếu `status` được truyền
 	if status != nil && *status != "" {

@@ -4,30 +4,28 @@ import (
 	"express_be/core/pointer"
 	"express_be/core/record"
 	"express_be/core/security"
+	"express_be/entity"
 	model "express_be/model/req"
-	accountingEntity "express_be/repository/accounting/entity"
-	adminEntity "express_be/repository/admin/entity"
-	userEntity "express_be/repository/user/entity"
 
 	"github.com/google/uuid"
 )
 
-func RegisterToAdmin(req model.RegisterRequest) (*adminEntity.Admin, *userEntity.User) {
+func RegisterToAdmin(req model.RegisterRequest) (*entity.Admin, *entity.User) {
 	hashedPassword, err := security.HashPassword(req.Password)
 	if err != nil {
 		return nil, nil
 	}
 	id := pointer.String(uuid.New().String())
 
-	user := &userEntity.User{
+	user := &entity.User{
 		BaseEntity: record.BaseEntity{
 			ID: id,
 		},
 		Phone:    &req.Phone,
 		Password: &hashedPassword,
-		Role:     userEntity.Admin,
+		Role:     entity.AdminRole,
 	}
-	admin := &adminEntity.Admin{
+	admin := &entity.Admin{
 		BaseEntity: record.BaseEntity{
 			ID: id,
 		},
@@ -36,13 +34,13 @@ func RegisterToAdmin(req model.RegisterRequest) (*adminEntity.Admin, *userEntity
 	return admin, user
 }
 
-func RegisterToAccounting(req model.RegisterRequest) (*accountingEntity.Accounting, *userEntity.User) {
+func RegisterToAccounting(req model.RegisterRequest) (*entity.Accounting, *entity.User) {
 	hashedPassword, err := security.HashPassword(req.Password)
 	if err != nil {
 		return nil, nil
 	}
 	id := pointer.String(uuid.New().String())
-	user := &userEntity.User{
+	user := &entity.User{
 		BaseEntity: record.BaseEntity{
 			ID: id,
 		},
@@ -61,9 +59,9 @@ func RegisterToAccounting(req model.RegisterRequest) (*accountingEntity.Accounti
 		Nationality:          &req.Nationality,
 		PlaceOfOrigin:        &req.PlaceOfOrigin,
 		PlaceOfResidence:     &req.PlaceOfResidence,
-		Role:                 userEntity.Accounting,
+		Role:                 entity.AccountingRole,
 	}
-	accounting := &accountingEntity.Accounting{
+	accounting := &entity.Accounting{
 		BaseEntity: record.BaseEntity{
 			ID: id,
 		},

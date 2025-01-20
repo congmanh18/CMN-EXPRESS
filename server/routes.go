@@ -11,10 +11,51 @@ import (
 	priceHandler "express_be/handler/price"
 	userHandler "express_be/handler/user"
 
+	socketio "github.com/googollee/go-socket.io"
+
 	"express_be/handler/auth"
 
 	"github.com/labstack/echo/v4"
 )
+
+func SetupSocketIO(
+// messageHandler messagehandler.Handler,
+) []route.GroupSocketRoute {
+	return []route.GroupSocketRoute{
+		{
+			Namespace: "/chat",
+			Routes: []route.SocketRoute{
+				{
+					Event: "send_message",
+					// Handler: messageHandler.SendMessage,
+				},
+				{
+					Event: "fetch_messages",
+					// Handler: messageHandler.FetchMessages,
+				},
+			},
+		},
+	}
+}
+
+func RegisterSocketRoutes(server *socketio.Server, routes []route.GroupSocketRoute) {
+	for _, group := range routes {
+		// Namespace của group
+		server.OnConnect(group.Namespace, func(s socketio.Conn) error {
+			s.SetContext("")
+			return nil
+		})
+
+		// Đăng ký từng route trong group
+		for _, route := range group.Routes {
+			server.OnEvent(group.Namespace, route.Event, route.Handler)
+		}
+
+		// Xử lý ngắt kết nối
+		server.OnDisconnect(group.Namespace, func(s socketio.Conn, reason string) {
+		})
+	}
+}
 
 func SetupRoutes(
 	userHandler userHandler.Handler,
