@@ -3,23 +3,24 @@ package message
 import (
 	handlerError "express_be/core/err"
 	"express_be/core/transport/http/response"
-	"express_be/model/req"
 	"net/http"
+	"strconv"
 
 	"github.com/labstack/echo/v4"
 )
 
-// HandleCreateConversation implements Handler.
-// @Summary Create a new conversation
-// @Description Create a new conversation for a user
+// HandleGetAllConversations implements Handler.
+// @Summary Get all conversations
+// @Description Retrieve all conversations for a user
 // @Tags Conversations
 // @Accept json
 // @Produce json
 // @Param Authorization header string true "Bearer token" default(Bearer <access-token>)
-// @Param request body req.NewConversationReq true "Create Conversation Request"
+// @Param page query int false "Page number"
+// @Param page_size query int false "Page size"
 // @Security ApiKeyAuth
-// @Router /conversations [post]
-func (h *handlerImpl) HandleCreateConversation(c echo.Context) error {
+// @Router /conversations [get]
+func (h *handlerImpl) HandleGetAllConversations(c echo.Context) error {
 	roleCheck, ok := c.Get("role").(string)
 	if !ok {
 		return response.Error(c, handlerError.ErrTokenMissing.Code, handlerError.ErrTokenMissing.Message)
@@ -34,15 +35,20 @@ func (h *handlerImpl) HandleCreateConversation(c echo.Context) error {
 		return response.Error(c, handlerError.ErrInvalidToken.Code, handlerError.ErrInvalidToken.Message)
 	}
 
-	var req req.NewConversationReq
-	if err := c.Bind(&req); err != nil {
-		return response.Error(c, handlerError.ErrMissingField.Code, handlerError.ErrMissingField.Message)
+	page, err := strconv.Atoi(c.QueryParam("page"))
+	if err != nil || page < 1 {
+		page = 1
 	}
 
-	err := h.chatUsecase.CreateConversation(c.Request().Context(), req, &userID)
+	pageSize, err := strconv.Atoi(c.QueryParam("page_size"))
+	if err != nil || pageSize < 1 {
+		pageSize = 10
+	}
+
+	resp, uscaseErr := h.chatUsecase.GetAllConversations(c.Request().Context(), &userID, &page, &pageSize)
 	if err != nil {
-		return response.Error(c, err.Code, err.Message)
+		return response.Error(c, uscaseErr.Code, uscaseErr.Message)
 	}
 
-	return response.OK(c, http.StatusOK, "success", nil)
+	return response.OK(c, http.StatusOK, "success", resp)
 }

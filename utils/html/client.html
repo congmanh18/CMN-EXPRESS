@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Socket.IO Test Client</title>
+    <script src="https://cdn.socket.io/4.5.1/socket.io.min.js"></script>
+</head>
+<body>
+    <h1>Socket.IO Test Client</h1>
+
+    <!-- Giao diện nhập liệu -->
+    <div>
+        <label>Authorization Token:</label>
+        <input type="text" id="token" placeholder="Bearer <your_jwt_token>" style="width: 50%;">
+    </div>
+    <br/>
+    <div>
+        <label>Conversation ID:</label>
+        <input type="text" id="conversation_id" placeholder="Enter Conversation ID">
+    </div>
+    <br/>
+    <div>
+        <label>Message:</label>
+        <input type="text" id="message" placeholder="Enter Message">
+    </div>
+    <br/>
+    <button onclick="connectSocket()">Connect</button>
+    <button onclick="sendMessage()">Send Message</button>
+    <button onclick="fetchMessages()">Fetch Messages</button>
+    <br/><br/>
+
+    <!-- Kết quả -->
+    <h3>Logs:</h3>
+    <pre id="logs" style="background: #f4f4f4; padding: 10px; max-height: 300px; overflow-y: auto;"></pre>
+
+    <script>
+        let socket;
+
+        // Kết nối với server Socket.IO
+        function connectSocket() {
+            const token = document.getElementById("token").value;
+
+            if (!token) {
+                logMessage("Token is required!");
+                return;
+            }
+
+            socket = io("http://localhost:4579/chat", {
+                extraHeaders: {
+                    Authorization: token
+                }
+            });
+
+            // Lắng nghe sự kiện từ server
+            socket.on("connect", () => {
+                logMessage("Connected to Socket.IO server");
+            });
+
+            socket.on("disconnect", (reason) => {
+                logMessage(`Disconnected: ${reason}`);
+            });
+
+            socket.on("new_message", (data) => {
+                logMessage(`New message received: ${JSON.stringify(data)}`);
+            });
+
+            socket.on("messages_list", (data) => {
+                logMessage(`Messages list: ${JSON.stringify(data)}`);
+            });
+
+            socket.on("error", (err) => {
+                logMessage(`Error: ${err}`);
+            });
+        }
+
+        // Gửi tin nhắn
+        function sendMessage() {
+            const conversationID = document.getElementById("conversation_id").value;
+            const message = document.getElementById("message").value;
+
+            if (!conversationID || !message) {
+                logMessage("Conversation ID and Message are required!");
+                return;
+            }
+
+            socket.emit("send_message", {
+                conversation_id: conversationID,
+                text: message
+            });
+        }
+
+        // Lấy danh sách tin nhắn
+        function fetchMessages() {
+            const conversationID = document.getElementById("conversation_id").value;
+
+            if (!conversationID) {
+                logMessage("Conversation ID is required!");
+                return;
+            }
+
+            socket.emit("fetch_messages", {
+                conversation_id: conversationID,
+                page: 1,
+                page_size: 10
+            });
+        }
+
+        // Ghi log ra màn hình
+        function logMessage(message) {
+            const logs = document.getElementById("logs");
+            logs.textContent += message + "\\n";
+            logs.scrollTop = logs.scrollHeight;
+        }
+    </script>
+</body>
+</html>

@@ -4,8 +4,6 @@ go 1.23.0
 
 require (
 	firebase.google.com/go/v4 v4.15.1
-	github.com/go-chi/chi/v5 v5.2.0
-	github.com/go-chi/cors v1.2.1
 	github.com/go-playground/locales v0.14.1
 	github.com/go-playground/universal-translator v0.18.1
 	github.com/go-playground/validator/v10 v10.23.0
@@ -16,6 +14,7 @@ require (
 	github.com/googollee/go-socket.io v1.7.0
 	github.com/labstack/echo/v4 v4.13.3
 	github.com/lib/pq v1.10.9
+	github.com/mitchellh/mapstructure v1.5.0
 	github.com/mmcloughlin/geohash v0.10.0
 	github.com/nkovacs/go-socket.io v0.0.0-20160407114850-e507d8cf976e
 	github.com/op/go-logging v0.0.0-20160315200505-970db520ece7
@@ -76,7 +75,6 @@ require (
 	github.com/mailru/easyjson v0.9.0 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
-	github.com/mitchellh/mapstructure v1.5.0 // indirect
 	github.com/nkovacs/go-engine.io v0.0.0-20160407125956-0322b59816cb // indirect
 	github.com/pelletier/go-toml/v2 v2.2.2 // indirect
 	github.com/sagikazarmark/locafero v0.4.0 // indirect

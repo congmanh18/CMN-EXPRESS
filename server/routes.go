@@ -7,53 +7,42 @@ import (
 
 	// customerHandler "express_be/handler/customer"
 	// deliveryPersonHandler "express_be/handler/delivery"
+	messagehandler "express_be/handler/message"
 	orderHandler "express_be/handler/order"
 	priceHandler "express_be/handler/price"
 	userHandler "express_be/handler/user"
 
-	socketio "github.com/googollee/go-socket.io"
-
 	"express_be/handler/auth"
 
+	socketio "github.com/googollee/go-socket.io"
 	"github.com/labstack/echo/v4"
 )
 
 func SetupSocketIO(
-// messageHandler messagehandler.Handler,
+	jwtSecret string,
+	messageHandler messagehandler.Handler,
 ) []route.GroupSocketRoute {
 	return []route.GroupSocketRoute{
 		{
 			Namespace: "/chat",
+			Middlewares: []func(next func(s socketio.Conn, data any) error) func(s socketio.Conn, data any) error{
+				jwt.AuthSocketMiddleware(jwtSecret),
+			},
 			Routes: []route.SocketRoute{
 				{
 					Event: "send_message",
-					// Handler: messageHandler.SendMessage,
+					Handler: func(s socketio.Conn, data any) {
+						messageHandler.HandleSendMessage(s, data)
+					},
 				},
 				{
 					Event: "fetch_messages",
-					// Handler: messageHandler.FetchMessages,
+					Handler: func(s socketio.Conn, data any) {
+						messageHandler.HandleFetchMessages(s, data)
+					},
 				},
 			},
 		},
-	}
-}
-
-func RegisterSocketRoutes(server *socketio.Server, routes []route.GroupSocketRoute) {
-	for _, group := range routes {
-		// Namespace của group
-		server.OnConnect(group.Namespace, func(s socketio.Conn) error {
-			s.SetContext("")
-			return nil
-		})
-
-		// Đăng ký từng route trong group
-		for _, route := range group.Routes {
-			server.OnEvent(group.Namespace, route.Event, route.Handler)
-		}
-
-		// Xử lý ngắt kết nối
-		server.OnDisconnect(group.Namespace, func(s socketio.Conn, reason string) {
-		})
 	}
 }
 
@@ -62,6 +51,7 @@ func SetupRoutes(
 	authhandler auth.Handler,
 	priceHandler priceHandler.Handler,
 	orderHandler orderHandler.Handler,
+	messageHandler messagehandler.Handler,
 	jwtSecret string,
 ) []route.GroupRoute {
 	return []route.GroupRoute{
@@ -178,6 +168,29 @@ func SetupRoutes(
 					Path:    "",
 					Method:  method.GET,
 					Handler: orderHandler.HandleListOrder,
+				},
+			},
+		},
+		{
+			Prefix: "/conversations",
+			Middlewares: []echo.MiddlewareFunc{
+				jwt.AuthMiddleware(jwtSecret),
+			},
+			Routes: []route.Route{
+				{
+					Path:    "",
+					Method:  method.GET,
+					Handler: messageHandler.HandleGetAllConversations,
+				},
+				{
+					Path:    "",
+					Method:  method.POST,
+					Handler: messageHandler.HandleCreateConversation,
+				},
+				{
+					Path:    "/:id/participants",
+					Method:  method.GET,
+					Handler: messageHandler.HandleGetParticipantsByConversation,
 				},
 			},
 		},

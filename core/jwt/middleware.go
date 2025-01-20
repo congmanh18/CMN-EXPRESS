@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"github.com/golang-jwt/jwt/v4"
+	socketio "github.com/googollee/go-socket.io"
 	"github.com/labstack/echo/v4"
 )
 
@@ -32,6 +33,39 @@ func AuthMiddleware(jwtSecret string) echo.MiddlewareFunc {
 			c.Set("role", claims.Role)
 
 			return next(c)
+		}
+	}
+}
+
+func AuthSocketMiddleware(jwtSecret string) func(next func(s socketio.Conn, data any) error) func(s socketio.Conn, data any) error {
+	return func(next func(s socketio.Conn, data any) error) func(s socketio.Conn, data any) error {
+		return func(s socketio.Conn, data any) error {
+			// Lấy token từ header
+			authHeader := s.RemoteHeader().Get("Authorization")
+			if len(authHeader) > 7 && authHeader[:7] == "Bearer " {
+				tokenStr := authHeader[7:]
+				// Giải mã token
+				claims, err := ParseToken(tokenStr, jwtSecret)
+				if err != nil {
+					s.Emit("error", "Unauthorized: "+err.Error())
+					s.Close()
+					return fmt.Errorf("unauthorized: %v", err)
+				}
+
+				// Lưu thông tin vào context
+				ctx := map[string]string{
+					"user_id": claims.ID,
+					"role":    claims.Role,
+				}
+				s.SetContext(ctx)
+
+				// Gọi handler tiếp theo
+				return next(s, data)
+			} else {
+				s.Emit("error", "Unauthorized: Invalid token format")
+				s.Close()
+				return fmt.Errorf("unauthorized: invalid token format")
+			}
 		}
 	}
 }
