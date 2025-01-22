@@ -31,26 +31,7 @@ const docTemplate = `{
                         "BearerAuth": []
                     }
                 ],
-                "description": "Admin creates a new price entry",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Admin"
-                ],
-                "summary": "Create a new price",
                 "parameters": [
-                    {
-                        "type": "string",
-                        "default": "Bearer \u003caccess-token\u003e",
-                        "description": "Bearer token",
-                        "name": "Authorization",
-                        "in": "header",
-                        "required": true
-                    },
                     {
                         "description": "Price request payload",
                         "name": "body",
@@ -71,26 +52,7 @@ const docTemplate = `{
                         "BearerAuth": []
                     }
                 ],
-                "description": "Admin updates an existing price",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Admin"
-                ],
-                "summary": "Update a price",
                 "parameters": [
-                    {
-                        "type": "string",
-                        "default": "Bearer \u003caccess-token\u003e",
-                        "description": "Bearer token",
-                        "name": "Authorization",
-                        "in": "header",
-                        "required": true
-                    },
                     {
                         "type": "string",
                         "description": "Price ID",
@@ -116,26 +78,7 @@ const docTemplate = `{
                         "BearerAuth": []
                     }
                 ],
-                "description": "Admin deletes a price entry",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Admin"
-                ],
-                "summary": "Delete a price",
                 "parameters": [
-                    {
-                        "type": "string",
-                        "default": "Bearer \u003caccess-token\u003e",
-                        "description": "Bearer token",
-                        "name": "Authorization",
-                        "in": "header",
-                        "required": true
-                    },
                     {
                         "type": "string",
                         "description": "Price ID",
@@ -179,26 +122,7 @@ const docTemplate = `{
                         "BearerAuth": []
                     }
                 ],
-                "description": "Get a list of orders with pagination",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Orders"
-                ],
-                "summary": "List orders",
                 "parameters": [
-                    {
-                        "type": "string",
-                        "default": "Bearer \u003caccess-token\u003e",
-                        "description": "Bearer token",
-                        "name": "Authorization",
-                        "in": "header",
-                        "required": true
-                    },
                     {
                         "type": "integer",
                         "default": 1,
@@ -222,26 +146,7 @@ const docTemplate = `{
                         "BearerAuth": []
                     }
                 ],
-                "description": "Create a new order with the provided details",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Orders"
-                ],
-                "summary": "Create a new order",
                 "parameters": [
-                    {
-                        "type": "string",
-                        "default": "Bearer \u003caccess-token\u003e",
-                        "description": "Bearer token",
-                        "name": "Authorization",
-                        "in": "header",
-                        "required": true
-                    },
                     {
                         "description": "Create Order Request",
                         "name": "request",
@@ -262,26 +167,7 @@ const docTemplate = `{
                         "BearerAuth": []
                     }
                 ],
-                "description": "Retrieve detailed information about an order based on its ID",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Orders"
-                ],
-                "summary": "Get order detail",
                 "parameters": [
-                    {
-                        "type": "string",
-                        "default": "Bearer \u003caccess-token\u003e",
-                        "description": "Bearer token",
-                        "name": "Authorization",
-                        "in": "header",
-                        "required": true
-                    },
                     {
                         "type": "string",
                         "description": "Order ID",
@@ -298,26 +184,7 @@ const docTemplate = `{
                         "BearerAuth": []
                     }
                 ],
-                "description": "Update the status of an order by ID",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Orders"
-                ],
-                "summary": "Update order status",
                 "parameters": [
-                    {
-                        "type": "string",
-                        "default": "Bearer \u003caccess-token\u003e",
-                        "description": "Bearer token",
-                        "name": "Authorization",
-                        "in": "header",
-                        "required": true
-                    },
                     {
                         "type": "string",
                         "description": "Order ID",
@@ -436,26 +303,7 @@ const docTemplate = `{
                         "BearerAuth": []
                     }
                 ],
-                "description": "Search a list of users (customers and delivery persons) with optional filters by status and role, including pagination.",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "User-information"
-                ],
-                "summary": "Search paginated users",
                 "parameters": [
-                    {
-                        "type": "string",
-                        "default": "Bearer \u003caccess-token\u003e",
-                        "description": "Bearer token",
-                        "name": "Authorization",
-                        "in": "header",
-                        "required": true
-                    },
                     {
                         "type": "integer",
                         "default": 1,
@@ -506,26 +354,7 @@ const docTemplate = `{
                         "BearerAuth": []
                     }
                 ],
-                "description": "Get a list of users (customers and delivery persons) with optional filters by status and role, including pagination.",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "User-information"
-                ],
-                "summary": "Fetch paginated users",
                 "parameters": [
-                    {
-                        "type": "string",
-                        "default": "Bearer \u003caccess-token\u003e",
-                        "description": "Bearer token",
-                        "name": "Authorization",
-                        "in": "header",
-                        "required": true
-                    },
                     {
                         "type": "integer",
                         "default": 1,
@@ -564,26 +393,7 @@ const docTemplate = `{
                         "BearerAuth": []
                     }
                 ],
-                "description": "Fetch the details of a user based on their ID. The user can be either a customer or a delivery person.",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "User-information"
-                ],
-                "summary": "Get user information",
                 "parameters": [
-                    {
-                        "type": "string",
-                        "default": "Bearer \u003caccess-token\u003e",
-                        "description": "Bearer token",
-                        "name": "Authorization",
-                        "in": "header",
-                        "required": true
-                    },
                     {
                         "type": "string",
                         "description": "UserID",
@@ -600,26 +410,7 @@ const docTemplate = `{
                         "BearerAuth": []
                     }
                 ],
-                "description": "Update for different roles (customer, delivery_person) account_type customer (prepaid, postpaid)\nExample user payload:",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "User-information"
-                ],
-                "summary": "Update",
                 "parameters": [
-                    {
-                        "type": "string",
-                        "default": "Bearer \u003caccess-token\u003e",
-                        "description": "Bearer token",
-                        "name": "Authorization",
-                        "in": "header",
-                        "required": true
-                    },
                     {
                         "type": "string",
                         "description": "UserID",
@@ -645,26 +436,7 @@ const docTemplate = `{
                         "BearerAuth": []
                     }
                 ],
-                "description": "Update customer status by ID",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "User-information"
-                ],
-                "summary": "Update customer status",
                 "parameters": [
-                    {
-                        "type": "string",
-                        "default": "Bearer \u003caccess-token\u003e",
-                        "description": "Bearer token",
-                        "name": "Authorization",
-                        "in": "header",
-                        "required": true
-                    },
                     {
                         "type": "string",
                         "description": "UserID",

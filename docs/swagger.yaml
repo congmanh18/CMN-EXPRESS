@@ -193,66 +193,29 @@ info:
 paths:
   /admin/services/prices:
     post:
-      consumes:
-      - application/json
-      description: Admin creates a new price entry
       parameters:
-      - default: Bearer <access-token>
-        description: Bearer token
-        in: header
-        name: Authorization
-        required: true
-        type: string
       - description: Price request payload
         in: body
         name: body
         required: true
         schema:
           $ref: '#/definitions/express_be_model_req.PriceReq'
-      produces:
-      - application/json
       responses: {}
       security:
       - BearerAuth: []
-      summary: Create a new price
-      tags:
-      - Admin
   /admin/services/prices/{id}:
     delete:
-      consumes:
-      - application/json
-      description: Admin deletes a price entry
       parameters:
-      - default: Bearer <access-token>
-        description: Bearer token
-        in: header
-        name: Authorization
-        required: true
-        type: string
       - description: Price ID
         in: path
         name: id
         required: true
         type: string
-      produces:
-      - application/json
       responses: {}
       security:
       - BearerAuth: []
-      summary: Delete a price
-      tags:
-      - Admin
     put:
-      consumes:
-      - application/json
-      description: Admin updates an existing price
       parameters:
-      - default: Bearer <access-token>
-        description: Bearer token
-        in: header
-        name: Authorization
-        required: true
-        type: string
       - description: Price ID
         in: path
         name: id
@@ -264,14 +227,9 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/express_be_model_req.PriceReq'
-      produces:
-      - application/json
       responses: {}
       security:
       - BearerAuth: []
-      summary: Update a price
-      tags:
-      - Admin
   /login:
     post:
       consumes:
@@ -290,16 +248,7 @@ paths:
       - Authentication
   /orders:
     get:
-      consumes:
-      - application/json
-      description: Get a list of orders with pagination
       parameters:
-      - default: Bearer <access-token>
-        description: Bearer token
-        in: header
-        name: Authorization
-        required: true
-        type: string
       - default: 1
         description: Page number
         in: query
@@ -310,75 +259,33 @@ paths:
         in: query
         name: page_size
         type: integer
-      produces:
-      - application/json
       responses: {}
       security:
       - BearerAuth: []
-      summary: List orders
-      tags:
-      - Orders
     post:
-      consumes:
-      - application/json
-      description: Create a new order with the provided details
       parameters:
-      - default: Bearer <access-token>
-        description: Bearer token
-        in: header
-        name: Authorization
-        required: true
-        type: string
       - description: Create Order Request
         in: body
         name: request
         required: true
         schema:
           $ref: '#/definitions/express_be_model_req.CreateOrderReq'
-      produces:
-      - application/json
       responses: {}
       security:
       - BearerAuth: []
-      summary: Create a new order
-      tags:
-      - Orders
   /orders/{id}:
     get:
-      consumes:
-      - application/json
-      description: Retrieve detailed information about an order based on its ID
       parameters:
-      - default: Bearer <access-token>
-        description: Bearer token
-        in: header
-        name: Authorization
-        required: true
-        type: string
       - description: Order ID
         in: path
         name: id
         required: true
         type: string
-      produces:
-      - application/json
       responses: {}
       security:
       - BearerAuth: []
-      summary: Get order detail
-      tags:
-      - Orders
     patch:
-      consumes:
-      - application/json
-      description: Update the status of an order by ID
       parameters:
-      - default: Bearer <access-token>
-        description: Bearer token
-        in: header
-        name: Authorization
-        required: true
-        type: string
       - description: Order ID
         in: path
         name: id
@@ -390,14 +297,9 @@ paths:
         name: order_status
         required: true
         type: string
-      produces:
-      - application/json
       responses: {}
       security:
       - BearerAuth: []
-      summary: Update order status
-      tags:
-      - Orders
   /prices:
     get:
       consumes:
@@ -485,17 +387,7 @@ paths:
       - Authentication
   /search:
     get:
-      consumes:
-      - application/json
-      description: Search a list of users (customers and delivery persons) with optional
-        filters by status and role, including pagination.
       parameters:
-      - default: Bearer <access-token>
-        description: Bearer token
-        in: header
-        name: Authorization
-        required: true
-        type: string
       - default: 1
         description: Page number (default is 1)
         in: query
@@ -524,27 +416,12 @@ paths:
         name: role
         required: true
         type: string
-      produces:
-      - application/json
       responses: {}
       security:
       - BearerAuth: []
-      summary: Search paginated users
-      tags:
-      - User-information
   /users:
     get:
-      consumes:
-      - application/json
-      description: Get a list of users (customers and delivery persons) with optional
-        filters by status and role, including pagination.
       parameters:
-      - default: Bearer <access-token>
-        description: Bearer token
-        in: header
-        name: Authorization
-        required: true
-        type: string
       - default: 1
         description: Page number (default is 1)
         in: query
@@ -565,51 +442,22 @@ paths:
         name: role
         required: true
         type: string
-      produces:
-      - application/json
       responses: {}
       security:
       - BearerAuth: []
-      summary: Fetch paginated users
-      tags:
-      - User-information
   /users/{id}:
     get:
-      consumes:
-      - application/json
-      description: Fetch the details of a user based on their ID. The user can be
-        either a customer or a delivery person.
       parameters:
-      - default: Bearer <access-token>
-        description: Bearer token
-        in: header
-        name: Authorization
-        required: true
-        type: string
       - description: UserID
         in: path
         name: id
         required: true
         type: string
-      produces:
-      - application/json
       responses: {}
       security:
       - BearerAuth: []
-      summary: Get user information
-      tags:
-      - User-information
     patch:
-      consumes:
-      - application/json
-      description: Update customer status by ID
       parameters:
-      - default: Bearer <access-token>
-        description: Bearer token
-        in: header
-        name: Authorization
-        required: true
-        type: string
       - description: UserID
         in: path
         name: id
@@ -620,27 +468,11 @@ paths:
         name: approval_status
         required: true
         type: string
-      produces:
-      - application/json
       responses: {}
       security:
       - BearerAuth: []
-      summary: Update customer status
-      tags:
-      - User-information
     put:
-      consumes:
-      - application/json
-      description: |-
-        Update for different roles (customer, delivery_person) account_type customer (prepaid, postpaid)
-        Example user payload:
       parameters:
-      - default: Bearer <access-token>
-        description: Bearer token
-        in: header
-        name: Authorization
-        required: true
-        type: string
       - description: UserID
         in: path
         name: id
@@ -652,14 +484,9 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/express_be_model_req.UpdateUserReq'
-      produces:
-      - application/json
       responses: {}
       security:
       - BearerAuth: []
-      summary: Update
-      tags:
-      - User-information
 securityDefinitions:
   BearerAuth:
     in: header
