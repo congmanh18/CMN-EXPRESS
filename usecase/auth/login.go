@@ -8,6 +8,7 @@ import (
 	"express_be/core/record"
 	"express_be/core/security"
 	"express_be/entity"
+	"fmt"
 
 	"time"
 
@@ -29,10 +30,16 @@ func (a *authUsecaseImpl) Login(ctx context.Context, phone, password *string) (*
 	role := user.Role.String()
 	refreshTokenExpiresAt := time.Now().Add(refreshTokenDuration)
 
-	// jwt := "secret_key"
 	token, err := a.GenToken(*user.ID, role, accessTokenDuration, refreshTokenDuration)
 	if err != nil {
 		return nil, error.ErrGentokenFailure
+	}
+
+	// Lưu accessToken vào Redis
+	redisKey := fmt.Sprintf("accessToken:%s", *user.ID)
+	err = a.tokenRepo.CacheAccessToken(ctx, &redisKey, &token.AccessToken, int64(accessTokenDuration.Seconds()))
+	if err != nil {
+		return nil, error.ErrSaveTokenFailure
 	}
 
 	refreshToken := entity.RefreshToken{
@@ -45,7 +52,7 @@ func (a *authUsecaseImpl) Login(ctx context.Context, phone, password *string) (*
 		ExpiresAt: refreshTokenExpiresAt,
 	}
 
-	err = a.tokenRepo.SaveToken(ctx, &refreshToken)
+	err = a.tokenRepo.SaveRefreshToken(ctx, &refreshToken)
 	if err != nil {
 		return nil, error.ErrSaveTokenFailure
 	}

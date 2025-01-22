@@ -28,7 +28,7 @@ const docTemplate = `{
             "post": {
                 "security": [
                     {
-                        "ApiKeyAuth": []
+                        "BearerAuth": []
                     }
                 ],
                 "description": "Admin creates a new price entry",
@@ -68,7 +68,7 @@ const docTemplate = `{
             "put": {
                 "security": [
                     {
-                        "ApiKeyAuth": []
+                        "BearerAuth": []
                     }
                 ],
                 "description": "Admin updates an existing price",
@@ -113,7 +113,7 @@ const docTemplate = `{
             "delete": {
                 "security": [
                     {
-                        "ApiKeyAuth": []
+                        "BearerAuth": []
                     }
                 ],
                 "description": "Admin deletes a price entry",
@@ -139,125 +139,6 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "Price ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {}
-            }
-        },
-        "/conversations": {
-            "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "description": "Retrieve all conversations for a user",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Conversations"
-                ],
-                "summary": "Get all conversations",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "default": "Bearer \u003caccess-token\u003e",
-                        "description": "Bearer token",
-                        "name": "Authorization",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "integer",
-                        "description": "Page number",
-                        "name": "page",
-                        "in": "query"
-                    },
-                    {
-                        "type": "integer",
-                        "description": "Page size",
-                        "name": "page_size",
-                        "in": "query"
-                    }
-                ],
-                "responses": {}
-            },
-            "post": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "description": "Create a new conversation for a user",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Conversations"
-                ],
-                "summary": "Create a new conversation",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "default": "Bearer \u003caccess-token\u003e",
-                        "description": "Bearer token",
-                        "name": "Authorization",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "description": "Create Conversation Request",
-                        "name": "request",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/express_be_model_req.NewConversationReq"
-                        }
-                    }
-                ],
-                "responses": {}
-            }
-        },
-        "/conversations/{id}/participants": {
-            "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "description": "Retrieve all participants in a specific conversation",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Conversations"
-                ],
-                "summary": "Get participants by conversation ID",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "default": "Bearer \u003caccess-token\u003e",
-                        "description": "Bearer token",
-                        "name": "Authorization",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Conversation ID",
                         "name": "id",
                         "in": "path",
                         "required": true
@@ -295,7 +176,7 @@ const docTemplate = `{
             "get": {
                 "security": [
                     {
-                        "ApiKeyAuth": []
+                        "BearerAuth": []
                     }
                 ],
                 "description": "Get a list of orders with pagination",
@@ -338,7 +219,7 @@ const docTemplate = `{
             "post": {
                 "security": [
                     {
-                        "ApiKeyAuth": []
+                        "BearerAuth": []
                     }
                 ],
                 "description": "Create a new order with the provided details",
@@ -378,7 +259,7 @@ const docTemplate = `{
             "get": {
                 "security": [
                     {
-                        "ApiKeyAuth": []
+                        "BearerAuth": []
                     }
                 ],
                 "description": "Retrieve detailed information about an order based on its ID",
@@ -414,7 +295,7 @@ const docTemplate = `{
             "patch": {
                 "security": [
                     {
-                        "ApiKeyAuth": []
+                        "BearerAuth": []
                     }
                 ],
                 "description": "Update the status of an order by ID",
@@ -552,7 +433,7 @@ const docTemplate = `{
             "get": {
                 "security": [
                     {
-                        "ApiKeyAuth": []
+                        "BearerAuth": []
                     }
                 ],
                 "description": "Search a list of users (customers and delivery persons) with optional filters by status and role, including pagination.",
@@ -622,7 +503,7 @@ const docTemplate = `{
             "get": {
                 "security": [
                     {
-                        "ApiKeyAuth": []
+                        "BearerAuth": []
                     }
                 ],
                 "description": "Get a list of users (customers and delivery persons) with optional filters by status and role, including pagination.",
@@ -680,7 +561,7 @@ const docTemplate = `{
             "get": {
                 "security": [
                     {
-                        "ApiKeyAuth": []
+                        "BearerAuth": []
                     }
                 ],
                 "description": "Fetch the details of a user based on their ID. The user can be either a customer or a delivery person.",
@@ -716,7 +597,7 @@ const docTemplate = `{
             "put": {
                 "security": [
                     {
-                        "ApiKeyAuth": []
+                        "BearerAuth": []
                     }
                 ],
                 "description": "Update for different roles (customer, delivery_person) account_type customer (prepaid, postpaid)\nExample user payload:",
@@ -761,7 +642,7 @@ const docTemplate = `{
             "patch": {
                 "security": [
                     {
-                        "ApiKeyAuth": []
+                        "BearerAuth": []
                     }
                 ],
                 "description": "Update customer status by ID",
@@ -886,20 +767,6 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "phone": {
-                    "type": "string"
-                }
-            }
-        },
-        "express_be_model_req.NewConversationReq": {
-            "type": "object",
-            "required": [
-                "receiver_id"
-            ],
-            "properties": {
-                "name": {
-                    "type": "string"
-                },
-                "receiver_id": {
                     "type": "string"
                 }
             }
@@ -1071,6 +938,13 @@ const docTemplate = `{
                     "type": "string"
                 }
             }
+        }
+    },
+    "securityDefinitions": {
+        "BearerAuth": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
         }
     }
 }`

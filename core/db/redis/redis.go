@@ -3,6 +3,7 @@ package redis
 import (
 	"context"
 	"log"
+	"time"
 
 	"github.com/redis/go-redis/v9"
 )
@@ -13,19 +14,22 @@ type Connection struct {
 	DB       int
 }
 
-func New(conn Connection) *redis.Client {
+func New(conn Connection) (*redis.Client, error) {
 	rdb := redis.NewClient(&redis.Options{
-		Addr:     conn.Addr,     // Địa chỉ Redis
-		Password: conn.Password, // Mật khẩu Redis (để trống nếu không có)
-		DB:       conn.DB,       // Sử dụng database mặc định
+		Addr:         conn.Addr,
+		Password:     conn.Password,
+		DB:           conn.DB,
+		DialTimeout:  5 * time.Second,
+		ReadTimeout:  3 * time.Second,
+		WriteTimeout: 3 * time.Second,
 	})
 
 	// Kiểm tra kết nối
 	_, err := rdb.Ping(context.Background()).Result()
 	if err != nil {
-		log.Fatalf("Failed to connect to Redis: %v", err)
+		return nil, err
 	}
 
 	log.Println("Connected to Redis successfully")
-	return rdb
+	return rdb, nil
 }

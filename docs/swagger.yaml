@@ -62,15 +62,6 @@ definitions:
     - password
     - phone
     type: object
-  express_be_model_req.NewConversationReq:
-    properties:
-      name:
-        type: string
-      receiver_id:
-        type: string
-    required:
-    - receiver_id
-    type: object
   express_be_model_req.PriceReq:
     properties:
       area:
@@ -222,7 +213,7 @@ paths:
       - application/json
       responses: {}
       security:
-      - ApiKeyAuth: []
+      - BearerAuth: []
       summary: Create a new price
       tags:
       - Admin
@@ -247,7 +238,7 @@ paths:
       - application/json
       responses: {}
       security:
-      - ApiKeyAuth: []
+      - BearerAuth: []
       summary: Delete a price
       tags:
       - Admin
@@ -277,88 +268,10 @@ paths:
       - application/json
       responses: {}
       security:
-      - ApiKeyAuth: []
+      - BearerAuth: []
       summary: Update a price
       tags:
       - Admin
-  /conversations:
-    get:
-      consumes:
-      - application/json
-      description: Retrieve all conversations for a user
-      parameters:
-      - default: Bearer <access-token>
-        description: Bearer token
-        in: header
-        name: Authorization
-        required: true
-        type: string
-      - description: Page number
-        in: query
-        name: page
-        type: integer
-      - description: Page size
-        in: query
-        name: page_size
-        type: integer
-      produces:
-      - application/json
-      responses: {}
-      security:
-      - ApiKeyAuth: []
-      summary: Get all conversations
-      tags:
-      - Conversations
-    post:
-      consumes:
-      - application/json
-      description: Create a new conversation for a user
-      parameters:
-      - default: Bearer <access-token>
-        description: Bearer token
-        in: header
-        name: Authorization
-        required: true
-        type: string
-      - description: Create Conversation Request
-        in: body
-        name: request
-        required: true
-        schema:
-          $ref: '#/definitions/express_be_model_req.NewConversationReq'
-      produces:
-      - application/json
-      responses: {}
-      security:
-      - ApiKeyAuth: []
-      summary: Create a new conversation
-      tags:
-      - Conversations
-  /conversations/{id}/participants:
-    get:
-      consumes:
-      - application/json
-      description: Retrieve all participants in a specific conversation
-      parameters:
-      - default: Bearer <access-token>
-        description: Bearer token
-        in: header
-        name: Authorization
-        required: true
-        type: string
-      - description: Conversation ID
-        in: path
-        name: id
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses: {}
-      security:
-      - ApiKeyAuth: []
-      summary: Get participants by conversation ID
-      tags:
-      - Conversations
   /login:
     post:
       consumes:
@@ -401,7 +314,7 @@ paths:
       - application/json
       responses: {}
       security:
-      - ApiKeyAuth: []
+      - BearerAuth: []
       summary: List orders
       tags:
       - Orders
@@ -426,7 +339,7 @@ paths:
       - application/json
       responses: {}
       security:
-      - ApiKeyAuth: []
+      - BearerAuth: []
       summary: Create a new order
       tags:
       - Orders
@@ -451,7 +364,7 @@ paths:
       - application/json
       responses: {}
       security:
-      - ApiKeyAuth: []
+      - BearerAuth: []
       summary: Get order detail
       tags:
       - Orders
@@ -481,7 +394,7 @@ paths:
       - application/json
       responses: {}
       security:
-      - ApiKeyAuth: []
+      - BearerAuth: []
       summary: Update order status
       tags:
       - Orders
@@ -615,7 +528,7 @@ paths:
       - application/json
       responses: {}
       security:
-      - ApiKeyAuth: []
+      - BearerAuth: []
       summary: Search paginated users
       tags:
       - User-information
@@ -656,7 +569,7 @@ paths:
       - application/json
       responses: {}
       security:
-      - ApiKeyAuth: []
+      - BearerAuth: []
       summary: Fetch paginated users
       tags:
       - User-information
@@ -682,7 +595,7 @@ paths:
       - application/json
       responses: {}
       security:
-      - ApiKeyAuth: []
+      - BearerAuth: []
       summary: Get user information
       tags:
       - User-information
@@ -711,7 +624,7 @@ paths:
       - application/json
       responses: {}
       security:
-      - ApiKeyAuth: []
+      - BearerAuth: []
       summary: Update customer status
       tags:
       - User-information
@@ -743,8 +656,13 @@ paths:
       - application/json
       responses: {}
       security:
-      - ApiKeyAuth: []
+      - BearerAuth: []
       summary: Update
       tags:
       - User-information
+securityDefinitions:
+  BearerAuth:
+    in: header
+    name: Authorization
+    type: apiKey
 swagger: "2.0"

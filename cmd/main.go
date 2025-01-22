@@ -24,7 +24,9 @@ import (
 // @termsOfService https://sharkytech.vercel.app/terms
 // @license.name MIT License
 // @license.url https://opensource.org/licenses/MIT
-
+// @securityDefinitions.apikey BearerAuth
+// @in header
+// @name Authorization
 func main() {
 	// Dùng cách cờ để đọc file config
 	// go run ./cmd/main.go -config="./conf/pgsql.env"

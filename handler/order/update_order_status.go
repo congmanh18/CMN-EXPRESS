@@ -17,7 +17,7 @@ import (
 // @Param Authorization header string true "Bearer token" default(Bearer <access-token>)
 // @Param id path string true "Order ID"
 // @Param order_status query string true "New status of the order (picking_up, picked_up, pickup_canceled, return_to_hub, at_hub, out_for_delivery, delivered, returned, delivery_canceled)"
-// @Security ApiKeyAuth
+// @Security BearerAuth
 // @Router /orders/{id} [patch]
 func (h *handlerImpl) HandleUpdateOrderStatus(c echo.Context) error {
 	roleCheck, ok := c.Get("role").(string)

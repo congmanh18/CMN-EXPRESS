@@ -34,3 +34,9 @@ func (r GroupSocketRoute) AddGroupSocketRouteToServer(server *socketio.Server) {
 		route.AddSocketRouteToServer(server, r.Namespace)
 	}
 }
+
+func RegisterSocketRoutes(server *socketio.Server, routes []GroupSocketRoute) {
+	for _, group := range routes {
+		group.AddGroupSocketRouteToServer(server)
+	}
+}

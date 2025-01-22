@@ -17,7 +17,7 @@ import (
 // @Produce json
 // @Param Authorization header string true "Bearer token" default(Bearer <access-token>)
 // @Param request body model.CreateOrderReq true "Create Order Request"
-// @Security ApiKeyAuth
+// @Security BearerAuth
 // @Router /orders [post]
 func (h *handlerImpl) HandleCreate(c echo.Context) error {
 	var req model.CreateOrderReq

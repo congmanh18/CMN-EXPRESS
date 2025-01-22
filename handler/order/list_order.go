@@ -20,7 +20,7 @@ import (
 // @Param Authorization header string true "Bearer token" default(Bearer <access-token>)
 // @Param page query int false "Page number" default(1)
 // @Param page_size query int false "Page size" default(10)
-// @Security ApiKeyAuth
+// @Security BearerAuth
 // @Router /orders [get]
 func (h *handlerImpl) HandleListOrder(c echo.Context) error {
 	roleCheck, ok := c.Get("role").(string)

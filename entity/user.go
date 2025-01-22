@@ -52,7 +52,6 @@ type User struct {
 	Customer             Customer       `gorm:"foreignKey:Phone;references:Phone"`
 	DeliveryPerson       DeliveryPerson `gorm:"foreignKey:Phone;references:Phone"`
 	Accounting           Accounting     `gorm:"foreignKey:Phone;references:Phone"`
-	Participants         []Participant  `gorm:"foreignKey:UserID;references:ID"`
 }
 
 func (u *User) TableName() string {

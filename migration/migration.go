@@ -20,10 +20,6 @@ func Migration(db *gorm.DB) {
 		&entity.DeliveryPerson{},
 		&entity.Salary{},
 
-		&entity.Conversation{},
-		&entity.Message{},
-		&entity.Participant{},
-
 		// &user.BankInfo{},
 
 		&entity.Order{},
