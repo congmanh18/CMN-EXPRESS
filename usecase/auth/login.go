@@ -8,7 +8,6 @@ import (
 	"express_be/core/record"
 	"express_be/core/security"
 	"express_be/entity"
-	"fmt"
 
 	"time"
 
@@ -36,11 +35,11 @@ func (a *authUsecaseImpl) Login(ctx context.Context, phone, password *string) (*
 	}
 
 	// Lưu accessToken vào Redis
-	redisKey := fmt.Sprintf("accessToken:%s", *user.ID)
-	err = a.tokenRepo.CacheAccessToken(ctx, &redisKey, &token.AccessToken, int64(accessTokenDuration.Seconds()))
-	if err != nil {
-		return nil, error.ErrSaveTokenFailure
-	}
+	// redisKey := fmt.Sprintf("accessToken:%s", *user.ID)
+	// err = a.tokenRepo.CacheAccessToken(ctx, &redisKey, &token.AccessToken, int64(accessTokenDuration.Seconds()))
+	// if err != nil {
+	// 	return nil, error.ErrSaveTokenFailure
+	// }
 
 	refreshToken := entity.RefreshToken{
 		BaseEntity: record.BaseEntity{
