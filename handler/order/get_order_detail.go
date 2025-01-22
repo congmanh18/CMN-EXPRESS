@@ -14,7 +14,7 @@ import (
 // @Tags Orders
 // @Accept json
 // @Produce json
-// @Param Authorization header string true "Bearer token" default(Bearer <access-token>)
+
 // @Param id path string true "Order ID"
 // @Security BearerAuth
 // @Router /orders/{id} [get]

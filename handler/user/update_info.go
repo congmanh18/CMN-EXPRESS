@@ -18,7 +18,7 @@ import (
 // @Tags User-information
 // @Accept json
 // @Produce json
-// @Param Authorization header string true "Bearer token" default(Bearer <access-token>)
+
 // @Param id path string true "UserID"
 // @Param update_info body model.UpdateUserReq true "Update Request Example"
 // @Security BearerAuth

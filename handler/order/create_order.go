@@ -15,7 +15,7 @@ import (
 // @Tags Orders
 // @Accept json
 // @Produce json
-// @Param Authorization header string true "Bearer token" default(Bearer <access-token>)
+
 // @Param request body model.CreateOrderReq true "Create Order Request"
 // @Security BearerAuth
 // @Router /orders [post]

@@ -17,7 +17,7 @@ import (
 // @Tags         User-information
 // @Accept       json
 // @Produce      json
-// @Param Authorization header string true "Bearer token" default(Bearer <access-token>)
+
 // @Param        page        query     int     false  "Page number (default is 1)"       default(1)
 // @Param        page_size   query     int     false  "Page size (default is 10)"       default(10)
 // @Param        status      query     string  false  "Filter by customer status (e.g., pending, verified, blocked, active, inactive) Filter by delivery_person (e.g., on_duty, off_duty)"

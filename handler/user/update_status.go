@@ -14,7 +14,7 @@ import (
 // @Tags User-information
 // @Accept json
 // @Produce json
-// @Param Authorization header string true "Bearer token" default(Bearer <access-token>)
+
 // @Param id path string true "UserID"
 // @Param approval_status query string true "Trạng thái mới của khách hàng (accept, deny)"
 // @Security BearerAuth
