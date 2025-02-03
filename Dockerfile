@@ -31,7 +31,7 @@ WORKDIR $DIST_PATH
 
 # Copy the built application
 COPY --from=builder /project/app .
-COPY --from=builder /project/docserror.md ./docserror.md
+COPY --from=builder /project/docs/swagger.json ./docs/swagger.json
 
 # Copy the configuration file
 COPY --from=builder /project/conf/service.env ./conf/service.env

@@ -193,6 +193,9 @@ info:
 paths:
   /admin/services/prices:
     post:
+      consumes:
+      - application/json
+      description: Admin creates a new price entry
       parameters:
       - description: Price request payload
         in: body
@@ -200,21 +203,37 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/express_be_model_req.PriceReq'
+      produces:
+      - application/json
       responses: {}
       security:
       - BearerAuth: []
+      summary: Create a new price
+      tags:
+      - Admin
   /admin/services/prices/{id}:
     delete:
+      consumes:
+      - application/json
+      description: Admin deletes a price entry
       parameters:
       - description: Price ID
         in: path
         name: id
         required: true
         type: string
+      produces:
+      - application/json
       responses: {}
       security:
       - BearerAuth: []
+      summary: Delete a price
+      tags:
+      - Admin
     put:
+      consumes:
+      - application/json
+      description: Admin updates an existing price
       parameters:
       - description: Price ID
         in: path
@@ -227,13 +246,27 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/express_be_model_req.PriceReq'
+      produces:
+      - application/json
       responses: {}
       security:
       - BearerAuth: []
+      summary: Update a price
+      tags:
+      - Admin
   /login:
     post:
       consumes:
       - application/json
+      description: |-
+        Login for different roles (admin, customer, delivery_person, accounting)
+        Example customer payload:
+        ```
+        {
+        "phone": "0977683511",
+        "password": "nguyenmanhcong"
+        }
+        ```
       parameters:
       - description: Login Request
         in: body
@@ -244,10 +277,14 @@ paths:
       produces:
       - application/json
       responses: {}
+      summary: Login
       tags:
       - Authentication
   /orders:
     get:
+      consumes:
+      - application/json
+      description: Get a list of orders with pagination
       parameters:
       - default: 1
         description: Page number
@@ -259,10 +296,18 @@ paths:
         in: query
         name: page_size
         type: integer
+      produces:
+      - application/json
       responses: {}
       security:
       - BearerAuth: []
+      summary: List orders
+      tags:
+      - Orders
     post:
+      consumes:
+      - application/json
+      description: Create a new order with the provided details
       parameters:
       - description: Create Order Request
         in: body
@@ -270,21 +315,37 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/express_be_model_req.CreateOrderReq'
+      produces:
+      - application/json
       responses: {}
       security:
       - BearerAuth: []
+      summary: Create a new order
+      tags:
+      - Orders
   /orders/{id}:
     get:
+      consumes:
+      - application/json
+      description: Retrieve detailed information about an order based on its ID
       parameters:
       - description: Order ID
         in: path
         name: id
         required: true
         type: string
+      produces:
+      - application/json
       responses: {}
       security:
       - BearerAuth: []
+      summary: Get order detail
+      tags:
+      - Orders
     patch:
+      consumes:
+      - application/json
+      description: Update the status of an order by ID
       parameters:
       - description: Order ID
         in: path
@@ -297,9 +358,14 @@ paths:
         name: order_status
         required: true
         type: string
+      produces:
+      - application/json
       responses: {}
       security:
       - BearerAuth: []
+      summary: Update order status
+      tags:
+      - Orders
   /prices:
     get:
       consumes:
@@ -373,6 +439,16 @@ paths:
     patch:
       consumes:
       - application/json
+      description: |-
+        Đổi mật khẩu người dùng bằng số điện thoại
+        Example reset password payload:
+        ```
+        {
+        "confirm_password": "strongpassword123",
+        "new_password": "strongpassword321",
+        "phone": "0977683511",
+        }
+        ```
       parameters:
       - description: Reset Password Request
         in: body
@@ -383,10 +459,15 @@ paths:
       produces:
       - application/json
       responses: {}
+      summary: Đổi mật khẩu
       tags:
       - Authentication
   /search:
     get:
+      consumes:
+      - application/json
+      description: Search a list of users (customers and delivery persons) with optional
+        filters by status and role, including pagination.
       parameters:
       - default: 1
         description: Page number (default is 1)
@@ -416,11 +497,20 @@ paths:
         name: role
         required: true
         type: string
+      produces:
+      - application/json
       responses: {}
       security:
       - BearerAuth: []
+      summary: Search paginated users
+      tags:
+      - User-information
   /users:
     get:
+      consumes:
+      - application/json
+      description: Get a list of users (customers and delivery persons) with optional
+        filters by status and role, including pagination.
       parameters:
       - default: 1
         description: Page number (default is 1)
@@ -442,21 +532,38 @@ paths:
         name: role
         required: true
         type: string
+      produces:
+      - application/json
       responses: {}
       security:
       - BearerAuth: []
+      summary: Fetch paginated users
+      tags:
+      - User-information
   /users/{id}:
     get:
+      consumes:
+      - application/json
+      description: Fetch the details of a user based on their ID. The user can be
+        either a customer or a delivery person.
       parameters:
       - description: UserID
         in: path
         name: id
         required: true
         type: string
+      produces:
+      - application/json
       responses: {}
       security:
       - BearerAuth: []
+      summary: Get user information
+      tags:
+      - User-information
     patch:
+      consumes:
+      - application/json
+      description: Update customer status by ID
       parameters:
       - description: UserID
         in: path
@@ -468,10 +575,20 @@ paths:
         name: approval_status
         required: true
         type: string
+      produces:
+      - application/json
       responses: {}
       security:
       - BearerAuth: []
+      summary: Update customer status
+      tags:
+      - User-information
     put:
+      consumes:
+      - application/json
+      description: |-
+        Update for different roles (customer, delivery_person) account_type customer (prepaid, postpaid)
+        Example user payload:
       parameters:
       - description: UserID
         in: path
@@ -484,9 +601,14 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/express_be_model_req.UpdateUserReq'
+      produces:
+      - application/json
       responses: {}
       security:
       - BearerAuth: []
+      summary: Update
+      tags:
+      - User-information
 securityDefinitions:
   BearerAuth:
     in: header

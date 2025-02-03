@@ -18,7 +18,6 @@ import (
 // @Tags User-information
 // @Accept json
 // @Produce json
-
 // @Param id path string true "UserID"
 // @Param update_info body model.UpdateUserReq true "Update Request Example"
 // @Security BearerAuth

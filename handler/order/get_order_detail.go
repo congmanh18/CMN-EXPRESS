@@ -14,7 +14,6 @@ import (
 // @Tags Orders
 // @Accept json
 // @Produce json
-
 // @Param id path string true "Order ID"
 // @Security BearerAuth
 // @Router /orders/{id} [get]

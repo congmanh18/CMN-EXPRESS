@@ -14,7 +14,6 @@ import (
 // @Tags         Admin
 // @Accept       json
 // @Produce      json
-
 // @Param        body body model.PriceReq true "Price request payload"
 // @Security BearerAuth
 // @Router       /admin/services/prices [post]
@@ -65,7 +64,6 @@ func (h *handlerImpl) HandleRead(c echo.Context) error {
 // @Tags         Admin
 // @Accept       json
 // @Produce      json
-
 // @Param        id path string true "Price ID"
 // @Param        body body model.PriceReq true "Price request payload"
 // @Security BearerAuth
@@ -108,7 +106,6 @@ func (h *handlerImpl) HandleUpdate(c echo.Context) error {
 // @Tags         Admin
 // @Accept       json
 // @Produce      json
-
 // @Param        id path string true "Price ID"
 // @Security BearerAuth
 // @Router       /admin/services/prices/{id} [delete]

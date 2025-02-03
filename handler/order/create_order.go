@@ -15,7 +15,6 @@ import (
 // @Tags Orders
 // @Accept json
 // @Produce json
-
 // @Param request body model.CreateOrderReq true "Create Order Request"
 // @Security BearerAuth
 // @Router /orders [post]

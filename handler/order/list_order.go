@@ -17,7 +17,6 @@ import (
 // @Tags Orders
 // @Accept json
 // @Produce json
-
 // @Param page query int false "Page number" default(1)
 // @Param page_size query int false "Page size" default(10)
 // @Security BearerAuth

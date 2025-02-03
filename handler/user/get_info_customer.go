@@ -14,7 +14,6 @@ import (
 // @Tags         User-information
 // @Accept       json
 // @Produce      json
-
 // @Param id path string true "UserID"
 // @Security BearerAuth
 // @Router       /users/{id} [get]

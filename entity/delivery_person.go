@@ -19,7 +19,7 @@ type DeliveryPerson struct {
 	TotalCod        *float64
 	DailyIncome     *float64
 	GeoHash         *string
-
+	
 	IsAvailable  bool
 	ActiveStatus ActiveStatus
 

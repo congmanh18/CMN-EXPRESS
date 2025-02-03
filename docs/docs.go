@@ -31,6 +31,17 @@ const docTemplate = `{
                         "BearerAuth": []
                     }
                 ],
+                "description": "Admin creates a new price entry",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Create a new price",
                 "parameters": [
                     {
                         "description": "Price request payload",
@@ -52,6 +63,17 @@ const docTemplate = `{
                         "BearerAuth": []
                     }
                 ],
+                "description": "Admin updates an existing price",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Update a price",
                 "parameters": [
                     {
                         "type": "string",
@@ -78,6 +100,17 @@ const docTemplate = `{
                         "BearerAuth": []
                     }
                 ],
+                "description": "Admin deletes a price entry",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Delete a price",
                 "parameters": [
                     {
                         "type": "string",
@@ -92,6 +125,7 @@ const docTemplate = `{
         },
         "/login": {
             "post": {
+                "description": "Login for different roles (admin, customer, delivery_person, accounting)\nExample customer payload:\n` + "`" + `` + "`" + `` + "`" + `\n{\n\"phone\": \"0977683511\",\n\"password\": \"nguyenmanhcong\"\n}\n` + "`" + `` + "`" + `` + "`" + `",
                 "consumes": [
                     "application/json"
                 ],
@@ -101,6 +135,7 @@ const docTemplate = `{
                 "tags": [
                     "Authentication"
                 ],
+                "summary": "Login",
                 "parameters": [
                     {
                         "description": "Login Request",
@@ -122,6 +157,17 @@ const docTemplate = `{
                         "BearerAuth": []
                     }
                 ],
+                "description": "Get a list of orders with pagination",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "List orders",
                 "parameters": [
                     {
                         "type": "integer",
@@ -146,6 +192,17 @@ const docTemplate = `{
                         "BearerAuth": []
                     }
                 ],
+                "description": "Create a new order with the provided details",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "Create a new order",
                 "parameters": [
                     {
                         "description": "Create Order Request",
@@ -167,6 +224,17 @@ const docTemplate = `{
                         "BearerAuth": []
                     }
                 ],
+                "description": "Retrieve detailed information about an order based on its ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "Get order detail",
                 "parameters": [
                     {
                         "type": "string",
@@ -184,6 +252,17 @@ const docTemplate = `{
                         "BearerAuth": []
                     }
                 ],
+                "description": "Update the status of an order by ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "Update order status",
                 "parameters": [
                     {
                         "type": "string",
@@ -273,6 +352,7 @@ const docTemplate = `{
         },
         "/reset-password": {
             "patch": {
+                "description": "Đổi mật khẩu người dùng bằng số điện thoại\nExample reset password payload:\n` + "`" + `` + "`" + `` + "`" + `\n{\n\"confirm_password\": \"strongpassword123\",\n\"new_password\": \"strongpassword321\",\n\"phone\": \"0977683511\",\n}\n` + "`" + `` + "`" + `` + "`" + `",
                 "consumes": [
                     "application/json"
                 ],
@@ -282,6 +362,7 @@ const docTemplate = `{
                 "tags": [
                     "Authentication"
                 ],
+                "summary": "Đổi mật khẩu",
                 "parameters": [
                     {
                         "description": "Reset Password Request",
@@ -303,6 +384,17 @@ const docTemplate = `{
                         "BearerAuth": []
                     }
                 ],
+                "description": "Search a list of users (customers and delivery persons) with optional filters by status and role, including pagination.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User-information"
+                ],
+                "summary": "Search paginated users",
                 "parameters": [
                     {
                         "type": "integer",
@@ -354,6 +446,17 @@ const docTemplate = `{
                         "BearerAuth": []
                     }
                 ],
+                "description": "Get a list of users (customers and delivery persons) with optional filters by status and role, including pagination.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User-information"
+                ],
+                "summary": "Fetch paginated users",
                 "parameters": [
                     {
                         "type": "integer",
@@ -393,6 +496,17 @@ const docTemplate = `{
                         "BearerAuth": []
                     }
                 ],
+                "description": "Fetch the details of a user based on their ID. The user can be either a customer or a delivery person.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User-information"
+                ],
+                "summary": "Get user information",
                 "parameters": [
                     {
                         "type": "string",
@@ -410,6 +524,17 @@ const docTemplate = `{
                         "BearerAuth": []
                     }
                 ],
+                "description": "Update for different roles (customer, delivery_person) account_type customer (prepaid, postpaid)\nExample user payload:",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User-information"
+                ],
+                "summary": "Update",
                 "parameters": [
                     {
                         "type": "string",
@@ -436,6 +561,17 @@ const docTemplate = `{
                         "BearerAuth": []
                     }
                 ],
+                "description": "Update customer status by ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User-information"
+                ],
+                "summary": "Update customer status",
                 "parameters": [
                     {
                         "type": "string",

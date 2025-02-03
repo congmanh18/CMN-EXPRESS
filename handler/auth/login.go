@@ -20,7 +20,7 @@ import (
 //	@Description	"password": "nguyenmanhcong"
 //	@Description }
 //	@Description ```
-
+//
 // @Tags Authentication
 // @Accept json
 // @Produce json
