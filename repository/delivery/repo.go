@@ -14,6 +14,9 @@ type Repo interface {
 	DeleteDeliveryPerson(ctx context.Context, id *string) error
 	Update(ctx context.Context, id *string, deliveryPerson *entity.DeliveryPerson) error
 	FetchAllDeliveryPersons(ctx context.Context, page, pageSize *int) ([]entity.DeliveryPerson, error)
+	FetchOffDutyDeliveryPersons(ctx context.Context) ([]entity.DeliveryPerson, error)
+	FetchOffDutyGeoHashes(ctx context.Context, status *string) ([]string, error)
+	FindByGeohash(ctx context.Context, geohash *string) (*entity.DeliveryPerson, error)
 	FetchPhone(ctx context.Context, phone *string) (*string, error)
 }
 

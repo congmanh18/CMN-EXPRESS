@@ -27,6 +27,7 @@ import (
 // @securityDefinitions.apikey BearerAuth
 // @in header
 // @name Authorization
+// @Param Authorization header string true "Bearer token" default(Bearer <access-token>)
 func main() {
 	// Dùng cách cờ để đọc file config
 	// go run ./cmd/main.go -config="./conf/pgsql.env"

@@ -14,12 +14,15 @@ const (
 type DeliveryPerson struct {
 	record.BaseEntity
 	Phone           *string `gorm:"not null;index"`
+	FullName        *string
 	SalaryRate      *float64
 	ExtraWeightRate *float64
 	TotalCod        *float64
 	DailyIncome     *float64
 	GeoHash         *string
-	
+	Latitude        *float64
+	Longitude       *float64
+
 	IsAvailable  bool
 	ActiveStatus ActiveStatus
 

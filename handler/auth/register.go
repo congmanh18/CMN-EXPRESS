@@ -33,7 +33,7 @@ import (
 //	@Description     "place_of_origin": "Phu Quoc",
 //	@Description     "place_of_residence": "Phu Quoc",
 //	@Description     "latitude": 10.2899,
-//	@Description     "longtitude": 103.9840,
+//	@Description     "longitude": 103.9840,
 //	@Description     "account_type": "postpaid",
 //	@Description     "role": "customer"
 //	@Description   }

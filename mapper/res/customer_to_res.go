@@ -27,6 +27,6 @@ func CustomerToRes(user *entity.CustomerDetails) res.CustomerRes {
 		PlaceOfResidence:     user.PlaceOfResidence,
 		AccountType:          user.AccountType,
 		Latitude:             user.Latitude,
-		Longitude:            user.Longtitude,
+		Longitude:            user.Longitude,
 	}
 }

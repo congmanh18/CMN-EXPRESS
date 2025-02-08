@@ -14,7 +14,7 @@ import (
 
 func RegisterToCustomer(req model.RegisterRequest) (*entity.Customer, *entity.User) {
 	// Xử lý geohash luôn nếu cần
-	geohash := geohash.Encode(req.Latitude, req.Longtitude)
+	geohash := geohash.Encode(req.Latitude, req.Longitude)
 	hashedPassword, err := security.HashPassword(req.Password)
 	if err != nil {
 		return nil, nil
@@ -39,7 +39,7 @@ func RegisterToCustomer(req model.RegisterRequest) (*entity.Customer, *entity.Us
 		Phone:       &req.Phone,
 		GeoHash:     &geohash,
 		Latitude:    &req.Latitude,
-		Longtitude:  &req.Longtitude,
+		Longitude:   &req.Longitude,
 	}
 
 	user := &entity.User{
@@ -70,7 +70,7 @@ func RegisterToCustomer(req model.RegisterRequest) (*entity.Customer, *entity.Us
 }
 
 func UpdateToCustomer(req model.UpdateUserReq) (*entity.Customer, *entity.User) {
-	geohash := geohash.Encode(req.Latitude, req.Longtitude)
+	geohash := geohash.Encode(req.Latitude, req.Longitude)
 	user := &entity.User{
 		SpecificAddress:      &req.SpecificAddress,
 		Ward:                 &req.Ward,
@@ -88,9 +88,9 @@ func UpdateToCustomer(req model.UpdateUserReq) (*entity.Customer, *entity.User) 
 		PlaceOfResidence:     &req.PlaceOfResidence,
 	}
 	customer := &entity.Customer{
-		GeoHash:    &geohash,
-		Latitude:   &req.Latitude,
-		Longtitude: &req.Longtitude,
+		GeoHash:   &geohash,
+		Latitude:  &req.Latitude,
+		Longitude: &req.Longitude,
 	}
 	return customer, user
 }

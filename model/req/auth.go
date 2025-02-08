@@ -31,7 +31,7 @@ type RegisterRequest struct {
 	// 2. Field for customer
 	CustomerAccountType string  `json:"account_type"`
 	Latitude            float64 `json:"latitude,omitempty"`
-	Longtitude          float64 `json:"longtitude,omitempty"`
+	Longitude           float64 `json:"longitude,omitempty"`
 
 	Role string `json:"role" validate:"required"`
 }

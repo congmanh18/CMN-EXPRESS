@@ -30,7 +30,7 @@ func CustomerInfoToDetail(user *entity.User, customer *entity.Customer) *entity.
 		},
 		AccountType: (*string)(&customer.AccountType),
 		Latitude:    customer.Latitude,
-		Longtitude:  customer.Longtitude,
+		Longitude:   customer.Longitude,
 	}
 
 }

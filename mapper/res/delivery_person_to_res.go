@@ -28,3 +28,14 @@ func DeliveryPersonToRes(user *entity.DeliveryPersonDetails) res.DeliveryPersonR
 		SalaryRate:           user.SalaryRate,
 	}
 }
+
+func BaseDeliveryPersonToRes(delivery_person *entity.DeliveryPerson) res.BaseDeliveryPersonRes {
+	return res.BaseDeliveryPersonRes{
+		ID:        delivery_person.ID,
+		Phone:     delivery_person.Phone,
+		FullName:  delivery_person.FullName,
+		GeoHash:   delivery_person.GeoHash,
+		Latitude:  delivery_person.Latitude,
+		Longitude: delivery_person.Longitude,
+	}
+}

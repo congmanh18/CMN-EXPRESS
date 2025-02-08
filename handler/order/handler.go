@@ -11,6 +11,7 @@ type Handler interface {
 	HandleUpdateOrderStatus(c echo.Context) error
 	HandleListOrder(c echo.Context) error
 	HandlerOrderDetail(c echo.Context) error
+	HandleNearestDeliveryPerson(c echo.Context) error
 }
 
 type handlerImpl struct {

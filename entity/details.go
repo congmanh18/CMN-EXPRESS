@@ -7,7 +7,3 @@ type OrderDetail struct {
 	DelivererPhone    *string `json:"deliverer_phone"`
 	DelivererFullName *string `json:"deliverer_full_name"`
 }
-
-type OrderDetailByDeliveryPerson struct {
-	Order
-}

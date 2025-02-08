@@ -28,10 +28,10 @@ func Migration(db *gorm.DB) {
 		// &order.CODReconciliation{},
 		// &order.AdditionalService{},
 
-		// &warehouse.Warehouse{},
-		// &warehouse.WarehouseTransaction{},
+		&entity.Warehouse{},
+		&entity.WarehouseTransaction{},
 		&entity.BasicPrice{},
-		&entity.LogPrice{},
+		&entity.AdminLog{},
 	)
 	if err != nil {
 		panic("Failed to migrate: " + err.Error())

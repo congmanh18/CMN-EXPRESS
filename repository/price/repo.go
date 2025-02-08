@@ -32,7 +32,7 @@ func (p *priceImpl) Create(ctx context.Context, price *entity.BasicPrice, adminI
 	}
 
 	// Ghi log thao tác
-	log := entity.LogPrice{
+	log := entity.AdminLog{
 		BaseEntity: record.BaseEntity{
 			ID: pointer.String(uuid.New().String()),
 		},
@@ -80,7 +80,7 @@ func (p *priceImpl) Update(ctx context.Context, id *string, price *entity.BasicP
 	}
 
 	// Ghi log thao tác
-	log := entity.LogPrice{
+	log := entity.AdminLog{
 		BaseEntity: record.BaseEntity{
 			ID: pointer.String(uuid.New().String()),
 		},
@@ -108,7 +108,7 @@ func (p *priceImpl) Delete(ctx context.Context, id *string, adminID *string) err
 	}
 
 	// Ghi log thao tác
-	log := entity.LogPrice{
+	log := entity.AdminLog{
 		BaseEntity: record.BaseEntity{
 			ID: pointer.String(uuid.New().String()),
 		},

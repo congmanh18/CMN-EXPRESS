@@ -44,6 +44,15 @@ type DeliveryPersonRes struct {
 	PlaceOfResidence     *string  `json:"place_of_residence"`
 }
 
+type BaseDeliveryPersonRes struct {
+	ID        *string  `json:"id"`
+	Phone     *string  `json:"phone"`
+	FullName  *string  `json:"full_name"`
+	GeoHash   *string  `json:"geo_hash"`
+	Latitude  *float64 `json:"latitude"`
+	Longitude *float64 `json:"longitude"`
+}
+
 type PaginationResponse struct {
 	Page            int                 `json:"page"`
 	PageSize        int                 `json:"page_size"`

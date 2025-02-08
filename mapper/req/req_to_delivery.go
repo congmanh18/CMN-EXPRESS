@@ -21,7 +21,8 @@ func RegisterToDeliveryPerson(req model.RegisterRequest) (*entity.DeliveryPerson
 		BaseEntity: record.BaseEntity{
 			ID: id,
 		},
-		Phone: &req.Phone,
+		FullName: pointer.String(req.LastName + " " + req.MiddleName + " " + req.FirstName),
+		Phone:    &req.Phone,
 	}
 	user := &entity.User{
 		BaseEntity: record.BaseEntity{

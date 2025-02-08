@@ -19,7 +19,7 @@ type Customer struct {
 	Phone       *string  `gorm:"not null;index"`
 	GeoHash     *string  `json:"geo_hash"`
 	Latitude    *float64 `json:"latitude"`
-	Longtitude  *float64 `json:"longtitude"`
+	Longitude   *float64 `json:"longitude"`
 	Order       []Order  `gorm:"foreignKey:SenderID" json:"order"`
 }
 

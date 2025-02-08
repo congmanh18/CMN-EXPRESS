@@ -8,8 +8,8 @@ import (
 )
 
 // CreateOrder implements OrderUsecase.
-func (o *orderUsecaseImpl) CreateOrder(ctx context.Context, req model.CreateOrderReq) *error.Err {
-	order := mapper.CreateOrderReqToOrder(req)
+func (o *orderUsecaseImpl) CreateOrder(ctx context.Context, req model.CreateOrderReq, customerID *string) *error.Err {
+	order := mapper.CreateOrderReqToOrder(req, customerID)
 	err := o.orderRepo.Create(ctx, order)
 	if err != nil {
 		return error.ErrInternalServer

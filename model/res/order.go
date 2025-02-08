@@ -12,15 +12,21 @@ type OrderRes struct {
 	DelivererPhone    *string `json:"deliverer_phone"`
 	DelivererFullName *string `json:"deliverer_full_name"`
 
-	SenderID       *string `json:"sender_id"`
-	ShopName       *string `json:"shop_name"`
-	SenderPhone    *string `json:"sender_phone"`
-	SenderAddress  *string `json:"sender_address"`
-	AutonomousCode *string `json:"autonomous_code"`
+	SenderID              *string `json:"sender_id"`
+	ShopName              *string `json:"shop_name"`
+	SenderPhone           *string `json:"sender_phone"`
+	SenderSpecificAddress *string `json:"sender_specific_address"`
+	SenderWard            *string `json:"sender_ward"`
+	SenderDistrict        *string `json:"sender_district"`
+	SenderCity            *string `json:"sender_city"`
+	AutonomousCode        *string `json:"autonomous_code"`
 
-	ReceiverName    *string `json:"receiver_name"`
-	ReceiverPhone   *string `json:"receiver_phone"`
-	ReceiverAddress *string `json:"receiver_address"`
+	ReceiverName            *string `json:"receiver_name"`
+	ReceiverPhone           *string `json:"receiver_phone"`
+	ReceiverSpecificAddress *string `json:"receiver_specific_address"`
+	ReceiverWard            *string `json:"receiver_ward"`
+	ReceiverDistrict        *string `json:"receiver_district"`
+	ReceiverCity            *string `json:"receiver_city"`
 
 	Product         *string  `json:"product"`
 	Quantity        *int     `json:"quantity"`

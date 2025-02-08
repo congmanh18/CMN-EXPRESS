@@ -84,7 +84,7 @@ func Run(confPath string) {
 
 	// Khởi tạo Usecase
 	authUsecase := auth.NewAuthUsecase(userRepo, adminRepo, custRepo, deliRepo, accountingRepo, tokenRepo, serviceConf.JwtSecretKey)
-	orderUsecase := order.NewOrderUsecase(orderRepo)
+	orderUsecase := order.NewOrderUsecase(orderRepo, deliRepo)
 	userUsecase := user.NewUserUsecase(userRepo, custRepo, deliRepo)
 	priceUsecase := price.NewPriceUsecase(priceRepo)
 

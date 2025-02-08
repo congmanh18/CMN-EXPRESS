@@ -26,7 +26,7 @@ func (c *userImpl) FetchCustomerUsers(ctx context.Context, status *string, page,
 			users.*,
 			customers.account_type,
 			customers.latitude,
-			customers.longtitude
+			customers.longitude
 		`).
 		Joins("JOIN customers ON customers.phone = users.phone").
 		Where("users.role = ?", entity.CustomerRole)

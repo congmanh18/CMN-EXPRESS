@@ -27,7 +27,7 @@ func (u *userImpl) SearchCustomers(ctx context.Context, phone, name, status *str
 			users.*,
 			customers.account_type,
 			customers.latitude,
-			customers.longtitude
+			customers.longitude
 		`).
 		Joins("JOIN customers ON customers.phone = users.phone").
 		Where("users.role = ?", entity.CustomerRole)

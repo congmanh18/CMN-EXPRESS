@@ -72,7 +72,7 @@ func SetupRoutes(
 					Handler: userHandler.HandleListUsers,
 				},
 				{
-					Path:    "/user-info",
+					Path:    "/users/:id",
 					Method:  method.GET,
 					Handler: userHandler.HandleGetInfoUser,
 				},
@@ -137,6 +137,11 @@ func SetupRoutes(
 					Path:    "",
 					Method:  method.GET,
 					Handler: orderHandler.HandleListOrder,
+				},
+				{
+					Path:    "/nearest",
+					Method:  method.GET,
+					Handler: orderHandler.HandleNearestDeliveryPerson,
 				},
 			},
 		},

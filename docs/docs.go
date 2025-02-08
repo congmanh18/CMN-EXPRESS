@@ -217,6 +217,49 @@ const docTemplate = `{
                 "responses": {}
             }
         },
+        "/orders/nearest": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Retrieve the closest delivery person to the provided latitude and longitude",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "Get the nearest delivery person",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Latitude of the location",
+                        "name": "lat",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Longitude of the location",
+                        "name": "lon",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Filter by delivery person's status (default: off_duty)",
+                        "name": "status",
+                        "in": "query"
+                    }
+                ],
+                "responses": {}
+            }
+        },
         "/orders/{id}": {
             "get": {
                 "security": [
@@ -325,7 +368,7 @@ const docTemplate = `{
         },
         "/register": {
             "post": {
-                "description": "Register for different roles (admin, accounting, customer, delivery_person) account_type customer (prepaid, postpaid)\nExample customer payload:\n{\n\"phone\": \"0990123456\",\n\"password\": \"wrightdaniel\",\n\"last_name\": \"Wright\",\n\"middle_name\": \"Thomas\",\n\"first_name\": \"Daniel\",\n\"specific_address\": \"789 Tran Hung Dao\",\n\"ward\": \"Duong Dong\",\n\"district\": \"Duong Dong\",\n\"city\": \"Phu Quoc\",\n\"identification_number\": \"321987654\",\n\"gender\": \"male\",\n\"date_of_birth\": \"1994-09-09\",\n\"nationality\": \"Vietnamese\",\n\"place_of_origin\": \"Phu Quoc\",\n\"place_of_residence\": \"Phu Quoc\",\n\"latitude\": 10.2899,\n\"longtitude\": 103.9840,\n\"account_type\": \"postpaid\",\n\"role\": \"customer\"\n}",
+                "description": "Register for different roles (admin, accounting, customer, delivery_person) account_type customer (prepaid, postpaid)\nExample customer payload:\n{\n\"phone\": \"0990123456\",\n\"password\": \"wrightdaniel\",\n\"last_name\": \"Wright\",\n\"middle_name\": \"Thomas\",\n\"first_name\": \"Daniel\",\n\"specific_address\": \"789 Tran Hung Dao\",\n\"ward\": \"Duong Dong\",\n\"district\": \"Duong Dong\",\n\"city\": \"Phu Quoc\",\n\"identification_number\": \"321987654\",\n\"gender\": \"male\",\n\"date_of_birth\": \"1994-09-09\",\n\"nationality\": \"Vietnamese\",\n\"place_of_origin\": \"Phu Quoc\",\n\"place_of_residence\": \"Phu Quoc\",\n\"latitude\": 10.2899,\n\"longitude\": 103.9840,\n\"account_type\": \"postpaid\",\n\"role\": \"customer\"\n}",
                 "consumes": [
                     "application/json"
                 ],
@@ -597,15 +640,15 @@ const docTemplate = `{
             "type": "object",
             "required": [
                 "declared_code",
+                "delivery_notes",
                 "dimensions",
+                "pick_up_notes",
                 "product",
                 "quantity",
-                "receiver_address",
                 "receiver_latitude",
                 "receiver_longitude",
                 "receiver_name",
                 "receiver_phone",
-                "sender_address",
                 "sender_id",
                 "sender_latitude",
                 "sender_longitude",
@@ -617,7 +660,13 @@ const docTemplate = `{
                 "declared_code": {
                     "type": "number"
                 },
+                "delivery_notes": {
+                    "type": "string"
+                },
                 "dimensions": {
+                    "type": "string"
+                },
+                "pick_up_notes": {
                     "type": "string"
                 },
                 "product": {
@@ -626,7 +675,10 @@ const docTemplate = `{
                 "quantity": {
                     "type": "integer"
                 },
-                "receiver_address": {
+                "receiver_city": {
+                    "type": "string"
+                },
+                "receiver_district": {
                     "type": "string"
                 },
                 "receiver_latitude": {
@@ -641,7 +693,16 @@ const docTemplate = `{
                 "receiver_phone": {
                     "type": "string"
                 },
-                "sender_address": {
+                "receiver_specific_address": {
+                    "type": "string"
+                },
+                "receiver_ward": {
+                    "type": "string"
+                },
+                "sender_city": {
+                    "type": "string"
+                },
+                "sender_district": {
                     "type": "string"
                 },
                 "sender_id": {
@@ -654,6 +715,12 @@ const docTemplate = `{
                     "type": "number"
                 },
                 "sender_phone": {
+                    "type": "string"
+                },
+                "sender_specific_address": {
+                    "type": "string"
+                },
+                "sender_ward": {
                     "type": "string"
                 },
                 "shop_name": {
@@ -732,7 +799,7 @@ const docTemplate = `{
                 "latitude": {
                     "type": "number"
                 },
-                "longtitude": {
+                "longitude": {
                     "type": "number"
                 },
                 "middle_name": {
@@ -821,7 +888,7 @@ const docTemplate = `{
                 "latitude": {
                     "type": "number"
                 },
-                "longtitude": {
+                "longitude": {
                     "type": "number"
                 },
                 "middle_name": {
