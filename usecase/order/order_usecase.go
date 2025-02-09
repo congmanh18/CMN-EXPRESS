@@ -23,5 +23,8 @@ type orderUsecaseImpl struct {
 }
 
 func NewOrderUsecase(orderRepo order.Repo, deliveryPersonRepo delivery.Repo) OrderUsecase {
-	return &orderUsecaseImpl{orderRepo: orderRepo}
+	return &orderUsecaseImpl{
+		orderRepo:    orderRepo,
+		deliveryRepo: deliveryPersonRepo,
+	}
 }

@@ -9,8 +9,8 @@ import (
 )
 
 // HandleVerifyUser implements Handler.
-// @Summary Update customer status
-// @Description Update customer status by ID
+// @Summary Update user status
+// @Description Update user status by ID
 // @Tags User-information
 // @Accept json
 // @Produce json
