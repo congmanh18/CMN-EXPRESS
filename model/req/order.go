@@ -1,7 +1,6 @@
 package req
 
 type CreateOrderReq struct {
-	SenderID              *string  `json:"sender_id" validate:"required"`
 	ShopName              *string  `json:"shop_name" validate:"required"`
 	SenderPhone           *string  `json:"sender_phone" validate:"required"`
 	SenderSpecificAddress *string  `json:"sender_specific_address"`

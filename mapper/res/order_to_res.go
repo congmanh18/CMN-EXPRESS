@@ -18,7 +18,6 @@ func OrderDetailToRes(orderDetail *entity.OrderDetail) res.OrderRes {
 		DelivererPhone:    orderDetail.DelivererPhone,
 		DelivererFullName: orderDetail.DelivererFullName,
 
-		SenderID:              orderDetail.SenderID,
 		ShopName:              orderDetail.ShopName,
 		SenderPhone:           orderDetail.SenderPhone,
 		SenderSpecificAddress: orderDetail.SenderSpecificAddress,

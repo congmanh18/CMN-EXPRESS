@@ -8,10 +8,12 @@ import (
 	model "express_be/model/req"
 
 	"github.com/google/uuid"
+	"github.com/mmcloughlin/geohash"
 )
 
 func RegisterToDeliveryPerson(req model.RegisterRequest) (*entity.DeliveryPerson, *entity.User) {
 	hashedPassword, err := security.HashPassword(req.Password)
+	geohash := geohash.Encode(req.Latitude, req.Longitude)
 	if err != nil {
 		return nil, nil
 	}
@@ -21,8 +23,12 @@ func RegisterToDeliveryPerson(req model.RegisterRequest) (*entity.DeliveryPerson
 		BaseEntity: record.BaseEntity{
 			ID: id,
 		},
-		FullName: pointer.String(req.LastName + " " + req.MiddleName + " " + req.FirstName),
-		Phone:    &req.Phone,
+		FullName:     pointer.String(req.LastName + " " + req.MiddleName + " " + req.FirstName),
+		Phone:        &req.Phone,
+		Latitude:     &req.Latitude,
+		Longitude:    &req.Longitude,
+		GeoHash:      &geohash,
+		ActiveStatus: entity.OffDuty,
 	}
 	user := &entity.User{
 		BaseEntity: record.BaseEntity{

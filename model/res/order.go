@@ -12,7 +12,6 @@ type OrderRes struct {
 	DelivererPhone    *string `json:"deliverer_phone"`
 	DelivererFullName *string `json:"deliverer_full_name"`
 
-	SenderID              *string `json:"sender_id"`
 	ShopName              *string `json:"shop_name"`
 	SenderPhone           *string `json:"sender_phone"`
 	SenderSpecificAddress *string `json:"sender_specific_address"`
